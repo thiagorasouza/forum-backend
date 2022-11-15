@@ -11,5 +11,12 @@ export class User {
         error: "Empty email",
       };
     }
+
+    if (!userData.password) {
+      return {
+        success: false,
+        error: "Empty password",
+      };
+    }
   }
 }

@@ -14,4 +14,18 @@ describe("User Test Suite", () => {
 
     expect(result).toEqual(expected);
   });
+
+  it("should fail to create a user with an empty password", () => {
+    const userData = {
+      email: "valid_email@email.com",
+      password: "",
+    };
+    const result = User.create(userData);
+    const expected = {
+      success: false,
+      error: "Empty password",
+    };
+
+    expect(result).toEqual(expected);
+  });
 });
