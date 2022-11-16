@@ -59,4 +59,25 @@ describe("User Test Suite", () => {
 
     expect(result).toEqual(invalidPassword);
   });
+
+  it("should return User instance if data is valid", () => {
+    const validEmail = Result.succeed<UserEmail>({
+      value: "valid_email@email.com",
+    } as UserEmail);
+    const validPassword = Result.succeed<UserPassword>({
+      value: "valid_password",
+    } as UserPassword);
+
+    jest.spyOn(UserEmail, "create").mockReturnValueOnce(validEmail);
+    jest.spyOn(UserPassword, "create").mockReturnValueOnce(validPassword);
+
+    const userData = {
+      email: "valid_email@email.com",
+      password: "valid_password",
+    };
+    const result = User.create(userData);
+
+    expect(result.ok).toBe(true);
+    expect(result.value).toBeInstanceOf(User);
+  });
 });

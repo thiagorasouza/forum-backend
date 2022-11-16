@@ -1,3 +1,4 @@
+import { Result } from "../other/result";
 import { UserEmail } from "./userEmail";
 import { UserPassword } from "./userPassword";
 
@@ -25,11 +26,11 @@ export class User {
       return userPasswordResult;
     }
 
-    // const props = {
-    //   email: userEmailResult.value,
-    //   password: userPasswordResult.value,
-    // };
+    const props = {
+      email: userEmailResult.value,
+      password: userPasswordResult.value,
+    };
 
-    // return Result.succeed<User>(new User(props));
+    return Result.succeed<User>(new User(props));
   }
 }
