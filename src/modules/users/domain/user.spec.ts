@@ -7,12 +7,8 @@ describe("User Test Suite", () => {
       password: "valid_password",
     };
     const result = User.create(userData);
-    const expected = {
-      success: false,
-      error: "Empty email",
-    };
 
-    expect(result).toEqual(expected);
+    expect(result.ok).toBe(false);
   });
 
   it("should fail to create a user with an empty password", () => {
@@ -21,25 +17,7 @@ describe("User Test Suite", () => {
       password: "",
     };
     const result = User.create(userData);
-    const expected = {
-      success: false,
-      error: "Empty password",
-    };
 
-    expect(result).toEqual(expected);
+    expect(result.ok).toBe(false);
   });
-
-  // it("should fail to create a user with an invalid email", () => {
-  //   const userData = {
-  //     email: "invalid_email",
-  //     password: "valid_password",
-  //   };
-  //   const result = User.create(userData);
-  //   const expected = {
-  //     success: false,
-  //     error: "Invalid email",
-  //   };
-
-  //   expect(result).toEqual(expected);
-  // });
 });

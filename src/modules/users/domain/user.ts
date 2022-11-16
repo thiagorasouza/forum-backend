@@ -1,3 +1,5 @@
+import { Result } from "../other/result";
+
 interface UserProps {
   email: string;
   password: string;
@@ -6,19 +8,13 @@ interface UserProps {
 export class User {
   private constructor(private readonly props: UserProps) {}
 
-  static create(props: UserProps) {
+  static create(props: UserProps): any {
     if (!props.email) {
-      return {
-        success: false,
-        error: "Empty email",
-      };
+      return Result.fail("Empty email");
     }
 
     if (!props.password) {
-      return {
-        success: false,
-        error: "Empty password",
-      };
+      return Result.fail("Empty password");
     }
   }
 }

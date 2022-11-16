@@ -7,8 +7,8 @@ export class Result<T> {
     Object.freeze(this);
   }
 
-  static fail(error: string) {
-    return new Result(false, error, undefined);
+  static fail<T>(error: string) {
+    return new Result<T>(false, error, undefined);
   }
 
   static succeed<T>(value: T) {
