@@ -9,6 +9,18 @@ const mockResponse = (): Response => ({
 });
 
 describe("Result Test Suite", () => {
+  it("should throw when trying to fail without error message", () => {
+    expect(() => Result.fail("")).toThrowError(
+      "Result.fail: error message must be provided"
+    );
+  });
+
+  it("should throw when trying to succeed without result value", () => {
+    expect(() => Result.succeed(null)).toThrowError(
+      "Result.succed: result value must be provided"
+    );
+  });
+
   it("should not be OK on failures", () => {
     const result = Result.fail("error message");
     expect(result.ok).toBe(false);
@@ -26,12 +38,7 @@ describe("Result Test Suite", () => {
   });
 
   it("should hold a value on success", () => {
-    type Response = {
-      value: string;
-    };
-    const response: Response = {
-      value: "valid response",
-    };
+    const response = mockResponse();
     const result = Result.succeed<Response>(response);
     expect(result.value).toEqual(response);
   });
