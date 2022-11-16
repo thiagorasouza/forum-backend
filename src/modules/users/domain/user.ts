@@ -1,9 +1,9 @@
-import { Result } from "../other/result";
 import { UserEmail } from "./userEmail";
+import { UserPassword } from "./userPassword";
 
 interface UserProps {
   email: UserEmail;
-  password: string;
+  password: UserPassword;
 }
 
 interface UserData {
@@ -16,5 +16,6 @@ export class User {
 
   static create(userData: UserData): any {
     const userEmail = UserEmail.create(userData.email);
+    const userPassword = UserPassword.create(userData.password);
   }
 }

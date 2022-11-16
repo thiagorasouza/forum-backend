@@ -1,5 +1,6 @@
 import { User } from "./user";
 import { UserEmail } from "./userEmail";
+import { UserPassword } from "./userPassword";
 
 describe("User Test Suite", () => {
   beforeEach(() => {
@@ -20,7 +21,7 @@ describe("User Test Suite", () => {
   });
 
   it("should check if password is valid on creation", () => {
-    const userEmailCreate = jest.spyOn(UserEmail, "create");
+    const userPasswordCreate = jest.spyOn(UserPassword, "create");
 
     const userData = {
       email: "valid_email@email.com",
@@ -28,7 +29,7 @@ describe("User Test Suite", () => {
     };
     User.create(userData);
 
-    expect(userEmailCreate).toHaveBeenCalledTimes(1);
-    expect(userEmailCreate).toHaveBeenCalledWith("valid_email@email.com");
+    expect(userPasswordCreate).toHaveBeenCalledTimes(1);
+    expect(userPasswordCreate).toHaveBeenCalledWith("valid_password");
   });
 });
