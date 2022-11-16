@@ -1,26 +1,28 @@
-import { Validator } from "../adapters/validator";
 import { Result } from "../other/result";
 import { UserEmailInterface } from "./interfaces/userEmailInterface";
 
 export class UserEmail implements UserEmailInterface {
-  private _value = "";
+  // W3 Email Regex
+  private static REGEX = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+  private readonly _value: string;
 
-  constructor(private readonly validator: Validator) {}
+  private constructor(email: string) {
+    this._value = email;
+  }
 
-  get value(): string {
+  public get value(): string {
     return this._value;
   }
 
-  private isValid(email: string): boolean {
-    return this.validator.isEmailValid(email);
+  private static isValid(email: string): boolean {
+    return UserEmail.REGEX.test(email);
   }
 
-  create(email: string): Result<UserEmail> {
-    if (!this.isValid(email)) {
+  public static create(email: string): Result<UserEmail> {
+    if (!UserEmail.isValid(email)) {
       return Result.fail<UserEmail>("Invalid email");
     }
 
-    this._value = email;
-    return Result.succeed<UserEmail>(this);
+    return Result.succeed<UserEmail>(new UserEmail(email));
   }
 }
