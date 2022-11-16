@@ -10,8 +10,12 @@ export class UserEmail {
     return this._value;
   }
 
+  private isValid(email: string): boolean {
+    return this.validator.isEmailValid(email);
+  }
+
   create(email: string): Result<UserEmail> {
-    if (!this.validator.isEmailValid(email)) {
+    if (!this.isValid(email)) {
       return Result.fail<UserEmail>("Invalid email");
     }
 
