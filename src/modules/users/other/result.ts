@@ -3,7 +3,9 @@ export class Result<T> {
     public ok: boolean,
     public error?: string,
     public value?: T
-  ) {}
+  ) {
+    Object.freeze(this);
+  }
 
   static fail(error: string) {
     return new Result(false, error, undefined);

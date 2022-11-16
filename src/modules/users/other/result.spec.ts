@@ -32,4 +32,13 @@ describe("Result Test Suite", () => {
     const result = Result.succeed<Response>(response);
     expect(result.value).toEqual(response);
   });
+
+  it("should be closed for modifications after object creation", () => {
+    const result = Result.fail("error message");
+    for (const property of Reflect.ownKeys(result)) {
+      expect(Reflect.getOwnPropertyDescriptor(result, property)?.writable).toBe(
+        false
+      );
+    }
+  });
 });
