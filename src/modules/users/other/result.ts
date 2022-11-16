@@ -1,15 +1,15 @@
 export class Result<T> {
   private constructor(
     public ok: boolean,
-    public error: string | null,
-    public value: T | null
+    public error?: string,
+    public value?: T
   ) {}
 
   static fail(error: string) {
-    return new Result(false, error, null);
+    return new Result(false, error, undefined);
   }
 
   static succeed<T>(value: T) {
-    return new Result<T>(true, null, value);
+    return new Result<T>(true, undefined, value);
   }
 }

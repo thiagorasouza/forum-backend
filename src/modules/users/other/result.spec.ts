@@ -16,4 +16,20 @@ describe("Result Test Suite", () => {
     const result = Result.succeed<Response>(response);
     expect(result.ok).toBe(true);
   });
+
+  it("should hold an error on failure", () => {
+    const result = Result.fail("error message");
+    expect(result.error).toBe("error message");
+  });
+
+  it("should hold a value on success", () => {
+    type Response = {
+      value: string;
+    };
+    const response: Response = {
+      value: "valid response",
+    };
+    const result = Result.succeed<Response>(response);
+    expect(result.value).toEqual(response);
+  });
 });
