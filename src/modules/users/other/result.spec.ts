@@ -5,4 +5,9 @@ describe("Result Test Suite", () => {
     const result = Result.fail("error message");
     expect(result.ok).toBe(false);
   });
+
+  it("should be successful when the result is a success", () => {
+    const result = Result.succeed("error message");
+    expect(result.ok).toBe(true);
+  });
 });
