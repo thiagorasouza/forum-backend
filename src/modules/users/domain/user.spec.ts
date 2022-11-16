@@ -1,3 +1,4 @@
+import { Result } from "../other/result";
 import { User } from "./user";
 import { UserEmail } from "./userEmail";
 import { UserPassword } from "./userPassword";
@@ -34,19 +35,28 @@ describe("User Test Suite", () => {
   });
 
   it("should fail if email is not valid", () => {
+    const invalidEmail = Result.invalidParam<UserEmail>("email");
+    jest.spyOn(UserEmail, "create").mockReturnValueOnce(invalidEmail);
+
     const userData = {
       email: "invalid_email",
       password: "valid_password",
     };
     const result = User.create(userData);
 
-    expect(result.ok).toBe(false);
+    expect(result).toEqual(invalidEmail);
   });
-  // if("should return User instance if data is valid", () => {
-  //   const userData = {
-  //     email: "valid_email@email.com",
-  //     password: "valid_password",
-  //   };
-  //   User.create(userData);
-  // })
+
+  it("should fail if password is not valid", () => {
+    const invalidPassword = Result.invalidParam<UserPassword>("password");
+    jest.spyOn(UserPassword, "create").mockReturnValueOnce(invalidPassword);
+
+    const userData = {
+      email: "valid_email@email.com",
+      password: "invalid_password",
+    };
+    const result = User.create(userData);
+
+    expect(result).toEqual(invalidPassword);
+  });
 });
