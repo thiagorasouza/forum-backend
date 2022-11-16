@@ -9,18 +9,18 @@ export class Result<T> {
 
   get error(): string {
     if (this.ok) {
-      // throw new Error(
-      //   "Result.error: unable to get error from successful result"
-      // );
+      throw new Error(
+        "Result.error: unable to get error from successful result"
+      );
     }
 
     return this._error as string;
   }
 
   get value(): T {
-    // if (!this.ok) {
-    //   throw new Error("Result.value: unable to get value from failed result");
-    // }
+    if (!this.ok) {
+      throw new Error("Result.value: unable to get value from failed result");
+    }
 
     return this._value as T;
   }

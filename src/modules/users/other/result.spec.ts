@@ -21,6 +21,18 @@ describe("Result Test Suite", () => {
     );
   });
 
+  it("should throw when trying to get result value from failure", () => {
+    expect(() => Result.fail("error message").value).toThrowError(
+      "Result.value: unable to get value from failed result"
+    );
+  });
+
+  it("should throw when trying to get error value from success", () => {
+    expect(() => Result.succeed(mockResponse()).error).toThrowError(
+      "Result.error: unable to get error from successful result"
+    );
+  });
+
   it("should not be OK on failures", () => {
     const result = Result.fail("error message");
     expect(result.ok).toBe(false);
