@@ -1,20 +1,20 @@
 import { Result } from "../other/result";
-import { UserEmailInterface } from "./interfaces/userEmailInterface";
+import { UserEmail } from "./userEmail";
 
 interface UserProps {
-  email: UserEmailInterface;
+  email: UserEmail;
+  password: string;
+}
+
+interface UserData {
+  email: string;
   password: string;
 }
 
 export class User {
   private constructor(private readonly props: UserProps) {}
 
-  static create(props: UserProps): any {
-    if (!props.email.value) {
-      return Result.fail("Empty email");
-    }
-    if (!props.password) {
-      return Result.fail("Empty password");
-    }
+  static create(userData: UserData): any {
+    const userEmail = UserEmail.create(userData.email);
   }
 }

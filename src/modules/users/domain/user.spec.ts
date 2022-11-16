@@ -1,40 +1,44 @@
-import { UserEmailInterface } from "./interfaces/userEmailInterface";
 import { User } from "./user";
-
-const makeUserEmail = (mockValue: string): UserEmailInterface => {
-  class UserEmailMock implements UserEmailInterface {
-    get value(): string {
-      return mockValue;
-    }
-  }
-
-  return new UserEmailMock();
-};
+import { UserEmail } from "./userEmail";
 
 describe("User Test Suite", () => {
-  it("should fail to create a user with an empty email", () => {
-    const userEmail = makeUserEmail("");
+  it("should check if email is valid on creation", () => {
+    const userEmailCreate = jest.spyOn(UserEmail, "create");
 
-    const userProps = {
-      email: userEmail,
+    const userData = {
+      email: "valid_email@email.com",
       password: "valid_password",
     };
-    const result = User.create(userProps);
+    User.create(userData);
 
-    expect(result.ok).toBe(false);
-    expect(result.error).toBe("Empty email");
+    expect(userEmailCreate).toHaveBeenCalledTimes(1);
+    expect(userEmailCreate).toHaveBeenCalledWith("valid_email@email.com");
   });
+  // it("should check if email is valid to create a user with an empty email", () => {
+  //   const userEmail = {
+  //     value: "",
+  //   } as UserEmail;
 
-  it("should fail to create a user with an empty password", () => {
-    const userEmail = makeUserEmail("valid_email@email.com");
+  //   const userProps = {
+  //     email: userEmail,
+  //     password: "valid_password",
+  //   };
+  //   const result = User.create(userProps);
 
-    const userProps = {
-      email: userEmail,
-      password: "",
-    };
-    const result = User.create(userProps);
+  //   expect(result.ok).toBe(false);
+  //   expect(result.error).toBe("Empty email");
+  // });
 
-    expect(result.ok).toBe(false);
-    expect(result.error).toBe("Empty password");
-  });
+  // it("should fail to create a user with an empty password", () => {
+  //   const userEmail = makeUserEmail("valid_email@email.com");
+
+  //   const userProps = {
+  //     email: userEmail,
+  //     password: "",
+  //   };
+  //   const result = User.create(userProps);
+
+  //   expect(result.ok).toBe(false);
+  //   expect(result.error).toBe("Empty password");
+  // });
 });
