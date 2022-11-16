@@ -1,18 +1,21 @@
 import { Result } from "./result";
 
+type Response = {
+  value: string;
+};
+
+const mockResponse = (): Response => ({
+  value: "valid response",
+});
+
 describe("Result Test Suite", () => {
-  it("should not be successful when the result is a failure", () => {
+  it("should not be OK on failures", () => {
     const result = Result.fail("error message");
     expect(result.ok).toBe(false);
   });
 
-  it("should be successful when the result is a success", () => {
-    type Response = {
-      value: string;
-    };
-    const response: Response = {
-      value: "valid response",
-    };
+  it("should be OK on sucess", () => {
+    const response = mockResponse();
     const result = Result.succeed<Response>(response);
     expect(result.ok).toBe(true);
   });
