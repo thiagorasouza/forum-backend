@@ -2,7 +2,7 @@ export class Result<T> {
   private constructor(
     public ok: boolean,
     public error: string | null,
-    public value: T
+    public value: T | null
   ) {}
 
   static fail(error: string) {
@@ -10,6 +10,6 @@ export class Result<T> {
   }
 
   static succeed<T>(value: T) {
-    return new Result(true, null, value);
+    return new Result<T>(true, null, value);
   }
 }

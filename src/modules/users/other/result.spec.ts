@@ -7,7 +7,13 @@ describe("Result Test Suite", () => {
   });
 
   it("should be successful when the result is a success", () => {
-    const result = Result.succeed("error message");
+    type Response = {
+      value: string;
+    };
+    const response: Response = {
+      value: "valid response",
+    };
+    const result = Result.succeed<Response>(response);
     expect(result.ok).toBe(true);
   });
 });
