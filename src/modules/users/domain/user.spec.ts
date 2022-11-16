@@ -28,4 +28,18 @@ describe("User Test Suite", () => {
 
     expect(result).toEqual(expected);
   });
+
+  // it("should fail to create a user with an invalid email", () => {
+  //   const userData = {
+  //     email: "invalid_email",
+  //     password: "valid_password",
+  //   };
+  //   const result = User.create(userData);
+  //   const expected = {
+  //     success: false,
+  //     error: "Invalid email",
+  //   };
+
+  //   expect(result).toEqual(expected);
+  // });
 });
