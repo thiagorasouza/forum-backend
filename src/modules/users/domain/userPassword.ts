@@ -3,6 +3,8 @@ import { Result } from "../other/result";
 export class UserPassword {
   private static minLength = 6;
   private static maxLength = 32;
+  // Letters, numbers and special characters
+  private static REGEX = /^[A-z0-9*.!@#$%^&(){}[\]:;<>,.?/~_+\-=|\\]+$/;
   private readonly _value: string;
 
   private constructor(password: string) {
@@ -16,7 +18,8 @@ export class UserPassword {
   private static isValid(password: string): boolean {
     if (
       password.length < UserPassword.minLength ||
-      password.length > UserPassword.maxLength
+      password.length > UserPassword.maxLength ||
+      !UserPassword.REGEX.test(password)
     ) {
       return false;
     }
@@ -29,6 +32,6 @@ export class UserPassword {
       return Result.fail<UserPassword>("Password is not valid");
     }
 
-    return Result.succeed<UserPassword>(new UserPassword("password"));
+    return Result.succeed<UserPassword>(new UserPassword(password));
   }
 }

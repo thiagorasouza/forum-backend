@@ -12,4 +12,17 @@ describe("UserPassword Test Suite", () => {
     expect(result.ok).toBe(false);
     expect(result.error).toBe("Password is not valid");
   });
+
+  it("should fail when password contain not allowed characters", () => {
+    const result = UserPassword.create("abcdefº");
+    expect(result.ok).toBe(false);
+    expect(result.error).toBe("Password is not valid");
+  });
+
+  it("should return UserPassword instance when password is valid", () => {
+    const result = UserPassword.create("abc123!@#");
+    const userPassword = result.value;
+    expect(result.ok).toBe(true);
+    expect(userPassword?.value).toBe("abc123!@#");
+  });
 });
