@@ -1,11 +1,11 @@
+import { Result } from "../other/result";
 import { UserEmail } from "./userEmail";
 
 describe("UserEmail Test Suite", () => {
   it("should fail if email is not valid", () => {
     const result = UserEmail.create("invalid_email");
 
-    expect(result.ok).toBe(false);
-    expect(result.error).toBe("Invalid email");
+    expect(result).toEqual(Result.invalidParam<UserEmail>("email"));
   });
 
   it("should return UserEmail object if email is valid", () => {

@@ -19,7 +19,7 @@ export class UserEmail {
 
   public static create(email: string): Result<UserEmail> {
     if (!UserEmail.isValid(email)) {
-      return Result.fail<UserEmail>("Invalid email");
+      return Result.invalidParam<UserEmail>("email");
     }
 
     return Result.succeed<UserEmail>(new UserEmail(email));

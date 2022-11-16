@@ -1,5 +1,5 @@
 export class Result<T> {
-  private constructor(
+  protected constructor(
     public ok: boolean,
     public error?: string,
     public value?: T
@@ -9,6 +9,10 @@ export class Result<T> {
 
   static fail<T>(error: string) {
     return new Result<T>(false, error, undefined);
+  }
+
+  static invalidParam<T>(paramName: string) {
+    return Result.fail<T>(`Invalid param: ${paramName}`);
   }
 
   static succeed<T>(value: T) {

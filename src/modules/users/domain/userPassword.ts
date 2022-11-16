@@ -29,7 +29,7 @@ export class UserPassword {
 
   public static create(password: string): Result<UserPassword> {
     if (!UserPassword.isValid(password)) {
-      return Result.fail<UserPassword>("Password is not valid");
+      return Result.invalidParam<UserPassword>("password");
     }
 
     return Result.succeed<UserPassword>(new UserPassword(password));
