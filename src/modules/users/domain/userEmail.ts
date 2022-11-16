@@ -1,7 +1,6 @@
 import { Result } from "../other/result";
-import { UserEmailInterface } from "./interfaces/userEmailInterface";
 
-export class UserEmail implements UserEmailInterface {
+export class UserEmail {
   // W3 Email Regex
   private static REGEX = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
   private readonly _value: string;
