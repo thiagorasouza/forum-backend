@@ -1,7 +1,8 @@
 import { Validator } from "../adapters/validator";
 import { Result } from "../other/result";
+import { UserEmailInterface } from "./interfaces/userEmailInterface";
 
-export class UserEmail {
+export class UserEmail implements UserEmailInterface {
   private _value = "";
 
   constructor(private readonly validator: Validator) {}
