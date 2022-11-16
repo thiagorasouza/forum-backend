@@ -7,15 +7,17 @@ interface UserProps {
   password: UserPassword;
 }
 
-interface UserData {
+interface NotYetValidatedUserData {
   email: string;
   password: string;
 }
 
+type UserResult = Result<User> | Result<UserEmail> | Result<UserPassword>;
+
 export class User {
   private constructor(private readonly props: UserProps) {}
 
-  static create(userData: UserData): any {
+  static create(userData: NotYetValidatedUserData): UserResult {
     const userEmailResult = UserEmail.create(userData.email);
     if (!userEmailResult.ok) {
       return userEmailResult;
@@ -26,11 +28,11 @@ export class User {
       return userPasswordResult;
     }
 
-    const props = {
+    const validUserProps = {
       email: userEmailResult.value,
       password: userPasswordResult.value,
     };
 
-    return Result.succeed<User>(new User(props));
+    return Result.succeed<User>(new User(validUserProps));
   }
 }
