@@ -1,7 +1,7 @@
 import { Success } from "../core/success";
 import { User } from "./user";
 import { UserEmail } from "./userEmail";
-import { InvalidParamFailure } from "./userErrors";
+import { InvalidParamFailure } from "./userFailures";
 import { UserPassword } from "./userPassword";
 
 describe("User Test Suite", () => {

@@ -1,5 +1,5 @@
 import { Success } from "../core/success";
-import { InvalidParamFailure } from "./userErrors";
+import { InvalidParamFailure } from "./userFailures";
 import { UserPassword } from "./userPassword";
 
 const invalidPassword = new InvalidParamFailure("password");

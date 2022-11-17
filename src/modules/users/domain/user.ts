@@ -1,6 +1,6 @@
 import { Success } from "../core/success";
 import { UserEmail } from "./userEmail";
-import { InvalidParamFailure } from "./userErrors";
+import { InvalidParamFailure } from "./userFailures";
 import { UserPassword } from "./userPassword";
 
 interface UserProps {

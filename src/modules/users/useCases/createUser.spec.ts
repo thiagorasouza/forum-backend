@@ -1,6 +1,9 @@
-import { Failure } from "../core/failure";
 import { Success } from "../core/success";
 import { CreateUserUseCase } from "./createUser";
+import {
+  EmailAlreadyRegisteredFailure,
+  UserNotFoundFailure,
+} from "./createUserFailures";
 import { CreateUserPresenter } from "./createUserPresenter";
 import {
   GetUserByEmailResponse,
@@ -11,7 +14,7 @@ import {
 const makeRepository = (): CreateUserRepository => {
   class CreateUserRepositoryMock implements CreateUserRepository {
     async getUserByEmail(): Promise<GetUserByEmailResponse> {
-      return new Failure<string>("User does not exist");
+      return new UserNotFoundFailure();
     }
   }
 
@@ -81,9 +84,7 @@ describe("CreateUserUseCase Test Suite", () => {
     };
     await sut.execute(request);
 
-    const emailAlreadyRegistered = new Failure<string>(
-      "Email already registered"
-    );
+    const emailAlreadyRegistered = new EmailAlreadyRegisteredFailure();
     expect(presenterSpy).toHaveBeenCalledWith(emailAlreadyRegistered);
   });
 });
