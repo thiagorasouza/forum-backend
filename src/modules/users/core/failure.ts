@@ -1,4 +1,4 @@
-import { Result } from "./resultRefactor";
+import { Result } from "./result";
 
 export class Failure<T> extends Result {
   public readonly ok = false;
