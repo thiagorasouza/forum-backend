@@ -1,6 +1,6 @@
-import { Failure } from "../core/failure";
 import { Success } from "../core/success";
 import { UserEmail } from "./userEmail";
+import { InvalidParamFailure } from "./userErrors";
 import { UserPassword } from "./userPassword";
 
 interface UserProps {
@@ -18,7 +18,7 @@ export class User {
 
   static create(
     userData: NotYetValidatedUserData
-  ): Failure<string> | Success<User> {
+  ): InvalidParamFailure | Success<User> {
     const userEmailResult = UserEmail.create(userData.email);
     if (!userEmailResult.ok) {
       return userEmailResult;

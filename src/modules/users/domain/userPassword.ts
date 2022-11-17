@@ -1,5 +1,6 @@
 import { Failure } from "../core/failure";
 import { Success } from "../core/success";
+import { InvalidParamFailure } from "./userErrors";
 
 export class UserPassword {
   private static minLength = 6;
@@ -32,7 +33,7 @@ export class UserPassword {
     password: string
   ): Failure<string> | Success<UserPassword> {
     if (!UserPassword.isValid(password)) {
-      return new Failure("Invalid password");
+      return new InvalidParamFailure("password");
     }
 
     return new Success(new UserPassword(password));

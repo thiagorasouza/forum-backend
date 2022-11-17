@@ -1,8 +1,8 @@
-import { Failure } from "../core/failure";
 import { Success } from "../core/success";
+import { InvalidParamFailure } from "./userErrors";
 import { UserPassword } from "./userPassword";
 
-const invalidPassword = new Failure("Invalid password");
+const invalidPassword = new InvalidParamFailure("password");
 
 describe("UserPassword Test Suite", () => {
   it("should fail when password is less than 6 characters", () => {

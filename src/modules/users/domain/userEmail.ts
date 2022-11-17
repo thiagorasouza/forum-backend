@@ -1,5 +1,6 @@
 import { Failure } from "../core/failure";
 import { Success } from "../core/success";
+import { InvalidParamFailure } from "./userErrors";
 
 export class UserEmail {
   // W3 Email Regex
@@ -20,7 +21,7 @@ export class UserEmail {
 
   public static create(email: string): Failure<string> | Success<UserEmail> {
     if (!UserEmail.isValid(email)) {
-      return new Failure<string>("Invalid email");
+      return new InvalidParamFailure("email");
     }
 
     return new Success<UserEmail>(new UserEmail(email));

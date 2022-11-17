@@ -1,7 +1,7 @@
-import { Failure } from "../core/failure";
 import { Success } from "../core/success";
 import { User } from "./user";
 import { UserEmail } from "./userEmail";
+import { InvalidParamFailure } from "./userErrors";
 import { UserPassword } from "./userPassword";
 
 describe("User Test Suite", () => {
@@ -36,7 +36,7 @@ describe("User Test Suite", () => {
   });
 
   it("should fail if email is not valid", () => {
-    const invalidEmail = new Failure("Invalid email");
+    const invalidEmail = new InvalidParamFailure("email");
     jest.spyOn(UserEmail, "create").mockReturnValueOnce(invalidEmail);
 
     const userData = {
@@ -49,7 +49,7 @@ describe("User Test Suite", () => {
   });
 
   it("should fail if password is not valid", () => {
-    const invalidPassword = new Failure("Invalid password");
+    const invalidPassword = new InvalidParamFailure("password");
     jest.spyOn(UserPassword, "create").mockReturnValueOnce(invalidPassword);
 
     const userData = {
