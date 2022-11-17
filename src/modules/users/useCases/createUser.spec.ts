@@ -1,13 +1,15 @@
 import { Result } from "../core/result";
 import { CreateUserUseCase } from "./createUser";
-import { UserRepository } from "./userRepository";
+import {
+  GetUserByEmailResponse,
+  UserModel,
+  UserRepository,
+} from "./userRepository";
 
 const makeUserRepositoryMock = (): UserRepository => {
   class UserRepositoryMock implements UserRepository {
-    async getUserByEmail(email: string): Promise<any> {
-      return Promise.resolve(
-        Promise.resolve(Result.fail("User does not exist"))
-      );
+    async getUserByEmail(email: string): Promise<GetUserByEmailResponse> {
+      return Result.fail<void>("User does not exist");
     }
   }
 
@@ -27,15 +29,42 @@ const makeSut = (): SutTypes => {
 };
 
 describe("CreateUserUseCase Test Suite", () => {
-  it("should check if email is already registered", () => {
+  it("should check if email is already registered", async () => {
     const { sut, userRepositoryMock } = makeSut();
+
     const getUserByEmailSpy = jest.spyOn(userRepositoryMock, "getUserByEmail");
     const request = {
       email: "valid_email",
       password: "valid_password",
     };
-    sut.execute(request);
+    await sut.execute(request);
+
     expect(getUserByEmailSpy).toHaveBeenCalledTimes(1);
     expect(getUserByEmailSpy).toHaveBeenCalledWith(request.email);
+  });
+
+  it("should fail if email is already registered", async () => {
+    const { sut, userRepositoryMock } = makeSut();
+
+    // const userDoesNotExist = Result.fail<void>("User does not exist");
+    const userExists = Result.succeed<UserModel>({
+      email: "valid_email",
+      password: "valid_password",
+    });
+
+    jest
+      .spyOn(userRepositoryMock, "getUserByEmail")
+      .mockReturnValueOnce(Promise.resolve(userExists));
+
+    const request = {
+      email: "valid_email",
+      password: "valid_password",
+    };
+    const result = await sut.execute(request);
+
+    const emailAlreadyRegistered = Result.fail<void>(
+      "Email already registered"
+    );
+    expect(result).toEqual(emailAlreadyRegistered);
   });
 });

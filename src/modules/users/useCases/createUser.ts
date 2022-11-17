@@ -1,3 +1,4 @@
+import { Result } from "../core/result";
 import { UserRepository } from "./userRepository";
 
 interface CreateUserRequest {
@@ -8,8 +9,13 @@ interface CreateUserRequest {
 export class CreateUserUseCase {
   constructor(private readonly userRepository: UserRepository) {}
 
-  execute(request: CreateUserRequest) {
+  async execute(request: CreateUserRequest) {
     const { email, password } = request;
-    this.userRepository.getUserByEmail(email);
+    const getUserByEmailResult = await this.userRepository.getUserByEmail(
+      email
+    );
+    if (getUserByEmailResult.ok) {
+      return Result.fail<void>("Email already registered");
+    }
   }
 }
