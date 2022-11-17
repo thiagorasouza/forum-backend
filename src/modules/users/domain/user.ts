@@ -1,24 +1,18 @@
 import { Success } from "../core/success";
 import { UserEmail } from "./userEmail";
 import { InvalidParamFailure } from "./userFailures";
+import { UserModel } from "./userModel";
 import { UserPassword } from "./userPassword";
 
-interface UserProps {
-  email: UserEmail;
-  password: UserPassword;
-}
-
-interface NotYetValidatedUserData {
+interface UserData {
   email: string;
   password: string;
 }
 
 export class User {
-  private constructor(private readonly props: UserProps) {}
+  private constructor(public readonly props: UserModel) {}
 
-  static create(
-    userData: NotYetValidatedUserData
-  ): InvalidParamFailure | Success<User> {
+  static create(userData: UserData): InvalidParamFailure | Success<User> {
     const userEmailResult = UserEmail.create(userData.email);
     if (!userEmailResult.ok) {
       return userEmailResult;

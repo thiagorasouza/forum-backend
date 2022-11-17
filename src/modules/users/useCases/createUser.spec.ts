@@ -1,6 +1,7 @@
 import { Success } from "../core/success";
 import { User } from "../domain/user";
 import { InvalidParamFailure } from "../domain/userFailures";
+import { UserModel } from "../domain/userModel";
 import { CreateUserUseCase } from "./createUser";
 import {
   EmailAlreadyRegisteredFailure,
@@ -9,12 +10,15 @@ import {
 import { CreateUserPresenter } from "./createUserPresenter";
 import {
   GetUserByEmailResponse,
-  UserModel,
   CreateUserRepository,
+  saveResponse,
 } from "./createUserRepository";
 
 const makeRepository = (): CreateUserRepository => {
   class CreateUserRepositoryMock implements CreateUserRepository {
+    async save(): Promise<saveResponse> {
+      return new Success<string>("User saved");
+    }
     async getUserByEmail(): Promise<GetUserByEmailResponse> {
       return new UserNotFoundFailure();
     }
@@ -52,10 +56,7 @@ const requestMock = {
   password: "valid_password",
 };
 
-const responseMock = {
-  email: "valid_email",
-  password: "valid_password",
-};
+const responseMock = {} as UserModel;
 
 describe("CreateUserUseCase Test Suite", () => {
   beforeEach(() => {
@@ -88,7 +89,7 @@ describe("CreateUserUseCase Test Suite", () => {
     expect(presenterSpy).toHaveBeenCalledWith(emailAlreadyRegistered);
   });
 
-  it("should try to build user entity", async () => {
+  it("should create User entity with correct values", async () => {
     const { sut } = makeSut();
 
     const userCreateSpy = jest.spyOn(User, "create");
@@ -99,7 +100,7 @@ describe("CreateUserUseCase Test Suite", () => {
     expect(userCreateSpy).toHaveBeenCalledWith(requestMock);
   });
 
-  it("should fail if building user entity fails", async () => {
+  it("should fail if building User entity fails", async () => {
     const { sut, presenter } = makeSut();
 
     const invalidParamFailure = new InvalidParamFailure("any");
@@ -110,5 +111,18 @@ describe("CreateUserUseCase Test Suite", () => {
     await sut.execute(requestMock);
 
     expect(presenterSpy).toHaveBeenCalledWith(invalidParamFailure);
+  });
+
+  it("should save user if email does not exist and User entity is created", async () => {
+    const { sut, repository } = makeSut();
+
+    const userMock = { props: {} } as User;
+    jest.spyOn(User, "create").mockReturnValueOnce(new Success<User>(userMock));
+    const saveSpy = jest.spyOn(repository, "save");
+
+    await sut.execute(requestMock);
+
+    expect(saveSpy).toHaveBeenCalledTimes(1);
+    expect(saveSpy).toHaveBeenCalledWith(userMock.props);
   });
 });
