@@ -141,4 +141,17 @@ describe("CreateUserUseCase Test Suite", () => {
 
     expect(presenterSpy).toHaveBeenCalledWith(new ServerFailure());
   });
+
+  it("should succeed if everything went well", async () => {
+    const { sut, presenter } = makeSut();
+
+    const userMock = { props: {} } as User;
+    jest.spyOn(User, "create").mockReturnValueOnce(new Success<User>(userMock));
+    const presenterSpy = jest.spyOn(presenter, "execute");
+
+    await sut.execute(requestMock);
+
+    const userCreated = new Success<string>("User created");
+    expect(presenterSpy).toHaveBeenCalledWith(userCreated);
+  });
 });

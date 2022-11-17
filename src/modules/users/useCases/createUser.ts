@@ -31,11 +31,11 @@ export class CreateUserUseCase {
 
       const userModel = userResult.value.props;
       await this.repository.save(userModel);
+
+      return this.toPresenter(new Success<string>("User created"));
     } catch (error) {
       return this.toPresenter(new ServerFailure());
     }
-
-    return this.toPresenter(new Success<string>("User created"));
   }
 
   private toPresenter(response: CreateUserResponse) {
