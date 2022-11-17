@@ -1,6 +1,6 @@
 import { Result } from "./resultRefactor";
 
-export class Success<T> extends Result<T> {
+export class Success<T> extends Result {
   public readonly ok = true;
 
   public constructor(public readonly value: T) {

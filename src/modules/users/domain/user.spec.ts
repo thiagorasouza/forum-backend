@@ -1,4 +1,5 @@
-import { Result } from "../core/result";
+import { Failure } from "../core/failure";
+import { Success } from "../core/success";
 import { User } from "./user";
 import { UserEmail } from "./userEmail";
 import { UserPassword } from "./userPassword";
@@ -35,7 +36,7 @@ describe("User Test Suite", () => {
   });
 
   it("should fail if email is not valid", () => {
-    const invalidEmail = Result.invalidParam<UserEmail>("email");
+    const invalidEmail = new Failure("Invalid email");
     jest.spyOn(UserEmail, "create").mockReturnValueOnce(invalidEmail);
 
     const userData = {
@@ -48,7 +49,7 @@ describe("User Test Suite", () => {
   });
 
   it("should fail if password is not valid", () => {
-    const invalidPassword = Result.invalidParam<UserPassword>("password");
+    const invalidPassword = new Failure("Invalid password");
     jest.spyOn(UserPassword, "create").mockReturnValueOnce(invalidPassword);
 
     const userData = {
@@ -61,10 +62,10 @@ describe("User Test Suite", () => {
   });
 
   it("should return User instance if data is valid", () => {
-    const validEmail = Result.succeed<UserEmail>({
+    const validEmail = new Success<UserEmail>({
       value: "valid_email@email.com",
     } as UserEmail);
-    const validPassword = Result.succeed<UserPassword>({
+    const validPassword = new Success<UserPassword>({
       value: "valid_password",
     } as UserPassword);
 
@@ -75,7 +76,7 @@ describe("User Test Suite", () => {
       email: "valid_email@email.com",
       password: "valid_password",
     };
-    const result = User.create(userData);
+    const result = User.create(userData) as Success<User>;
 
     expect(result.ok).toBe(true);
     expect(result.value).toBeInstanceOf(User);

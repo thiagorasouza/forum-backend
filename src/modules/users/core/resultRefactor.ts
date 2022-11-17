@@ -1,4 +1,3 @@
-export abstract class Result<T> {
+export abstract class Result {
   protected abstract ok: boolean;
-  protected abstract value: T;
 }

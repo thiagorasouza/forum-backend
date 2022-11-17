@@ -8,7 +8,7 @@ describe("Failure Test Suite", () => {
 
   it("should hold a value", () => {
     const result = new Failure<string>("any");
-    expect(result.value).toBe("any");
+    expect(result.error).toBe("any");
   });
 
   it("should be closed for modifications after object creation", () => {

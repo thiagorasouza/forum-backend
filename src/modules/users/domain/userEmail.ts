@@ -1,4 +1,5 @@
-import { Result } from "../core/result";
+import { Failure } from "../core/failure";
+import { Success } from "../core/success";
 
 export class UserEmail {
   // W3 Email Regex
@@ -17,11 +18,11 @@ export class UserEmail {
     return UserEmail.REGEX.test(email);
   }
 
-  public static create(email: string): Result<UserEmail> {
+  public static create(email: string): Failure<string> | Success<UserEmail> {
     if (!UserEmail.isValid(email)) {
-      return Result.invalidParam<UserEmail>("email");
+      return new Failure<string>("Invalid email");
     }
 
-    return Result.succeed<UserEmail>(new UserEmail(email));
+    return new Success<UserEmail>(new UserEmail(email));
   }
 }

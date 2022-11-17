@@ -1,4 +1,5 @@
-import { Result } from "../core/result";
+import { Failure } from "../core/failure";
+import { Success } from "../core/success";
 
 export class UserPassword {
   private static minLength = 6;
@@ -27,11 +28,13 @@ export class UserPassword {
     return true;
   }
 
-  public static create(password: string): Result<UserPassword> {
+  public static create(
+    password: string
+  ): Failure<string> | Success<UserPassword> {
     if (!UserPassword.isValid(password)) {
-      return Result.invalidParam<UserPassword>("password");
+      return new Failure("Invalid password");
     }
 
-    return Result.succeed<UserPassword>(new UserPassword(password));
+    return new Success(new UserPassword(password));
   }
 }

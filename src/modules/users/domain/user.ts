@@ -1,4 +1,5 @@
-import { Result } from "../core/result";
+import { Failure } from "../core/failure";
+import { Success } from "../core/success";
 import { UserEmail } from "./userEmail";
 import { UserPassword } from "./userPassword";
 
@@ -12,12 +13,12 @@ interface NotYetValidatedUserData {
   password: string;
 }
 
-type UserResult = Result<User> | Result<UserEmail> | Result<UserPassword>;
-
 export class User {
   private constructor(private readonly props: UserProps) {}
 
-  static create(userData: NotYetValidatedUserData): UserResult {
+  static create(
+    userData: NotYetValidatedUserData
+  ): Failure<string> | Success<User> {
     const userEmailResult = UserEmail.create(userData.email);
     if (!userEmailResult.ok) {
       return userEmailResult;
@@ -33,6 +34,6 @@ export class User {
       password: userPasswordResult.value,
     };
 
-    return Result.succeed<User>(new User(validUserProps));
+    return new Success<User>(new User(validUserProps));
   }
 }
