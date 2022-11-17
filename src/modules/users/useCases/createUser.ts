@@ -6,16 +6,20 @@ interface CreateUserRequest {
   password: string;
 }
 
+type CreateUserUseCaseReturn = Result<void> | Result<string>;
+
 export class CreateUserUseCase {
   constructor(private readonly userRepository: UserRepository) {}
 
-  async execute(request: CreateUserRequest) {
+  async execute(request: CreateUserRequest): Promise<CreateUserUseCaseReturn> {
     const { email, password } = request;
     const getUserByEmailResult = await this.userRepository.getUserByEmail(
       email
     );
     if (getUserByEmailResult.ok) {
-      return Result.fail<void>("Email already registered");
+      return Result.emailAlreadyRegistered();
     }
+
+    return Result.succeed<string>("User created");
   }
 }
