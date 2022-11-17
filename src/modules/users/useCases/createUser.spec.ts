@@ -1,38 +1,55 @@
 import { Result } from "../core/result";
-import { CreateUserUseCase } from "./createUser";
+import { CreateUserResponse, CreateUserUseCase } from "./createUser";
+import { CreateUserPresenter } from "./createUserPresenter";
 import {
   GetUserByEmailResponse,
   UserModel,
-  UserRepository,
-} from "./userRepository";
+  CreateUserRepository,
+} from "./createUserRepository";
 
-const makeUserRepositoryMock = (): UserRepository => {
-  class UserRepositoryMock implements UserRepository {
+const makeRepository = (): CreateUserRepository => {
+  class CreateUserRepositoryMock implements CreateUserRepository {
     async getUserByEmail(email: string): Promise<GetUserByEmailResponse> {
       return Result.fail<void>("User does not exist");
     }
   }
 
-  return new UserRepositoryMock();
+  return new CreateUserRepositoryMock();
+};
+
+const makePresenter = (): CreateUserPresenter => {
+  class CreateUserPresenteMock implements CreateUserPresenter {
+    execute(response: CreateUserResponse): void {
+      return;
+    }
+  }
+
+  return new CreateUserPresenteMock();
 };
 
 interface SutTypes {
   sut: CreateUserUseCase;
-  userRepositoryMock: UserRepository;
+  repository: CreateUserRepository;
+  presenter: CreateUserPresenter;
 }
 
 const makeSut = (): SutTypes => {
-  const userRepositoryMock = makeUserRepositoryMock();
-  const sut = new CreateUserUseCase(userRepositoryMock);
+  const repository = makeRepository();
+  const presenter = makePresenter();
+  const sut = new CreateUserUseCase(repository, presenter);
 
-  return { sut, userRepositoryMock };
+  return { sut, repository, presenter };
 };
 
 describe("CreateUserUseCase Test Suite", () => {
-  it("should check if email is already registered", async () => {
-    const { sut, userRepositoryMock } = makeSut();
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
-    const getUserByEmailSpy = jest.spyOn(userRepositoryMock, "getUserByEmail");
+  it("should check if email is already registered", async () => {
+    const { sut, repository } = makeSut();
+
+    const getUserByEmailSpy = jest.spyOn(repository, "getUserByEmail");
     const request = {
       email: "valid_email",
       password: "valid_password",
@@ -44,7 +61,7 @@ describe("CreateUserUseCase Test Suite", () => {
   });
 
   it("should fail if email is already registered", async () => {
-    const { sut, userRepositoryMock } = makeSut();
+    const { sut, repository, presenter } = makeSut();
 
     // const userDoesNotExist = Result.fail<void>("User does not exist");
     const userExists = Result.succeed<UserModel>({
@@ -53,18 +70,17 @@ describe("CreateUserUseCase Test Suite", () => {
     });
 
     jest
-      .spyOn(userRepositoryMock, "getUserByEmail")
+      .spyOn(repository, "getUserByEmail")
       .mockReturnValueOnce(Promise.resolve(userExists));
+    const presenterSpy = jest.spyOn(presenter, "execute");
 
     const request = {
       email: "valid_email",
       password: "valid_password",
     };
-    const result = await sut.execute(request);
+    await sut.execute(request);
 
-    const emailAlreadyRegistered = Result.fail<void>(
-      "Email already registered"
-    );
-    expect(result).toEqual(emailAlreadyRegistered);
+    const emailAlreadyRegistered = Result.emailAlreadyRegistered();
+    expect(presenterSpy).toHaveBeenCalledWith(emailAlreadyRegistered);
   });
 });

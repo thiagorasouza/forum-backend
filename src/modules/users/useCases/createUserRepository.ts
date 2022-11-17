@@ -7,6 +7,6 @@ export interface UserModel {
 
 export type GetUserByEmailResponse = Result<void> | Result<UserModel>;
 
-export interface UserRepository {
+export interface CreateUserRepository {
   getUserByEmail(email: string): Promise<GetUserByEmailResponse>;
 }

@@ -1,25 +1,27 @@
 import { Result } from "../core/result";
-import { UserRepository } from "./userRepository";
+import { CreateUserPresenter } from "./createUserPresenter";
+import { CreateUserRepository } from "./createUserRepository";
 
-interface CreateUserRequest {
+export interface CreateUserRequest {
   email: string;
   password: string;
 }
 
-type CreateUserUseCaseReturn = Result<void> | Result<string>;
+export type CreateUserResponse = Result<void> | Result<string>;
 
 export class CreateUserUseCase {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    private readonly repository: CreateUserRepository,
+    private readonly presenter: CreateUserPresenter
+  ) {}
 
-  async execute(request: CreateUserRequest): Promise<CreateUserUseCaseReturn> {
+  async execute(request: CreateUserRequest): Promise<void> {
     const { email, password } = request;
-    const getUserByEmailResult = await this.userRepository.getUserByEmail(
-      email
-    );
+    const getUserByEmailResult = await this.repository.getUserByEmail(email);
     if (getUserByEmailResult.ok) {
-      return Result.emailAlreadyRegistered();
+      return this.presenter.execute(Result.emailAlreadyRegistered());
     }
 
-    return Result.succeed<string>("User created");
+    return this.presenter.execute(Result.succeed<string>("User created"));
   }
 }
