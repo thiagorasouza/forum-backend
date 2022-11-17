@@ -1,4 +1,5 @@
 import { Success } from "../core/success";
+import { User } from "../domain/user";
 import { CreateUserUseCase } from "./createUser";
 import {
   EmailAlreadyRegisteredFailure,
@@ -45,46 +46,55 @@ const makeSut = (): SutTypes => {
   return { sut, repository, presenter };
 };
 
+const requestMock = {
+  email: "valid_email",
+  password: "valid_password",
+};
+
+const responseMock = {
+  email: "valid_email",
+  password: "valid_password",
+};
+
 describe("CreateUserUseCase Test Suite", () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    // jest.clearAllMocks();
   });
 
   it("should check if email is already registered", async () => {
     const { sut, repository } = makeSut();
 
     const getUserByEmailSpy = jest.spyOn(repository, "getUserByEmail");
-    const request = {
-      email: "valid_email",
-      password: "valid_password",
-    };
-    await sut.execute(request);
+    await sut.execute(requestMock);
 
     expect(getUserByEmailSpy).toHaveBeenCalledTimes(1);
-    expect(getUserByEmailSpy).toHaveBeenCalledWith(request.email);
+    expect(getUserByEmailSpy).toHaveBeenCalledWith(requestMock.email);
   });
 
   it("should fail if email is already registered", async () => {
     const { sut, repository, presenter } = makeSut();
 
-    // const userDoesNotExist = Result.fail<void>("User does not exist");
-    const userExists = new Success<UserModel>({
-      email: "valid_email",
-      password: "valid_password",
-    });
+    const userExists = new Success<UserModel>(responseMock);
 
     jest
       .spyOn(repository, "getUserByEmail")
       .mockReturnValueOnce(Promise.resolve(userExists));
     const presenterSpy = jest.spyOn(presenter, "execute");
 
-    const request = {
-      email: "valid_email",
-      password: "valid_password",
-    };
-    await sut.execute(request);
+    await sut.execute(requestMock);
 
     const emailAlreadyRegistered = new EmailAlreadyRegisteredFailure();
     expect(presenterSpy).toHaveBeenCalledWith(emailAlreadyRegistered);
+  });
+
+  it("should try to build user entity", async () => {
+    const { sut } = makeSut();
+
+    const userCreateSpy = jest.spyOn(User, "create");
+
+    await sut.execute(requestMock);
+
+    expect(userCreateSpy).toHaveBeenCalledTimes(1);
+    expect(userCreateSpy).toHaveBeenCalledWith(requestMock);
   });
 });
