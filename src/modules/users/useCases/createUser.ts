@@ -4,6 +4,7 @@ import { EmailAlreadyRegisteredFailure } from "./createUserFailures";
 import { CreateUserPresenter } from "./createUserPresenter";
 import { CreateUserRepository } from "./createUserRepository";
 import { CreateUserRequest } from "./createUserRequest";
+import { CreateUserResponse } from "./createUserResponse";
 
 export class CreateUserUseCase {
   constructor(
@@ -13,13 +14,21 @@ export class CreateUserUseCase {
 
   async execute(request: CreateUserRequest): Promise<void> {
     const { email } = request;
+
     const getUserByEmailResult = await this.repository.getUserByEmail(email);
     if (getUserByEmailResult.ok) {
-      return this.presenter.execute(new EmailAlreadyRegisteredFailure());
+      return this.toPresenter(new EmailAlreadyRegisteredFailure());
     }
 
-    User.create(request);
+    const userResult = User.create(request);
+    if (!userResult.ok) {
+      return this.toPresenter(userResult);
+    }
 
-    return this.presenter.execute(new Success<string>("User created"));
+    return this.toPresenter(new Success<string>("User created"));
+  }
+
+  private toPresenter(response: CreateUserResponse) {
+    this.presenter.execute(response);
   }
 }

@@ -1,5 +1,6 @@
 import { Success } from "../core/success";
 import { User } from "../domain/user";
+import { InvalidParamFailure } from "../domain/userFailures";
 import { CreateUserUseCase } from "./createUser";
 import {
   EmailAlreadyRegisteredFailure,
@@ -96,5 +97,18 @@ describe("CreateUserUseCase Test Suite", () => {
 
     expect(userCreateSpy).toHaveBeenCalledTimes(1);
     expect(userCreateSpy).toHaveBeenCalledWith(requestMock);
+  });
+
+  it("should fail if building user entity fails", async () => {
+    const { sut, presenter } = makeSut();
+
+    const invalidParamFailure = new InvalidParamFailure("any");
+
+    jest.spyOn(User, "create").mockReturnValueOnce(invalidParamFailure);
+    const presenterSpy = jest.spyOn(presenter, "execute");
+
+    await sut.execute(requestMock);
+
+    expect(presenterSpy).toHaveBeenCalledWith(invalidParamFailure);
   });
 });
