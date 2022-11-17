@@ -4,6 +4,7 @@ import { InvalidParamFailure } from "../domain/userFailures";
 import { UserModel } from "../domain/userModel";
 import { CreateUserUseCase } from "./createUser";
 import {
+  ServerFailure,
   EmailAlreadyRegisteredFailure,
   UserNotFoundFailure,
 } from "./createUserFailures";
@@ -124,5 +125,20 @@ describe("CreateUserUseCase Test Suite", () => {
 
     expect(saveSpy).toHaveBeenCalledTimes(1);
     expect(saveSpy).toHaveBeenCalledWith(userMock.props);
+  });
+
+  it("should fail if saving user throws an error", async () => {
+    const { sut, repository, presenter } = makeSut();
+
+    const userMock = { props: {} } as User;
+    jest.spyOn(User, "create").mockReturnValueOnce(new Success<User>(userMock));
+    jest
+      .spyOn(repository, "save")
+      .mockReturnValueOnce(Promise.reject(new Error()));
+    const presenterSpy = jest.spyOn(presenter, "execute");
+
+    await sut.execute(requestMock);
+
+    expect(presenterSpy).toHaveBeenCalledWith(new ServerFailure());
   });
 });

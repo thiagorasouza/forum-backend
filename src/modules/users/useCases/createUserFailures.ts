@@ -11,3 +11,9 @@ export class EmailAlreadyRegisteredFailure extends Failure<string> {
     super("Email already registered");
   }
 }
+
+export class ServerFailure extends Failure<string> {
+  constructor() {
+    super("Unknown server error");
+  }
+}

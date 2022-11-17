@@ -1,6 +1,9 @@
 import { Success } from "../core/success";
 import { User } from "../domain/user";
-import { EmailAlreadyRegisteredFailure } from "./createUserFailures";
+import {
+  ServerFailure,
+  EmailAlreadyRegisteredFailure,
+} from "./createUserFailures";
 import { CreateUserPresenter } from "./createUserPresenter";
 import { CreateUserRepository } from "./createUserRepository";
 import { CreateUserRequest } from "./createUserRequest";
@@ -15,18 +18,22 @@ export class CreateUserUseCase {
   async execute(request: CreateUserRequest): Promise<void> {
     const { email } = request;
 
-    const getUserByEmailResult = await this.repository.getUserByEmail(email);
-    if (getUserByEmailResult.ok) {
-      return this.toPresenter(new EmailAlreadyRegisteredFailure());
-    }
+    try {
+      const getUserByEmailResult = await this.repository.getUserByEmail(email);
+      if (getUserByEmailResult.ok) {
+        return this.toPresenter(new EmailAlreadyRegisteredFailure());
+      }
 
-    const userResult = User.create(request);
-    if (!userResult.ok) {
-      return this.toPresenter(userResult);
-    }
+      const userResult = User.create(request);
+      if (!userResult.ok) {
+        return this.toPresenter(userResult);
+      }
 
-    const userModel = userResult.value.props;
-    await this.repository.save(userModel);
+      const userModel = userResult.value.props;
+      await this.repository.save(userModel);
+    } catch (error) {
+      return this.toPresenter(new ServerFailure());
+    }
 
     return this.toPresenter(new Success<string>("User created"));
   }
