@@ -1,4 +1,4 @@
-import { Result } from "../other/result";
+import { Result } from "../core/result";
 
 export class UserPassword {
   private static minLength = 6;

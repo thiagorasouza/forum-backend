@@ -1,4 +1,4 @@
-import { Result } from "../other/result";
+import { Result } from "../core/result";
 import { UserPassword } from "./userPassword";
 
 describe("UserPassword Test Suite", () => {

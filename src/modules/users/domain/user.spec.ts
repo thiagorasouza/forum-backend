@@ -1,4 +1,4 @@
-import { Result } from "../other/result";
+import { Result } from "../core/result";
 import { User } from "./user";
 import { UserEmail } from "./userEmail";
 import { UserPassword } from "./userPassword";

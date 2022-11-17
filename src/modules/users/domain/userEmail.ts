@@ -1,4 +1,4 @@
-import { Result } from "../other/result";
+import { Result } from "../core/result";
 
 export class UserEmail {
   // W3 Email Regex
