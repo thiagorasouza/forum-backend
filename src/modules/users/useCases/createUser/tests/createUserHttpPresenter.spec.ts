@@ -1,4 +1,6 @@
 import { Success } from "../../../core/success";
+import { InvalidParamFailure } from "../../../domain/userFailures";
+import { EmailAlreadyRegisteredFailure } from "../createUserFailures";
 import { CreateUserHttpPresenter } from "../createUserHttpPresenter";
 import { CreateUserHttpView } from "../createUserHttpView";
 
@@ -41,7 +43,9 @@ const makeSut = (): SutTypes => {
   return { sut, view };
 };
 
-const successResponseMock = new Success<string>("User created");
+const successMock = new Success<string>("success");
+const emailAlreadyRegisteredMock = new EmailAlreadyRegisteredFailure();
+const invalidParamMock = new InvalidParamFailure("any");
 
 describe("CreateUserHttpPresenter", () => {
   it("should display 200 for success case", () => {
@@ -49,10 +53,36 @@ describe("CreateUserHttpPresenter", () => {
 
     const viewSpy = jest.spyOn(view, "display");
 
-    sut.format(successResponseMock);
+    sut.format(successMock);
 
     expect(viewSpy).toHaveBeenCalledWith({
       statusCode: 200,
+    });
+  });
+
+  it("should display 400 if email is already registered", () => {
+    const { sut, view } = makeSut();
+
+    const viewSpy = jest.spyOn(view, "display");
+
+    sut.format(emailAlreadyRegisteredMock);
+
+    expect(viewSpy).toHaveBeenCalledWith({
+      statusCode: 400,
+      body: emailAlreadyRegisteredMock.error,
+    });
+  });
+
+  it("should display 400 if params are not valid", () => {
+    const { sut, view } = makeSut();
+
+    const viewSpy = jest.spyOn(view, "display");
+
+    sut.format(invalidParamMock);
+
+    expect(viewSpy).toHaveBeenCalledWith({
+      statusCode: 400,
+      body: invalidParamMock.error,
     });
   });
 });
