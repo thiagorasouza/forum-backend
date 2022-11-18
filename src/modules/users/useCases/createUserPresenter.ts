@@ -1,5 +1,5 @@
-import { CreateUserResponse } from "./createUserResponse";
+import { CreateUserResponseModel } from "./createUserResponse";
 
 export interface CreateUserPresenter {
-  execute(response: CreateUserResponse): void;
+  execute(response: CreateUserResponseModel): void;
 }

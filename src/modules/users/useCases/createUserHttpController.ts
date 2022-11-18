@@ -1,25 +1,22 @@
 import { Sanitizer } from "../../shared/sanitizer";
-import { CreateUserRequest } from "./createUserRequest";
-
-interface CreateUserDTO {
-  email: string;
-  password: string;
-}
-
-interface HttpRequest {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  body: CreateUserDTO;
-}
+import { CreateUserUseCase } from "./createUser";
+import { CreateUserHttpRequest } from "./createUserHttpRequest";
+import { CreateUserRequestModel } from "./createUserRequest";
 
 export class CreateUserHttpController {
-  constructor(private readonly sanitizer: Sanitizer) {}
+  constructor(
+    private readonly useCase: CreateUserUseCase,
+    private readonly sanitizer: Sanitizer
+  ) {}
 
-  async handle(request: HttpRequest): Promise<void> {
+  async handle(request: CreateUserHttpRequest): Promise<void> {
     const { email, password } = request.body;
 
-    const createUserRequest: CreateUserRequest = {
+    const createUserRequest: CreateUserRequestModel = {
       email: this.sanitizer.sanitize(email),
       password: this.sanitizer.sanitize(password),
     };
+
+    this.useCase.execute(createUserRequest);
   }
 }

@@ -6,8 +6,8 @@ import {
 } from "./createUserFailures";
 import { CreateUserPresenter } from "./createUserPresenter";
 import { CreateUserRepository } from "./createUserRepository";
-import { CreateUserRequest } from "./createUserRequest";
-import { CreateUserResponse } from "./createUserResponse";
+import { CreateUserRequestModel } from "./createUserRequest";
+import { CreateUserResponseModel } from "./createUserResponse";
 
 export class CreateUserUseCase {
   constructor(
@@ -15,7 +15,7 @@ export class CreateUserUseCase {
     private readonly presenter: CreateUserPresenter
   ) {}
 
-  async execute(request: CreateUserRequest): Promise<void> {
+  async execute(request: CreateUserRequestModel): Promise<void> {
     const { email } = request;
 
     try {
@@ -38,7 +38,7 @@ export class CreateUserUseCase {
     }
   }
 
-  private toPresenter(response: CreateUserResponse) {
+  private toPresenter(response: CreateUserResponseModel) {
     this.presenter.execute(response);
   }
 }
