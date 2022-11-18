@@ -39,6 +39,6 @@ export class CreateUserUseCase {
   }
 
   private toPresenter(response: CreateUserResponseModel) {
-    this.presenter.execute(response);
+    this.presenter.format(response);
   }
 }

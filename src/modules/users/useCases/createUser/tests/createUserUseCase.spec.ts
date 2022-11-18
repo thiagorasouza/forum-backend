@@ -34,7 +34,7 @@ describe("CreateUserUseCase Test Suite", () => {
     jest
       .spyOn(repository, "getByEmail")
       .mockReturnValueOnce(Promise.resolve(userExists));
-    const presenterSpy = jest.spyOn(presenter, "execute");
+    const presenterSpy = jest.spyOn(presenter, "format");
 
     await sut.execute(requestMock);
 
@@ -59,7 +59,7 @@ describe("CreateUserUseCase Test Suite", () => {
     const invalidParamFailure = new InvalidParamFailure("any");
 
     jest.spyOn(User, "create").mockReturnValueOnce(invalidParamFailure);
-    const presenterSpy = jest.spyOn(presenter, "execute");
+    const presenterSpy = jest.spyOn(presenter, "format");
 
     await sut.execute(requestMock);
 
@@ -87,7 +87,7 @@ describe("CreateUserUseCase Test Suite", () => {
     jest
       .spyOn(repository, "save")
       .mockReturnValueOnce(Promise.reject(new Error()));
-    const presenterSpy = jest.spyOn(presenter, "execute");
+    const presenterSpy = jest.spyOn(presenter, "format");
 
     await sut.execute(requestMock);
 
@@ -99,7 +99,7 @@ describe("CreateUserUseCase Test Suite", () => {
 
     const userMock = { props: {} } as User;
     jest.spyOn(User, "create").mockReturnValueOnce(new Success<User>(userMock));
-    const presenterSpy = jest.spyOn(presenter, "execute");
+    const presenterSpy = jest.spyOn(presenter, "format");
 
     await sut.execute(requestMock);
 

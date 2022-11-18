@@ -23,7 +23,7 @@ const makeRepository = (): CreateUserRepository => {
 
 const makePresenter = (): CreateUserPresenter => {
   class CreateUserPresenteMock implements CreateUserPresenter {
-    execute(): void {
+    format(): void {
       return;
     }
   }
