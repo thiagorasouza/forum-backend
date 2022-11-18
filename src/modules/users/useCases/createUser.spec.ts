@@ -9,18 +9,14 @@ import {
   UserNotFoundFailure,
 } from "./createUserFailures";
 import { CreateUserPresenter } from "./createUserPresenter";
-import {
-  GetUserByEmailResponse,
-  CreateUserRepository,
-  saveResponse,
-} from "./createUserRepository";
+import { CreateUserRepository, saveResponse } from "./createUserRepository";
 
 const makeRepository = (): CreateUserRepository => {
   class CreateUserRepositoryMock implements CreateUserRepository {
     async save(): Promise<saveResponse> {
       return new Success<string>("User saved");
     }
-    async getUserByEmail(): Promise<GetUserByEmailResponse> {
+    async getUserByEmail(): Promise<UserNotFoundFailure | Success<UserModel>> {
       return new UserNotFoundFailure();
     }
   }
