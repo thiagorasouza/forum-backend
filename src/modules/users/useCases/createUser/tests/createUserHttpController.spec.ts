@@ -1,6 +1,6 @@
-import { Sanitizer } from "../../shared/sanitizer";
-import { CreateUserUseCase } from "./createUser";
-import { CreateUserHttpController } from "./createUserHttpController";
+import { Sanitizer } from "../../../../shared/sanitizer";
+import { CreateUserUseCase } from "../createUserUseCase";
+import { CreateUserHttpController } from "../createUserHttpController";
 import { makeCreateUserUseCase } from "./createUserMock";
 
 const makeSanitizer = (): Sanitizer => {

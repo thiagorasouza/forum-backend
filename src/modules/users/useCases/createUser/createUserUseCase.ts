@@ -1,13 +1,13 @@
-import { Success } from "../core/success";
-import { User } from "../domain/user";
+import { Success } from "../../core/success";
+import { User } from "../../domain/user";
 import {
   ServerFailure,
   EmailAlreadyRegisteredFailure,
 } from "./createUserFailures";
 import { CreateUserPresenter } from "./createUserPresenter";
 import { CreateUserRepository } from "./createUserRepository";
-import { CreateUserRequestModel } from "./createUserRequest";
-import { CreateUserResponseModel } from "./createUserResponse";
+import { CreateUserRequestModel } from "./createUserRequestModel";
+import { CreateUserResponseModel } from "./createUserResponseModel";
 
 export class CreateUserUseCase {
   constructor(

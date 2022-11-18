@@ -1,11 +1,11 @@
-import { Success } from "../core/success";
-import { User } from "../domain/user";
-import { InvalidParamFailure } from "../domain/userFailures";
-import { UserModel } from "../domain/userModel";
+import { Success } from "../../../core/success";
+import { User } from "../../../domain/user";
+import { InvalidParamFailure } from "../../../domain/userFailures";
+import { UserModel } from "../../../domain/userModel";
 import {
   ServerFailure,
   EmailAlreadyRegisteredFailure,
-} from "./createUserFailures";
+} from "../createUserFailures";
 import { makeCreateUserUseCase as makeSut } from "./createUserMock";
 
 const requestMock = {

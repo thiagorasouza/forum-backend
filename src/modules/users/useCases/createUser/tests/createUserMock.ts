@@ -1,12 +1,12 @@
-import { Success } from "../core/success";
-import { CreateUserUseCase } from "./createUser";
-import { UserNotFoundFailure } from "./createUserFailures";
-import { CreateUserPresenter } from "./createUserPresenter";
+import { Success } from "../../../core/success";
+import { CreateUserUseCase } from "../createUserUseCase";
+import { UserNotFoundFailure } from "../createUserFailures";
+import { CreateUserPresenter } from "../createUserPresenter";
 import {
   CreateUserRepository,
   GetByEmailResponse,
   SaveResponse,
-} from "./createUserRepository";
+} from "../createUserRepository";
 
 const makeRepository = (): CreateUserRepository => {
   class CreateUserRepositoryMock implements CreateUserRepository {

@@ -1,7 +1,7 @@
-import { Sanitizer } from "../../shared/sanitizer";
-import { CreateUserUseCase } from "./createUser";
+import { Sanitizer } from "../../../shared/sanitizer";
+import { CreateUserUseCase } from "./createUserUseCase";
 import { CreateUserHttpRequest } from "./createUserHttpRequest";
-import { CreateUserRequestModel } from "./createUserRequest";
+import { CreateUserRequestModel } from "./createUserRequestModel";
 
 export class CreateUserHttpController {
   constructor(
