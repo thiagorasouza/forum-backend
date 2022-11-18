@@ -6,7 +6,7 @@ import {
   ServerFailure,
   EmailAlreadyRegisteredFailure,
 } from "../createUserFailures";
-import { makeCreateUserUseCase as makeSut } from "./createUserMock";
+import { makeCreateUserUseCase as makeSut } from "./createUserUseCase.mock";
 
 const requestMock = {
   email: "valid_email",

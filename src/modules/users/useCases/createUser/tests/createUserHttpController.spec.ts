@@ -1,7 +1,7 @@
 import { Sanitizer } from "../../../../shared/sanitizer";
 import { CreateUserUseCase } from "../createUserUseCase";
 import { CreateUserHttpController } from "../createUserHttpController";
-import { makeCreateUserUseCase } from "./createUserMock";
+import { makeCreateUserUseCase } from "./createUserUseCase.mock";
 
 const makeSanitizer = (): Sanitizer => {
   class SanitizerMock implements Sanitizer {
