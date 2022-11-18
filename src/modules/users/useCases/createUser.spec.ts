@@ -9,14 +9,18 @@ import {
   UserNotFoundFailure,
 } from "./createUserFailures";
 import { CreateUserPresenter } from "./createUserPresenter";
-import { CreateUserRepository, saveResponse } from "./createUserRepository";
+import {
+  CreateUserRepository,
+  GetByEmailResponse,
+  SaveResponse,
+} from "./createUserRepository";
 
 const makeRepository = (): CreateUserRepository => {
   class CreateUserRepositoryMock implements CreateUserRepository {
-    async save(): Promise<saveResponse> {
+    async save(): Promise<SaveResponse> {
       return new Success<string>("User saved");
     }
-    async getUserByEmail(): Promise<UserNotFoundFailure | Success<UserModel>> {
+    async getByEmail(): Promise<GetByEmailResponse> {
       return new UserNotFoundFailure();
     }
   }
@@ -63,11 +67,11 @@ describe("CreateUserUseCase Test Suite", () => {
   it("should check if email is already registered", async () => {
     const { sut, repository } = makeSut();
 
-    const getUserByEmailSpy = jest.spyOn(repository, "getUserByEmail");
+    const getByEmail = jest.spyOn(repository, "getByEmail");
     await sut.execute(requestMock);
 
-    expect(getUserByEmailSpy).toHaveBeenCalledTimes(1);
-    expect(getUserByEmailSpy).toHaveBeenCalledWith(requestMock.email);
+    expect(getByEmail).toHaveBeenCalledTimes(1);
+    expect(getByEmail).toHaveBeenCalledWith(requestMock.email);
   });
 
   it("should fail if email is already registered", async () => {
@@ -76,7 +80,7 @@ describe("CreateUserUseCase Test Suite", () => {
     const userExists = new Success<UserModel>(responseMock);
 
     jest
-      .spyOn(repository, "getUserByEmail")
+      .spyOn(repository, "getByEmail")
       .mockReturnValueOnce(Promise.resolve(userExists));
     const presenterSpy = jest.spyOn(presenter, "execute");
 

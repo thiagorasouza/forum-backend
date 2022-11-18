@@ -19,7 +19,7 @@ export class CreateUserUseCase {
     const { email } = request;
 
     try {
-      const getUserByEmailResult = await this.repository.getUserByEmail(email);
+      const getUserByEmailResult = await this.repository.getByEmail(email);
       if (getUserByEmailResult.ok) {
         return this.toPresenter(new EmailAlreadyRegisteredFailure());
       }
