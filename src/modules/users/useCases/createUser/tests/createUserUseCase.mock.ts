@@ -5,12 +5,12 @@ import { CreateUserPresenter } from "../createUserPresenter";
 import {
   CreateUserRepository,
   GetByEmailResponse,
-  SaveResponse,
+  CreateResponse,
 } from "../createUserRepository";
 
 const makeRepository = (): CreateUserRepository => {
   class CreateUserRepositoryMock implements CreateUserRepository {
-    async create(): Promise<SaveResponse> {
+    async create(): Promise<CreateResponse> {
       return new Success<string>("User saved");
     }
     async getByEmail(): Promise<GetByEmailResponse> {

@@ -3,10 +3,10 @@ import { Success } from "../../core/success";
 import { UserModel } from "../../domain/userModel";
 import { UserNotFoundFailure } from "./createUserFailures";
 
-export type SaveResponse = Failure<string> | Success<string>;
+export type CreateResponse = Failure<string> | Success<string>;
 export type GetByEmailResponse = UserNotFoundFailure | Success<UserModel>;
 
 export interface CreateUserRepository {
-  create(user: UserModel): Promise<SaveResponse>;
+  create(user: UserModel): Promise<CreateResponse>;
   getByEmail(email: string): Promise<GetByEmailResponse>;
 }

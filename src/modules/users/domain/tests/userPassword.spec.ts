@@ -1,6 +1,6 @@
-import { Success } from "../core/success";
-import { InvalidParamFailure } from "./userFailures";
-import { UserPassword } from "./userPassword";
+import { Success } from "../../core/success";
+import { InvalidParamFailure } from "../userFailures";
+import { UserPassword } from "../userPassword";
 
 const invalidPassword = new InvalidParamFailure("password");
 
