@@ -10,7 +10,7 @@ import {
 
 const makeRepository = (): CreateUserRepository => {
   class CreateUserRepositoryMock implements CreateUserRepository {
-    async save(): Promise<SaveResponse> {
+    async create(): Promise<SaveResponse> {
       return new Success<string>("User saved");
     }
     async getByEmail(): Promise<GetByEmailResponse> {

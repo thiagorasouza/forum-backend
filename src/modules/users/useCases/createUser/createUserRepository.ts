@@ -7,6 +7,6 @@ export type SaveResponse = Failure<string> | Success<string>;
 export type GetByEmailResponse = UserNotFoundFailure | Success<UserModel>;
 
 export interface CreateUserRepository {
-  save(user: UserModel): Promise<SaveResponse>;
+  create(user: UserModel): Promise<SaveResponse>;
   getByEmail(email: string): Promise<GetByEmailResponse>;
 }

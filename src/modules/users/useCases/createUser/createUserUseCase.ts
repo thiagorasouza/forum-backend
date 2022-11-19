@@ -30,7 +30,7 @@ export class CreateUserUseCase {
       }
 
       const userModel = userResult.value.props;
-      await this.repository.save(userModel);
+      await this.repository.create(userModel);
 
       return this.toPresenter(new Success<string>("User created"));
     } catch (error) {
