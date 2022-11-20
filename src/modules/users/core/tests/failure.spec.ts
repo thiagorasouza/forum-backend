@@ -1,4 +1,4 @@
-import { Failure } from "./failure";
+import { Failure } from "../failure";
 
 describe("Failure Test Suite", () => {
   it("should have an ok property set to false", () => {

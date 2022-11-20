@@ -1,4 +1,4 @@
-import { Success } from "./success";
+import { Success } from "../success";
 
 describe("Success Test Suite", () => {
   it("should have an ok property set to true", () => {
