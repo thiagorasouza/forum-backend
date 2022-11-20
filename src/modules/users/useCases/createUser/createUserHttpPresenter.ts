@@ -22,6 +22,6 @@ export class CreateUserHttpPresenter {
   }
 
   private toView(viewModel: CreateUserHttpViewModel) {
-    this.view.display(viewModel);
+    return this.view.display(viewModel);
   }
 }
