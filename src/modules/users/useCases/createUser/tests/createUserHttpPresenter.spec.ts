@@ -4,23 +4,6 @@ import { EmailAlreadyRegisteredFailure } from "../createUserFailures";
 import { CreateUserHttpPresenter } from "../createUserHttpPresenter";
 import { CreateUserHttpView } from "../createUserHttpView";
 
-// export type CreateUserResponseModel =
-//   | Success<string>
-//   | EmailAlreadyRegisteredFailure
-//   | UserFailures;
-
-// const makeViewModel = (): CreateUserHttpViewModel => {
-//   class CreateUserHttpResponseMock implements CreateUserHttpViewModel {
-//     constructor(
-//       public readonly statusCode: number,
-//       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-//       public readonly body: any
-//     ) {}
-//   }
-
-//   return new CreateUserHttpResponseMock(200, "success");
-// };
-
 interface SutTypes {
   sut: CreateUserHttpPresenter;
   view: CreateUserHttpView;
