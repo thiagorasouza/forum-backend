@@ -1,9 +1,9 @@
-import { Sequelize } from "sequelize-typescript";
-import { SequelizeUserRepository } from "./SequelizeUserRepository";
-import { SequelizeUserModel } from "./SequelizeUserModel";
-import { makeUserModel } from "../domain/tests/userModel.mock";
-import { Success } from "../core/success";
-import { UserModel } from "../domain/userModel";
+import { SequelizeUserRepository } from "./sequelizeUserRepository";
+import { SequelizeUserModel } from "./sequelizeUserModel";
+import { makeUserModel } from "../../domain/tests/userModel.mock";
+import { Success } from "../../core/success";
+import { UserModel } from "../../domain/userModel";
+import { SequelizeConnection } from "./sequelizeConnection";
 
 const makeSut = (): SequelizeUserRepository => {
   return new SequelizeUserRepository();
@@ -13,18 +13,8 @@ const mockUserModel = makeUserModel();
 const mockUserData = SequelizeUserRepository.mapFromDomain(mockUserModel);
 
 describe("SequelizeUserRepository Test Suite", () => {
-  let sequelize: Sequelize;
-
   beforeAll(async () => {
-    sequelize = new Sequelize({
-      database: "tests",
-      dialect: "sqlite",
-      username: "root",
-      password: "",
-      storage: ":memory:",
-      models: [SequelizeUserModel], // or [Player, Team],
-    });
-    await sequelize.authenticate();
+    await SequelizeConnection.connect([SequelizeUserModel]);
     await SequelizeUserModel.sync();
   });
 
@@ -33,7 +23,7 @@ describe("SequelizeUserRepository Test Suite", () => {
   });
 
   afterAll(async () => {
-    await sequelize.close();
+    await SequelizeConnection.disconnect();
   });
 
   it("should be able to create a new user on database", async () => {

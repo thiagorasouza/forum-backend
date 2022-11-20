@@ -1,14 +1,14 @@
-import { Success } from "../core/success";
-import { User, UserData } from "../domain/user";
-import { UserModel } from "../domain/userModel";
-import { UserNotFoundFailure } from "../useCases/createUser/createUserFailures";
+import { Success } from "../../core/success";
+import { User, UserData } from "../../domain/user";
+import { UserModel } from "../../domain/userModel";
+import { UserNotFoundFailure } from "../../useCases/createUser/createUserFailures";
 import {
   CreateUserRepository,
   CreateResponse,
   GetByEmailResponse,
-} from "../useCases/createUser/createUserRepository";
-import { InconsistentDataFailure } from "./SequelizeUserFailures";
-import { SequelizeUserModel } from "./SequelizeUserModel";
+} from "../../useCases/createUser/createUserRepository";
+import { InconsistentDataFailure } from "./sequelizeUserFailures";
+import { SequelizeUserModel } from "./sequelizeUserModel";
 
 export class SequelizeUserRepository implements CreateUserRepository {
   async create(userModel: UserModel): Promise<CreateResponse> {
@@ -21,7 +21,9 @@ export class SequelizeUserRepository implements CreateUserRepository {
   }
 
   async getByEmail(email: string): Promise<GetByEmailResponse> {
-    const userData = await SequelizeUserModel.findOne({ where: { email } });
+    const userData = await SequelizeUserModel.findOne({
+      where: { email },
+    });
     if (!userData) {
       return new UserNotFoundFailure();
     }
