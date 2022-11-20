@@ -1,17 +1,20 @@
+import { Success } from "../../core/success";
 import { UserEmail } from "../userEmail";
 import { UserModel } from "../userModel";
 import { UserPassword } from "../userPassword";
 
 const makeUserEmail = (): UserEmail => {
-  return {
-    value: "any_email@email.com",
-  } as UserEmail;
+  const userEmailResult = UserEmail.create(
+    "any_email@email.com"
+  ) as Success<UserEmail>;
+  return userEmailResult.value;
 };
 
 const makeUserPassword = (): UserPassword => {
-  return {
-    value: "any_password@email.com",
-  } as UserPassword;
+  const userPasswordResult = UserPassword.create(
+    "any_password"
+  ) as Success<UserPassword>;
+  return userPasswordResult.value;
 };
 
 export const makeUserModel = (): UserModel => {

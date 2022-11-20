@@ -1,36 +1,48 @@
-import { Failure } from "../core/failure";
 import { Success } from "../core/success";
+import { User, UserData } from "../domain/user";
 import { UserModel } from "../domain/userModel";
+import { UserNotFoundFailure } from "../useCases/createUser/createUserFailures";
 import {
   CreateUserRepository,
   CreateResponse,
   GetByEmailResponse,
 } from "../useCases/createUser/createUserRepository";
+import { InconsistentDataFailure } from "./SequelizeUserFailures";
 import { SequelizeUserModel } from "./SequelizeUserModel";
 
 export class SequelizeUserRepository implements CreateUserRepository {
   async create(userModel: UserModel): Promise<CreateResponse> {
-    const sequelizeUserModel = SequelizeUserModel.build({
-      email: userModel.email.value,
-      password: userModel.password.value,
-    });
+    const userData = SequelizeUserRepository.mapFromDomain(userModel);
 
-    sequelizeUserModel.save();
+    const sequelizeUserModel = SequelizeUserModel.build(userData);
+    await sequelizeUserModel.save();
 
-    const userCreated = SequelizeUserModel.findOne({
-      where: {
-        email: sequelizeUserModel.email,
-      },
-    });
-
-    if (!userCreated) {
-      return new Failure<string>("Unable to save user");
-    } else {
-      return new Success<string>("User saved");
-    }
+    return new Success<string>("User saved");
   }
 
-  async getByEmail(): Promise<GetByEmailResponse> {
-    return new Failure<string>("fail");
+  async getByEmail(email: string): Promise<GetByEmailResponse> {
+    const userData = await SequelizeUserModel.findOne({ where: { email } });
+    if (!userData) {
+      return new UserNotFoundFailure();
+    }
+
+    const mapResult = SequelizeUserRepository.mapToDomain(userData);
+    if (!mapResult.ok) {
+      return new InconsistentDataFailure();
+    }
+
+    const userModel = mapResult.value.props;
+    return new Success<UserModel>(userModel);
+  }
+
+  static mapFromDomain(userModel: UserModel) {
+    return {
+      email: userModel.email.value,
+      password: userModel.password.value,
+    };
+  }
+
+  static mapToDomain(userData: UserData) {
+    return User.create(userData);
   }
 }

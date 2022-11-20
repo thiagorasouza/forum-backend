@@ -4,7 +4,7 @@ import { InvalidParamFailure } from "./userFailures";
 import { UserModel } from "./userModel";
 import { UserPassword } from "./userPassword";
 
-interface UserData {
+export interface UserData {
   email: string;
   password: string;
 }
