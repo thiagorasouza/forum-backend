@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "sucrase-node src/main/server.ts",
     "test": "npx jest --silent --noStackTrace --passWithNoTests --runInBand",
     "test:verbose": "npx jest --runInBand",
     "test:watch": "npm test -- --watch",
@@ -30,6 +31,7 @@
     "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
     "sqlite3": "^5.1.2",
+    "sucrase": "^3.29.0",
     "supertest": "^6.3.1",
     "ts-jest": "^29.0.3",
     "ts-node": "^10.9.1",
