@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import request from "supertest";
-import { CreateUserHttpViewModel } from "../useCases/createUser/createUserHttpViewModel";
-import { ExpressHttpView } from "./ExpressHttpView";
+import { CreateUserHttpViewModel } from "../../useCases/createUser/createUserHttpViewModel";
+import { ExpressView } from "./expressView";
 
 const app = express();
 
@@ -10,10 +10,10 @@ const mockViewModel: CreateUserHttpViewModel = {
   body: "test",
 };
 
-describe("ExpressHttpView Test Suite", () => {
+describe("ExpressView Test Suite", () => {
   it("should return the correct HTTP status code", async () => {
     app.get("/test_status_code", (req: Request, res: Response): void => {
-      const sut = new ExpressHttpView(res);
+      const sut = new ExpressView(res);
       sut.display(mockViewModel);
     });
 
@@ -22,7 +22,7 @@ describe("ExpressHttpView Test Suite", () => {
 
   it("should return JSON", async () => {
     app.get("/test_json", (req: Request, res: Response): void => {
-      const sut = new ExpressHttpView(res);
+      const sut = new ExpressView(res);
       sut.display(mockViewModel);
     });
 
@@ -31,7 +31,7 @@ describe("ExpressHttpView Test Suite", () => {
 
   it("should return the correct body", async () => {
     app.get("/test_body", (req: Request, res: Response): void => {
-      const sut = new ExpressHttpView(res);
+      const sut = new ExpressView(res);
       sut.display(mockViewModel);
     });
 
