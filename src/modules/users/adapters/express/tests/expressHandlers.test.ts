@@ -1,8 +1,8 @@
 import express, { Response, Request } from "express";
 import request from "supertest";
-import { CreateUserHttpController } from "../../useCases/createUser/createUserHttpController";
-import { CreateUserHttpRequest } from "../../useCases/createUser/createUserHttpRequest";
-import { createUserExpressHandler } from "./expressHandlers";
+import { CreateUserHttpController } from "../../../useCases/createUser/createUserHttpController";
+import { CreateUserHttpRequest } from "../../../useCases/createUser/createUserHttpRequest";
+import { createUserExpressHandler } from "../expressHandlers";
 
 const app = express();
 app.use(express.json());

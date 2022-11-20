@@ -1,9 +1,9 @@
-import { SequelizeUserRepository } from "./sequelizeUserRepository";
-import { SequelizeUserModel } from "./sequelizeUserModel";
-import { makeUserModel } from "../../domain/tests/userModel.mock";
-import { Success } from "../../core/success";
-import { UserModel } from "../../domain/userModel";
-import { SequelizeConnection } from "./sequelizeConnection";
+import { SequelizeUserRepository } from "../sequelizeUserRepository";
+import { SequelizeUserModel } from "../sequelizeUserModel";
+import { makeUserModel } from "../../../domain/tests/userModel.mock";
+import { Success } from "../../../core/success";
+import { UserModel } from "../../../domain/userModel";
+import { SequelizeConnection } from "../sequelizeConnection";
 
 const makeSut = (): SequelizeUserRepository => {
   return new SequelizeUserRepository();

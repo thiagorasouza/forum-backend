@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import request from "supertest";
-import { CreateUserHttpViewModel } from "../../useCases/createUser/createUserHttpViewModel";
-import { ExpressView } from "./expressView";
+import { CreateUserHttpViewModel } from "../../../useCases/createUser/createUserHttpViewModel";
+import { ExpressView } from "../expressView";
 
 const app = express();
 

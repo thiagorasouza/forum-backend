@@ -1,5 +1,5 @@
 import { Column, Model, Table } from "sequelize-typescript";
-import { SequelizeConnection } from "./sequelizeConnection";
+import { SequelizeConnection } from "../sequelizeConnection";
 
 @Table
 class ModelMock extends Model {

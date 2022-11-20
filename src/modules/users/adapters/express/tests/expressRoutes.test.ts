@@ -1,8 +1,8 @@
 import request from "supertest";
-import { app } from "../../../main/app";
-import { SequelizeConnection } from "../../adapters/sequelize/sequelizeConnection";
-import { SequelizeUserModel } from "../../adapters/sequelize/sequelizeUserModel";
-import { CreateUserHttpRequest } from "../../useCases/createUser/createUserHttpRequest";
+import { app } from "../../../../../main/app";
+import { SequelizeConnection } from "../../sequelize/sequelizeConnection";
+import { SequelizeUserModel } from "../../sequelize/sequelizeUserModel";
+import { CreateUserHttpRequest } from "../../../useCases/createUser/createUserHttpRequest";
 
 const mockCreateUserRequest: CreateUserHttpRequest = {
   body: {
