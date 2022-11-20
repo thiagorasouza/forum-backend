@@ -4,6 +4,7 @@ import { makeUserModel } from "../../../domain/tests/userModel.mock";
 import { Success } from "../../../core/success";
 import { UserModel } from "../../../domain/userModel";
 import { SequelizeConnection } from "../sequelizeConnection";
+import { InconsistentDataFailure } from "../sequelizeUserFailures";
 
 const makeSut = (): SequelizeUserRepository => {
   return new SequelizeUserRepository();
@@ -42,5 +43,20 @@ describe("SequelizeUserRepository Test Suite", () => {
     )) as Success<UserModel>;
     expect(getByEmailResult.ok).toBe(true);
     expect(getByEmailResult?.value).toEqual(mockUserModel);
+  });
+
+  it("should fail when inconsistent database data is detected", async () => {
+    const sut = makeSut();
+    const inconsistentUserData = {
+      email: "invalid_email",
+      password: "valid_password",
+    };
+
+    await SequelizeUserModel.create(inconsistentUserData);
+    const getByEmailResult = (await sut.getByEmail(
+      inconsistentUserData.email
+    )) as InconsistentDataFailure;
+
+    expect(getByEmailResult).toEqual(new InconsistentDataFailure());
   });
 });
