@@ -3,23 +3,24 @@ import { UserEmail } from "../userEmail";
 import { UserModel } from "../userModel";
 import { UserPassword } from "../userPassword";
 
-const makeUserEmail = (): UserEmail => {
+const mockUserEmail = (): UserEmail => {
   const userEmailResult = UserEmail.create(
     "any_email@email.com"
   ) as Success<UserEmail>;
   return userEmailResult.value;
 };
 
-const makeUserPassword = (): UserPassword => {
+const mockUserPassword = (): UserPassword => {
   const userPasswordResult = UserPassword.create(
     "any_password"
   ) as Success<UserPassword>;
   return userPasswordResult.value;
 };
 
-export const makeUserModel = (): UserModel => {
+export const mockUserModel = (): UserModel => {
   return {
-    email: makeUserEmail(),
-    password: makeUserPassword(),
+    name: "any_name",
+    email: mockUserEmail(),
+    password: mockUserPassword(),
   };
 };

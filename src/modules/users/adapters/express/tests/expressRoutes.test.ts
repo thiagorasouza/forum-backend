@@ -2,14 +2,7 @@ import request from "supertest";
 import { app } from "../../../../../main/app";
 import { SequelizeConnection } from "../../sequelize/sequelizeConnection";
 import { SequelizeUserModel } from "../../sequelize/sequelizeUserModel";
-import { CreateUserHttpRequest } from "../../../useCases/createUser/createUserHttpRequest";
-
-const mockCreateUserRequest: CreateUserHttpRequest = {
-  body: {
-    email: "any_email@email.com",
-    password: "any_password",
-  },
-};
+import { mockCreateUserHttpRequest } from "../../../useCases/createUser/tests/createUserHttpRequest.mock";
 
 describe("CreateUserExpressRoute Test Suite", () => {
   beforeAll(async () => {
@@ -26,6 +19,7 @@ describe("CreateUserExpressRoute Test Suite", () => {
   });
 
   it("should return 200 when a user is created", async () => {
-    await request(app).post("/users").send(mockCreateUserRequest).expect(200);
+    const mockRequest = mockCreateUserHttpRequest();
+    await request(app).post("/users").send(mockRequest).expect(200);
   });
 });

@@ -39,6 +39,7 @@ export class SequelizeUserRepository implements CreateUserRepository {
 
   static mapFromDomain(userModel: UserModel) {
     return {
+      name: userModel.name,
       email: userModel.email.value,
       password: userModel.password.value,
     };

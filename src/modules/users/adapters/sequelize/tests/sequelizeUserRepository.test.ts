@@ -1,6 +1,6 @@
 import { SequelizeUserRepository } from "../sequelizeUserRepository";
 import { SequelizeUserModel } from "../sequelizeUserModel";
-import { makeUserModel } from "../../../domain/tests/userModel.mock";
+import { mockUserModel } from "../../../domain/tests/userModel.mock";
 import { Success } from "../../../core/success";
 import { UserModel } from "../../../domain/userModel";
 import { SequelizeConnection } from "../sequelizeConnection";
@@ -10,8 +10,7 @@ const makeSut = (): SequelizeUserRepository => {
   return new SequelizeUserRepository();
 };
 
-const mockUserModel = makeUserModel();
-const mockUserData = SequelizeUserRepository.mapFromDomain(mockUserModel);
+const mockUserData = SequelizeUserRepository.mapFromDomain(mockUserModel());
 
 describe("SequelizeUserRepository Test Suite", () => {
   beforeAll(async () => {
@@ -29,7 +28,7 @@ describe("SequelizeUserRepository Test Suite", () => {
 
   it("should be able to create a new user on database", async () => {
     const sut = makeSut();
-    const createResult = await sut.create(mockUserModel);
+    const createResult = await sut.create(mockUserModel());
     expect(createResult.ok).toBe(true);
     const usersCount = await SequelizeUserModel.count();
     expect(usersCount).toBe(1);
@@ -42,7 +41,7 @@ describe("SequelizeUserRepository Test Suite", () => {
       mockUserData.email
     )) as Success<UserModel>;
     expect(getByEmailResult.ok).toBe(true);
-    expect(getByEmailResult?.value).toEqual(mockUserModel);
+    expect(getByEmailResult?.value).toEqual(mockUserModel());
   });
 
   it("should fail when inconsistent database data is detected", async () => {

@@ -1,21 +1,15 @@
 import express, { Response, Request } from "express";
 import request from "supertest";
 import { CreateUserHttpController } from "../../../useCases/createUser/createUserHttpController";
-import { CreateUserHttpRequest } from "../../../useCases/createUser/createUserHttpRequest";
+import { mockCreateUserHttpRequest } from "../../../useCases/createUser/tests/createUserHttpRequest.mock";
 import { createUserExpressHandler } from "../expressHandlers";
 
 const app = express();
 app.use(express.json());
 
-const mockRequest: CreateUserHttpRequest = {
-  body: {
-    email: "any_email@email.com",
-    password: "any_password",
-  },
-};
-
 describe("CreateUserExpressHandler Test Suite", () => {
   it("should call controller handler with request object ", async () => {
+    const mockRequest = mockCreateUserHttpRequest();
     const handleSpy = jest.spyOn(CreateUserHttpController.prototype, "handle");
     app.post("/test_handler", createUserExpressHandler);
     await request(app).post("/test_handler").send(mockRequest);
@@ -24,6 +18,8 @@ describe("CreateUserExpressHandler Test Suite", () => {
   });
 
   it("should end with the response", async () => {
+    const mockRequest = mockCreateUserHttpRequest();
+
     let resSpy;
     app.post(
       "/test_res_end",

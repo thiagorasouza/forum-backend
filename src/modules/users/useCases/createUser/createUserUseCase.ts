@@ -24,7 +24,11 @@ export class CreateUserUseCase {
         return this.toPresenter(new EmailAlreadyRegisteredFailure());
       }
 
-      const userResult = User.create(request);
+      const userResult = User.create({
+        name: request.name,
+        email: request.email,
+        password: request.password,
+      });
       if (!userResult.ok) {
         return this.toPresenter(userResult);
       }

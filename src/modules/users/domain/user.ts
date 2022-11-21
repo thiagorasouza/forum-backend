@@ -5,6 +5,7 @@ import { UserModel } from "./userModel";
 import { UserPassword } from "./userPassword";
 
 export interface UserData {
+  name: string;
   email: string;
   password: string;
 }
@@ -24,6 +25,7 @@ export class User {
     }
 
     const validUserProps = {
+      name: userData.name,
       email: userEmailResult.value,
       password: userPasswordResult.value,
     };

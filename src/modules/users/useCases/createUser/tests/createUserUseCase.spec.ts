@@ -6,18 +6,15 @@ import {
   ServerFailure,
   EmailAlreadyRegisteredFailure,
 } from "../createUserFailures";
+import { mockCreateUserRequestModel } from "./createUserRequestModel.mock";
 import { makeCreateUserUseCase as makeSut } from "./createUserUseCase.mock";
-
-const requestMock = {
-  email: "valid_email",
-  password: "valid_password",
-};
 
 const responseMock = {} as UserModel;
 
 describe("CreateUserUseCase Test Suite", () => {
   it("should check if email is already registered", async () => {
     const { sut, repository } = makeSut();
+    const requestMock = mockCreateUserRequestModel();
 
     const getByEmail = jest.spyOn(repository, "getByEmail");
     await sut.execute(requestMock);
@@ -28,6 +25,7 @@ describe("CreateUserUseCase Test Suite", () => {
 
   it("should fail if email is already registered", async () => {
     const { sut, repository, presenter } = makeSut();
+    const requestMock = mockCreateUserRequestModel();
 
     const userExists = new Success<UserModel>(responseMock);
 
@@ -44,6 +42,7 @@ describe("CreateUserUseCase Test Suite", () => {
 
   it("should create User entity with correct values", async () => {
     const { sut } = makeSut();
+    const requestMock = mockCreateUserRequestModel();
 
     const userCreateSpy = jest.spyOn(User, "create");
 
@@ -55,6 +54,7 @@ describe("CreateUserUseCase Test Suite", () => {
 
   it("should fail if building User entity fails", async () => {
     const { sut, presenter } = makeSut();
+    const requestMock = mockCreateUserRequestModel();
 
     const invalidParamFailure = new InvalidParamFailure("any");
 
@@ -68,6 +68,7 @@ describe("CreateUserUseCase Test Suite", () => {
 
   it("should save user if email does not exist and User entity is created", async () => {
     const { sut, repository } = makeSut();
+    const requestMock = mockCreateUserRequestModel();
 
     const userMock = { props: {} } as User;
     jest.spyOn(User, "create").mockReturnValueOnce(new Success<User>(userMock));
@@ -81,6 +82,7 @@ describe("CreateUserUseCase Test Suite", () => {
 
   it("should fail if saving user throws an error", async () => {
     const { sut, repository, presenter } = makeSut();
+    const requestMock = mockCreateUserRequestModel();
 
     const userMock = { props: {} } as User;
     jest.spyOn(User, "create").mockReturnValueOnce(new Success<User>(userMock));
@@ -96,6 +98,7 @@ describe("CreateUserUseCase Test Suite", () => {
 
   it("should succeed if everything went well", async () => {
     const { sut, presenter } = makeSut();
+    const requestMock = mockCreateUserRequestModel();
 
     const userMock = { props: {} } as User;
     jest.spyOn(User, "create").mockReturnValueOnce(new Success<User>(userMock));
