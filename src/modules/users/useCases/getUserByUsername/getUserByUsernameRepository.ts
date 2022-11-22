@@ -1,16 +1,13 @@
 import { InconsistentDataFailure } from "../../adapters/sequelize/sequelizeUserFailures";
-import { Failure } from "../../core/failure";
 import { Success } from "../../core/success";
 import { UserModel } from "../../domain/userModel";
 import { UserNotFoundFailure } from "../failures/userNotFoundFailure";
 
-export type CreateResponse = Failure<string> | Success<string>;
-export type GetByEmailResponse =
+export type GetByUsernameResponse =
   | UserNotFoundFailure
   | InconsistentDataFailure
   | Success<UserModel>;
 
-export interface CreateUserRepository {
-  create(user: UserModel): Promise<CreateResponse>;
-  getByEmail(email: string): Promise<GetByEmailResponse>;
+export interface GetUserByUsernameRepository {
+  getByUsername(username: string): Promise<GetByUsernameResponse>;
 }

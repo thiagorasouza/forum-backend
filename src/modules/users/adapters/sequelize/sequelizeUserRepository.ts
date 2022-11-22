@@ -2,7 +2,7 @@ import { Success } from "../../core/success";
 import { User } from "../../domain/user";
 import { UserData } from "../../domain/userData";
 import { UserModel } from "../../domain/userModel";
-import { UserNotFoundFailure } from "../../useCases/createUser/createUserFailures";
+import { UserNotFoundFailure } from "../../useCases/failures/userNotFoundFailure";
 import {
   CreateUserRepository,
   CreateResponse,

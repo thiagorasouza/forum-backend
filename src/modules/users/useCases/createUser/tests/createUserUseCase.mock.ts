@@ -1,6 +1,6 @@
 import { Success } from "../../../core/success";
 import { CreateUserUseCase } from "../createUserUseCase";
-import { UserNotFoundFailure } from "../createUserFailures";
+import { UserNotFoundFailure } from "../../failures/userNotFoundFailure";
 import { CreateUserPresenter } from "../createUserPresenter";
 import {
   CreateUserRepository,

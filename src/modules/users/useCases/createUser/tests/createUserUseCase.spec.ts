@@ -2,10 +2,8 @@ import { Success } from "../../../core/success";
 import { User } from "../../../domain/user";
 import { InvalidParamFailure } from "../../../domain/userFailures";
 import { UserModel } from "../../../domain/userModel";
-import {
-  ServerFailure,
-  EmailAlreadyRegisteredFailure,
-} from "../createUserFailures";
+import { EmailAlreadyRegisteredFailure } from "../createUserFailures";
+import { ServerFailure } from "../../failures/serverFailure";
 import { mockCreateUserRequestModel } from "./createUserRequestModel.mock";
 import { makeCreateUserUseCase as makeSut } from "./createUserUseCase.mock";
 
