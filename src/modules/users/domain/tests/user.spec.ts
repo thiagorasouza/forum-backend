@@ -41,6 +41,16 @@ describe("User Test Suite", () => {
     expect(userPasswordCreate).toHaveBeenCalledWith("any_password");
   });
 
+  it("should fail if username is not valid", () => {
+    const invalidUsername = new InvalidParamFailure("username");
+    jest.spyOn(UserUsername, "create").mockReturnValueOnce(invalidUsername);
+
+    const userData = mockUserData();
+    const result = User.create(userData);
+
+    expect(result).toEqual(invalidUsername);
+  });
+
   it("should fail if email is not valid", () => {
     const invalidEmail = new InvalidParamFailure("email");
     jest.spyOn(UserEmail, "create").mockReturnValueOnce(invalidEmail);
