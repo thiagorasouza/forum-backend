@@ -1,7 +1,5 @@
-export interface GetUserByUsernameDTO {
-  username: string;
-}
-
 export interface GetUserByUsernameHttpRequest {
-  params: GetUserByUsernameDTO;
+  params: {
+    username: string;
+  };
 }

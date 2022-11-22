@@ -2,7 +2,7 @@ import { Success } from "../../core/success";
 import { CreateUserPresenter } from "../createUser/createUserPresenter";
 import { CreateUserResponseModel } from "../createUser/createUserResponseModel";
 import { GetUserByUsernamePresenter } from "../getUserByUsername/getUserByUsernamePresenter";
-import { GetUserByUsernameResponseModel } from "../getUserByUsername/getUserByUsernameResponseModel";
+import { GetUserByUsernameResponseModel } from "../getUserByUsername/getUserByUsernameUseCase";
 import { EmailAlreadyRegisteredFailure } from "./failures/emailAlreadyRegisteredFailure";
 import { InvalidParamFailure } from "./failures/invalidParamFailure";
 import { UserNotFoundFailure } from "./failures/userNotFoundFailure";

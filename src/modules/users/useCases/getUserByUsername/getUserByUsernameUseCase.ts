@@ -1,9 +1,20 @@
 import { Guard } from "../../core/guard";
+import { Success } from "../../core/success";
+import { UserFailures } from "../../domain/userFailures";
+import { UserModel } from "../../domain/userModel";
 import { ServerFailure } from "../shared/failures/serverFailure";
+import { UserNotFoundFailure } from "../shared/failures/userNotFoundFailure";
 import { GetUserByUsernamePresenter } from "./getUserByUsernamePresenter";
 import { GetUserByUsernameRepository } from "./getUserByUsernameRepository";
-import { GetUserByUsernameRequestModel } from "./getUserByUsernameRequestModel";
-import { GetUserByUsernameResponseModel } from "./getUserByUsernameResponseModel";
+
+export interface GetUserByUsernameRequestModel {
+  username: string;
+}
+
+export type GetUserByUsernameResponseModel =
+  | Success<UserModel>
+  | UserNotFoundFailure
+  | UserFailures;
 
 export class GetUserByUsernameUseCase {
   constructor(

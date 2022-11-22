@@ -1,4 +1,4 @@
-import { GetUserByUsernameRequestModel } from "../getUserByUsernameRequestModel";
+import { GetUserByUsernameRequestModel } from "../getUserByUsernameUseCase";
 
 export const mockGetUserByUsernameRequestModel =
   (): GetUserByUsernameRequestModel => {
