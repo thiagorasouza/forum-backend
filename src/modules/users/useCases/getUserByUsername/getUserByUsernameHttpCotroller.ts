@@ -1,9 +1,14 @@
 import { Controller } from "../shared/protocols/controller";
-import { GetUserByUsernameHttpRequest } from "./getUserByUsernameHttpRequest";
 import {
   GetUserByUsernameRequestModel,
   GetUserByUsernameUseCase,
 } from "./getUserByUsernameUseCase";
+
+export interface GetUserByUsernameHttpRequest {
+  params: {
+    username: string;
+  };
+}
 
 export class GetUserByUsernameHttpController implements Controller {
   constructor(private readonly useCase: GetUserByUsernameUseCase) {}

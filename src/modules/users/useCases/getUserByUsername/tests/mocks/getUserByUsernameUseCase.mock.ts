@@ -1,12 +1,12 @@
-import { Success } from "../../../core/success";
-import { mockUserModel } from "../../../domain/tests/userModel.mock";
-import { UserModel } from "../../../domain/userModel";
-import { GetUserByUsernamePresenter } from "../getUserByUsernamePresenter";
+import { Success } from "../../../../core/success";
+import { mockUserModel } from "../../../../domain/tests/userModel.mock";
+import { UserModel } from "../../../../domain/userModel";
+import { GetUserByUsernamePresenter } from "../../getUserByUsernamePresenter";
 import {
   GetByUsernameResponse,
   GetUserByUsernameRepository,
-} from "../getUserByUsernameRepository";
-import { GetUserByUsernameUseCase } from "../getUserByUsernameUseCase";
+} from "../../getUserByUsernameRepository";
+import { GetUserByUsernameUseCase } from "../../getUserByUsernameUseCase";
 
 const makeRepository = (): GetUserByUsernameRepository => {
   class GetUserByUsernameRepositoryMock implements GetUserByUsernameRepository {

@@ -1,7 +1,7 @@
 import { GetUserByUsernameHttpController } from "../getUserByUsernameHttpCotroller";
 import { GetUserByUsernameUseCase } from "../getUserByUsernameUseCase";
-import { mockGetUserByUsernameHttpRequest } from "./getUserByUsernameHttpRequest.mock";
-import { mockGetUserByUsernameUseCase } from "./getUserByUsernameUseCase.mock";
+import { mockGetUserByUsernameHttpRequest } from "./mocks/getUserByUsernameHttpRequest.mock";
+import { mockGetUserByUsernameUseCase } from "./mocks/getUserByUsernameUseCase.mock";
 
 interface SutTypes {
   useCase: GetUserByUsernameUseCase;

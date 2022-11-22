@@ -5,8 +5,8 @@ import { UserModel } from "../../../domain/userModel";
 import { MissingParamFailure } from "../../shared/failures/missingParamFailure";
 import { ServerFailure } from "../../shared/failures/serverFailure";
 import { UserNotFoundFailure } from "../../shared/failures/userNotFoundFailure";
-import { mockGetUserByUsernameRequestModel } from "./getUserByUsernameRequestModel.mock";
-import { mockGetUserByUsernameUseCase as makeSut } from "./getUserByUsernameUseCase.mock";
+import { mockGetUserByUsernameRequestModel } from "./mocks/getUserByUsernameRequestModel.mock";
+import { mockGetUserByUsernameUseCase as makeSut } from "./mocks/getUserByUsernameUseCase.mock";
 
 describe("GetUserByUsernameUseCase Test Suite", () => {
   it("should call Guard.againstNullOrUndefined", async () => {

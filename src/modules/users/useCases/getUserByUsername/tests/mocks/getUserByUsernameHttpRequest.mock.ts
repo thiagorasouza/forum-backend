@@ -1,4 +1,4 @@
-import { GetUserByUsernameHttpRequest } from "../getUserByUsernameHttpRequest";
+import { GetUserByUsernameHttpRequest } from "../../getUserByUsernameHttpCotroller";
 
 export const mockGetUserByUsernameHttpRequest =
   (): GetUserByUsernameHttpRequest => ({
