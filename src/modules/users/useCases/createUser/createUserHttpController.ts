@@ -1,7 +1,13 @@
-import { CreateUserUseCase } from "./createUserUseCase";
-import { CreateUserHttpRequest } from "./createUserHttpRequest";
-import { CreateUserRequestModel } from "./createUserRequestModel";
+import { CreateUserRequestModel, CreateUserUseCase } from "./createUserUseCase";
 import { Controller } from "../shared/protocols/controller";
+
+export interface CreateUserHttpRequest {
+  body: {
+    username: string;
+    email: string;
+    password: string;
+  };
+}
 
 export class CreateUserHttpController implements Controller {
   constructor(private readonly useCase: CreateUserUseCase) {}

@@ -1,8 +1,7 @@
 import { CreateUserUseCase } from "../createUserUseCase";
 import { CreateUserHttpController } from "../createUserHttpController";
-import { makeCreateUserUseCase } from "./createUserUseCase.mock";
-import { CreateUserHttpRequest } from "../createUserHttpRequest";
-import { mockCreateUserDTO } from "./createUserDTO.mock";
+import { makeCreateUserUseCase } from "./mocks/createUserUseCase.mock";
+import { mockCreateUserHttpRequest } from "./mocks/createUserHttpRequest.mock";
 
 interface SutTypes {
   useCase: CreateUserUseCase;
@@ -22,14 +21,10 @@ describe("CreateUserHttpController Test Suite", () => {
 
     const useCaseSpy = jest.spyOn(useCase, "execute");
 
-    const createUserDTO = mockCreateUserDTO();
-
-    const httpRequest: CreateUserHttpRequest = {
-      body: createUserDTO,
-    };
+    const httpRequest = mockCreateUserHttpRequest();
     sut.handle(httpRequest);
 
     expect(useCaseSpy).toHaveBeenCalledTimes(1);
-    expect(useCaseSpy).toHaveBeenCalledWith(createUserDTO);
+    expect(useCaseSpy).toHaveBeenCalledWith(httpRequest.body);
   });
 });

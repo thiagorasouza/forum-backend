@@ -1,7 +1,7 @@
 import express, { Response, Request } from "express";
 import request from "supertest";
 import { CreateUserHttpController } from "../../../useCases/createUser/createUserHttpController";
-import { mockCreateUserHttpRequest } from "../../../useCases/createUser/tests/createUserHttpRequest.mock";
+import { mockCreateUserHttpRequest } from "../../../useCases/createUser/tests/mocks/createUserHttpRequest.mock";
 import { createUserExpressHandler } from "../expressHandlers";
 
 const app = express();

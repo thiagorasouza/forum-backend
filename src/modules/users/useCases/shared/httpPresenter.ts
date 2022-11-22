@@ -1,6 +1,6 @@
 import { Success } from "../../core/success";
 import { CreateUserPresenter } from "../createUser/createUserPresenter";
-import { CreateUserResponseModel } from "../createUser/createUserResponseModel";
+import { CreateUserResponseModel } from "../createUser/createUserUseCase";
 import { GetUserByUsernamePresenter } from "../getUserByUsername/getUserByUsernamePresenter";
 import { GetUserByUsernameResponseModel } from "../getUserByUsername/getUserByUsernameUseCase";
 import { EmailAlreadyRegisteredFailure } from "./failures/emailAlreadyRegisteredFailure";

@@ -4,8 +4,8 @@ import { InvalidParamFailure } from "../../shared/failures/invalidParamFailure";
 import { UserModel } from "../../../domain/userModel";
 import { EmailAlreadyRegisteredFailure } from "../../shared/failures/emailAlreadyRegisteredFailure";
 import { ServerFailure } from "../../shared/failures/serverFailure";
-import { mockCreateUserRequestModel } from "./createUserRequestModel.mock";
-import { makeCreateUserUseCase as makeSut } from "./createUserUseCase.mock";
+import { mockCreateUserRequestModel } from "./mocks/createUserRequestModel.mock";
+import { makeCreateUserUseCase as makeSut } from "./mocks/createUserUseCase.mock";
 import { Guard } from "../../../core/guard";
 import { MissingParamFailure } from "../../shared/failures/missingParamFailure";
 

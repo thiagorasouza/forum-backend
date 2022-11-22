@@ -1,4 +1,4 @@
-import { CreateUserRequestModel } from "../createUserRequestModel";
+import { CreateUserRequestModel } from "../../createUserUseCase";
 
 export const mockCreateUserRequestModel = (): CreateUserRequestModel => {
   return {

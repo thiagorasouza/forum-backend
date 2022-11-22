@@ -2,13 +2,23 @@ import { Guard } from "../../core/guard";
 import { Success } from "../../core/success";
 import { User } from "../../domain/user";
 import { UserData } from "../../domain/userData";
+import { UserFailures } from "../../domain/userFailures";
 import { EmailAlreadyRegisteredFailure } from "../shared/failures/emailAlreadyRegisteredFailure";
 import { ServerFailure } from "../shared/failures/serverFailure";
 import { UseCase } from "../shared/protocols/useCase";
 import { CreateUserPresenter } from "./createUserPresenter";
 import { CreateUserRepository } from "./createUserRepository";
-import { CreateUserRequestModel } from "./createUserRequestModel";
-import { CreateUserResponseModel } from "./createUserResponseModel";
+
+export interface CreateUserRequestModel {
+  username: string;
+  email: string;
+  password: string;
+}
+
+export type CreateUserResponseModel =
+  | Success<string>
+  | EmailAlreadyRegisteredFailure
+  | UserFailures;
 
 export class CreateUserUseCase implements UseCase {
   constructor(
