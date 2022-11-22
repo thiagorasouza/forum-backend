@@ -3,11 +3,22 @@ import { User } from "../user";
 import { UserEmail } from "../userEmail";
 import { InvalidParamFailure } from "../userFailures";
 import { UserPassword } from "../userPassword";
+import { UserUsername } from "../userUsername";
 import { mockUserData } from "./userData.mock";
 
 describe("User Test Suite", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+  });
+
+  it("should check if username is valid on creation", () => {
+    const userUsernameCreate = jest.spyOn(UserUsername, "create");
+
+    const userData = mockUserData();
+    User.create(userData);
+
+    expect(userUsernameCreate).toHaveBeenCalledTimes(1);
+    expect(userUsernameCreate).toHaveBeenCalledWith("any_username");
   });
 
   it("should check if email is valid on creation", () => {

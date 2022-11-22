@@ -14,6 +14,7 @@ export class User {
     if (!userUsernameResult.ok) {
       return userUsernameResult;
     }
+
     const userEmailResult = UserEmail.create(userData.email);
     if (!userEmailResult.ok) {
       return userEmailResult;
