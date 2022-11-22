@@ -12,13 +12,13 @@ export class GetUserByUsernameUseCase {
   ) {}
 
   async execute(request: GetUserByUsernameRequestModel): Promise<void> {
-    const guardResult = Guard.againstNullOrUndefined(request, ["username"]);
-    if (!guardResult.ok) {
-      this.toPresenter(guardResult);
-    }
-
-    const { username } = request;
     try {
+      const guardResult = Guard.againstNullOrUndefined(request, ["username"]);
+      if (!guardResult.ok) {
+        return this.toPresenter(guardResult);
+      }
+
+      const { username } = request;
       const getUserByUsernameResult = await this.repository.getByUsername(
         username
       );
