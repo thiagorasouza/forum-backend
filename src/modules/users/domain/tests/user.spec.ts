@@ -1,7 +1,7 @@
 import { Success } from "../../core/success";
 import { User } from "../user";
 import { UserEmail } from "../userEmail";
-import { InvalidParamFailure } from "../userFailures";
+import { InvalidParamFailure } from "../../useCases/shared/failures/invalidParamFailure";
 import { UserPassword } from "../userPassword";
 import { UserUsername } from "../userUsername";
 import { mockUserData } from "./userData.mock";

@@ -1,6 +1,6 @@
 import { Success } from "../../../core/success";
 import { User } from "../../../domain/user";
-import { InvalidParamFailure } from "../../../domain/userFailures";
+import { InvalidParamFailure } from "../../shared/failures/invalidParamFailure";
 import { UserModel } from "../../../domain/userModel";
 import { EmailAlreadyRegisteredFailure } from "../../shared/failures/emailAlreadyRegisteredFailure";
 import { ServerFailure } from "../../shared/failures/serverFailure";

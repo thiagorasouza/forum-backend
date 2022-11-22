@@ -1,5 +1,5 @@
 import { Success } from "../../core/success";
-import { InvalidParamFailure } from "../userFailures";
+import { InvalidParamFailure } from "../../useCases/shared/failures/invalidParamFailure";
 
 import { UserUsername } from "../userUsername";
 

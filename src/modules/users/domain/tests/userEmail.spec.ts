@@ -1,6 +1,6 @@
 import { Success } from "../../core/success";
 import { UserEmail } from "../userEmail";
-import { InvalidParamFailure } from "../userFailures";
+import { InvalidParamFailure } from "../../useCases/shared/failures/invalidParamFailure";
 
 const invalidPassword = new InvalidParamFailure("email");
 describe("UserEmail Test Suite", () => {

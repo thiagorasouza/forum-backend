@@ -1,5 +1,5 @@
 import { Success } from "../../../core/success";
-import { InvalidParamFailure } from "../../../domain/userFailures";
+import { InvalidParamFailure } from "../../shared/failures/invalidParamFailure";
 import { EmailAlreadyRegisteredFailure } from "../../shared/failures/emailAlreadyRegisteredFailure";
 import { CreateUserHttpPresenter } from "../createUserHttpPresenter";
 import { HttpView } from "../../shared/protocols/httpView";

@@ -1,6 +1,6 @@
 import { Failure } from "../core/failure";
 import { Success } from "../core/success";
-import { InvalidParamFailure } from "./userFailures";
+import { InvalidParamFailure } from "../useCases/shared/failures/invalidParamFailure";
 
 export class UserEmail {
   // W3 Email Regex

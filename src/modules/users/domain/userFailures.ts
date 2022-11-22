@@ -1,9 +1,3 @@
-import { Failure } from "../core/failure";
+import { InvalidParamFailure } from "../useCases/shared/failures/invalidParamFailure";
 
 export type UserFailures = InvalidParamFailure;
-
-export class InvalidParamFailure extends Failure<string> {
-  constructor(paramName: string) {
-    super(`Invalid ${paramName}`);
-  }
-}

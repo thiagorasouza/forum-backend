@@ -8,7 +8,7 @@ import { InconsistentDataFailure } from "../sequelizeUserFailures";
 import { UserData } from "../../../domain/userData";
 import { UserNotFoundFailure } from "../../../useCases/shared/failures/userNotFoundFailure";
 import { User } from "../../../domain/user";
-import { InvalidParamFailure } from "../../../domain/userFailures";
+import { InvalidParamFailure } from "../../../useCases/shared/failures/invalidParamFailure";
 
 const makeSut = (): SequelizeUserRepository => {
   return new SequelizeUserRepository();

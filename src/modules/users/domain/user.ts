@@ -1,7 +1,7 @@
 import { Success } from "../core/success";
 import { UserData } from "./userData";
 import { UserEmail } from "./userEmail";
-import { InvalidParamFailure } from "./userFailures";
+import { InvalidParamFailure } from "../useCases/shared/failures/invalidParamFailure";
 import { UserModel } from "./userModel";
 import { UserPassword } from "./userPassword";
 import { UserUsername } from "./userUsername";

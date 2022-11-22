@@ -1,6 +1,6 @@
 import { Failure } from "../core/failure";
 import { Success } from "../core/success";
-import { InvalidParamFailure } from "./userFailures";
+import { InvalidParamFailure } from "../useCases/shared/failures/invalidParamFailure";
 
 export class UserPassword {
   private static minLength = 6;
