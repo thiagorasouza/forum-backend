@@ -1,3 +1,4 @@
+import { Guard } from "../../core/guard";
 import { Success } from "../../core/success";
 import { User } from "../../domain/user";
 import { UserData } from "../../domain/userData";
@@ -16,9 +17,18 @@ export class CreateUserUseCase implements UseCase {
   ) {}
 
   async execute(request: CreateUserRequestModel): Promise<void> {
-    const { username, email, password } = request;
-
     try {
+      const guardResult = Guard.againstNullOrUndefined(request, [
+        "username",
+        "email",
+        "password",
+      ]);
+      if (!guardResult.ok) {
+        return this.toPresenter(guardResult);
+      }
+
+      const { username, email, password } = request;
+
       const getUserByEmailResult = await this.repository.getByEmail(email);
       if (getUserByEmailResult.ok) {
         return this.toPresenter(new EmailAlreadyRegisteredFailure());

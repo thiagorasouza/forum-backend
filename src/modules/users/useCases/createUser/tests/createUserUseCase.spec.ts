@@ -6,10 +6,42 @@ import { EmailAlreadyRegisteredFailure } from "../../shared/failures/emailAlread
 import { ServerFailure } from "../../shared/failures/serverFailure";
 import { mockCreateUserRequestModel } from "./createUserRequestModel.mock";
 import { makeCreateUserUseCase as makeSut } from "./createUserUseCase.mock";
+import { Guard } from "../../../core/guard";
+import { MissingParamFailure } from "../../shared/failures/missingParamFailure";
 
 const responseMock = {} as UserModel;
 
 describe("CreateUserUseCase Test Suite", () => {
+  it("should call Guard.againstNullOrUndefined", async () => {
+    const { sut } = makeSut();
+
+    const guardSpy = jest.spyOn(Guard, "againstNullOrUndefined");
+
+    const requestModel = mockCreateUserRequestModel();
+    sut.execute(requestModel);
+
+    expect(guardSpy).toHaveBeenCalledTimes(1);
+    expect(guardSpy).toHaveBeenCalledWith(
+      requestModel,
+      Object.keys(requestModel)
+    );
+  });
+
+  it("should fail if Guard.againstNullOrUndefined fails", async () => {
+    const { sut, presenter } = makeSut();
+
+    const missingParam = new MissingParamFailure("any_field");
+    jest
+      .spyOn(Guard, "againstNullOrUndefined")
+      .mockReturnValueOnce(missingParam);
+    const presenterSpy = jest.spyOn(presenter, "format");
+
+    const requestModel = mockCreateUserRequestModel();
+    sut.execute(requestModel);
+
+    expect(presenterSpy).toHaveBeenCalledWith(missingParam);
+  });
+
   it("should check if email is already registered", async () => {
     const { sut, repository } = makeSut();
     const requestMock = mockCreateUserRequestModel();
