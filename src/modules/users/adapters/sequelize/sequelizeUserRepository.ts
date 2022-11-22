@@ -10,8 +10,14 @@ import {
 } from "../../useCases/createUser/createUserRepository";
 import { InconsistentDataFailure } from "./sequelizeUserFailures";
 import { SequelizeUserModel } from "./sequelizeUserModel";
+import {
+  GetByUsernameResponse,
+  GetUserByUsernameRepository,
+} from "../../useCases/getUserByUsername/getUserByUsernameRepository";
 
-export class SequelizeUserRepository implements CreateUserRepository {
+export class SequelizeUserRepository
+  implements CreateUserRepository, GetUserByUsernameRepository
+{
   async create(userModel: UserModel): Promise<CreateResponse> {
     const userData = SequelizeUserRepository.mapFromDomain(userModel);
 
@@ -22,8 +28,27 @@ export class SequelizeUserRepository implements CreateUserRepository {
   }
 
   async getByEmail(email: string): Promise<GetByEmailResponse> {
+    return await this.getByField({ fieldName: "email", fieldValue: email });
+  }
+
+  async getByUsername(username: string): Promise<GetByUsernameResponse> {
+    return await this.getByField({
+      fieldName: "username",
+      fieldValue: username,
+    });
+  }
+
+  private async getByField({
+    fieldName: name,
+    fieldValue: value,
+  }: {
+    fieldName: string;
+    fieldValue: string;
+  }): Promise<
+    UserNotFoundFailure | InconsistentDataFailure | Success<UserModel>
+  > {
     const userData = await SequelizeUserModel.findOne({
-      where: { email },
+      where: { [name]: value },
     });
     if (!userData) {
       return new UserNotFoundFailure();

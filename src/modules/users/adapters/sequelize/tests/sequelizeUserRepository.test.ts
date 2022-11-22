@@ -6,6 +6,9 @@ import { UserModel } from "../../../domain/userModel";
 import { SequelizeConnection } from "../sequelizeConnection";
 import { InconsistentDataFailure } from "../sequelizeUserFailures";
 import { UserData } from "../../../domain/userData";
+import { UserNotFoundFailure } from "../../../useCases/failures/userNotFoundFailure";
+import { User } from "../../../domain/user";
+import { InvalidParamFailure } from "../../../domain/userFailures";
 
 const makeSut = (): SequelizeUserRepository => {
   return new SequelizeUserRepository();
@@ -37,7 +40,15 @@ describe("SequelizeUserRepository Test Suite", () => {
     expect(usersCount).toBe(1);
   });
 
-  it("should be able to get a user by email", async () => {
+  it("should fail to get a user by email if user does not exist", async () => {
+    const sut = makeSut();
+    const getByEmailResult = (await sut.getByEmail(
+      "any_email"
+    )) as UserNotFoundFailure;
+    expect(getByEmailResult).toEqual(new UserNotFoundFailure());
+  });
+
+  it("should be able to get a user by email if user exists", async () => {
     const sut = makeSut();
     const userData = mockUserData();
     await SequelizeUserModel.create({ ...userData });
@@ -48,17 +59,36 @@ describe("SequelizeUserRepository Test Suite", () => {
     expect(getByEmailResult?.value).toEqual(mockUserModel());
   });
 
+  it("should fail to get a user by username if user does not exist", async () => {
+    const sut = makeSut();
+    const getByEmailResult = (await sut.getByUsername(
+      "any_username"
+    )) as UserNotFoundFailure;
+    expect(getByEmailResult).toEqual(new UserNotFoundFailure());
+  });
+
+  it("should be able to get a user by username if user exists", async () => {
+    const sut = makeSut();
+    const userData = mockUserData();
+    await SequelizeUserModel.create({ ...userData });
+    const getByUsernameResult = (await sut.getByUsername(
+      userData.username
+    )) as Success<UserModel>;
+    expect(getByUsernameResult.ok).toBe(true);
+    expect(getByUsernameResult?.value).toEqual(mockUserModel());
+  });
+
   it("should fail when inconsistent database data is detected", async () => {
     const sut = makeSut();
-    const inconsistentUserData = {
-      username: "invalid_username",
-      email: "invalid_email",
-      password: "valid_password",
-    };
+    const userData = mockUserData();
 
-    await SequelizeUserModel.create(inconsistentUserData);
+    jest
+      .spyOn(User, "create")
+      .mockReturnValueOnce(new InvalidParamFailure("any_field"));
+
+    await SequelizeUserModel.create({ ...userData });
     const getByEmailResult = (await sut.getByEmail(
-      inconsistentUserData.email
+      userData.email
     )) as InconsistentDataFailure;
 
     expect(getByEmailResult).toEqual(new InconsistentDataFailure());
