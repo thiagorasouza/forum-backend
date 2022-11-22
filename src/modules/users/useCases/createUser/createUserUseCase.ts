@@ -1,5 +1,5 @@
 import { Success } from "../../core/success";
-import { User } from "../../domain/user";
+import { User, UserData } from "../../domain/user";
 import {
   ServerFailure,
   EmailAlreadyRegisteredFailure,
@@ -16,7 +16,7 @@ export class CreateUserUseCase {
   ) {}
 
   async execute(request: CreateUserRequestModel): Promise<void> {
-    const { email } = request;
+    const { name, email, password } = request;
 
     try {
       const getUserByEmailResult = await this.repository.getByEmail(email);
@@ -24,11 +24,8 @@ export class CreateUserUseCase {
         return this.toPresenter(new EmailAlreadyRegisteredFailure());
       }
 
-      const userResult = User.create({
-        name: request.name,
-        email: request.email,
-        password: request.password,
-      });
+      const userData: UserData = { name, email, password };
+      const userResult = User.create(userData);
       if (!userResult.ok) {
         return this.toPresenter(userResult);
       }
