@@ -1,13 +1,45 @@
+import { Guard } from "../../../core/guard";
 import { Success } from "../../../core/success";
 import { mockUserModel } from "../../../domain/tests/userModel.mock";
 import { UserModel } from "../../../domain/userModel";
+import { MissingParamFailure } from "../../shared/failures/missingParamFailure";
 import { ServerFailure } from "../../shared/failures/serverFailure";
 import { UserNotFoundFailure } from "../../shared/failures/userNotFoundFailure";
 import { mockGetUserByUsernameRequestModel } from "./getUserByUsernameRequestModel.mock";
 import { mockGetUserByUsernameUseCase as makeSut } from "./getUserByUsernameUseCase.mock";
 
 describe("GetUserByUsernameUseCase Test Suite", () => {
-  it("should present UserNotFoundFailure if username is not registered", async () => {
+  it("should call Guard.againstNullOrUndefined", async () => {
+    const { sut } = makeSut();
+
+    const guardSpy = jest.spyOn(Guard, "againstNullOrUndefined");
+
+    const requestModel = mockGetUserByUsernameRequestModel();
+    sut.execute(requestModel);
+
+    expect(guardSpy).toHaveBeenCalledTimes(1);
+    expect(guardSpy).toHaveBeenCalledWith(
+      requestModel,
+      Object.keys(requestModel)
+    );
+  });
+
+  it("should fail if Guard.againstNullOrUndefined fails", async () => {
+    const { sut, presenter } = makeSut();
+
+    const missingParam = new MissingParamFailure("any_field");
+    jest
+      .spyOn(Guard, "againstNullOrUndefined")
+      .mockReturnValueOnce(missingParam);
+    const presenterSpy = jest.spyOn(presenter, "format");
+
+    const requestModel = mockGetUserByUsernameRequestModel();
+    sut.execute(requestModel);
+
+    expect(presenterSpy).toHaveBeenCalledWith(missingParam);
+  });
+
+  it("should fail if retrieving username fails", async () => {
     const { sut, repository, presenter } = makeSut();
 
     const userNotFound = new UserNotFoundFailure();
@@ -22,7 +54,7 @@ describe("GetUserByUsernameUseCase Test Suite", () => {
     expect(presenterSpy).toHaveBeenCalledWith(userNotFound);
   });
 
-  it("should succeed with UserModel if username registered", async () => {
+  it("should succeed if retrieving username succeeds", async () => {
     const { sut, presenter } = makeSut();
 
     const presenterSpy = jest.spyOn(presenter, "format");

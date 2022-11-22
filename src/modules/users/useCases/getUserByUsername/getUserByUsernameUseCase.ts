@@ -1,3 +1,4 @@
+import { Guard } from "../../core/guard";
 import { ServerFailure } from "../shared/failures/serverFailure";
 import { GetUserByUsernamePresenter } from "./getUserByUsernamePresenter";
 import { GetUserByUsernameRepository } from "./getUserByUsernameRepository";
@@ -11,6 +12,11 @@ export class GetUserByUsernameUseCase {
   ) {}
 
   async execute(request: GetUserByUsernameRequestModel): Promise<void> {
+    const guardResult = Guard.againstNullOrUndefined(request, ["username"]);
+    if (!guardResult.ok) {
+      this.toPresenter(guardResult);
+    }
+
     const { username } = request;
     try {
       const getUserByUsernameResult = await this.repository.getByUsername(
