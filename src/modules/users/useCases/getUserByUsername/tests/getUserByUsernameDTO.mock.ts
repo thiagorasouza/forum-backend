@@ -1,5 +1,3 @@
-// import { CreateUserDTO } from "../createUserHttpRequest";
-
 import { GetUserByUsernameDTO } from "../getUserByUsernameHttpRequest";
 
 export const mockGetUserByUsernameDTO = (): GetUserByUsernameDTO => {

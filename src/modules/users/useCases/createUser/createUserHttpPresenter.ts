@@ -1,12 +1,12 @@
 import { Success } from "../../core/success";
 import { InvalidParamFailure } from "../../domain/userFailures";
 import { EmailAlreadyRegisteredFailure } from "../failures/emailAlreadyRegisteredFailure";
-import { CreateUserHttpView } from "./createUserHttpView";
-import { CreateUserHttpViewModel } from "./createUserHttpViewModel";
+import { UserHttpView } from "../protocols/userHttpView";
+import { UserHttpViewModel } from "../protocols/userHttpViewModel";
 import { CreateUserResponseModel } from "./createUserResponseModel";
 
 export class CreateUserHttpPresenter {
-  constructor(private readonly view: CreateUserHttpView) {}
+  constructor(private readonly view: UserHttpView) {}
 
   format(response: CreateUserResponseModel): void {
     if (response.constructor === Success) {
@@ -21,7 +21,7 @@ export class CreateUserHttpPresenter {
     }
   }
 
-  private toView(viewModel: CreateUserHttpViewModel) {
+  private toView(viewModel: UserHttpViewModel) {
     return this.view.display(viewModel);
   }
 }

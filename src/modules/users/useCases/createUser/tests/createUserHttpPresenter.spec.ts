@@ -2,15 +2,15 @@ import { Success } from "../../../core/success";
 import { InvalidParamFailure } from "../../../domain/userFailures";
 import { EmailAlreadyRegisteredFailure } from "../../failures/emailAlreadyRegisteredFailure";
 import { CreateUserHttpPresenter } from "../createUserHttpPresenter";
-import { CreateUserHttpView } from "../createUserHttpView";
+import { UserHttpView } from "../../protocols/userHttpView";
 
 interface SutTypes {
   sut: CreateUserHttpPresenter;
-  view: CreateUserHttpView;
+  view: UserHttpView;
 }
 
-const makeView = (): CreateUserHttpView => {
-  class CreateUserHttpViewMock implements CreateUserHttpView {
+const makeView = (): UserHttpView => {
+  class CreateUserHttpViewMock implements UserHttpView {
     display(): void {
       return;
     }

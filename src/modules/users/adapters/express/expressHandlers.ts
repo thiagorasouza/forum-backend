@@ -17,3 +17,16 @@ export const createUserExpressHandler = async (
   await controller.handle(req.body);
   return res.end();
 };
+
+// export const getUserByUsernameExpressHandler = async (
+//   req: Request,
+//   res: Response
+// ): Promise<Response> => {
+//   const view = new ExpressView(res);
+//   const presenter = new GetUserByUsername(view);
+//   const repository = new SequelizeUserRepository();
+//   const useCase = new GetUserByUsernameUseCase(repository, presenter);
+//   const controller = new GetUserByUsernameHttpController(useCase);
+//   await controller.handle(req.body);
+//   return res.end();
+// };

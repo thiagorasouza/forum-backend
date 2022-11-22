@@ -1,11 +1,11 @@
 import express, { Request, Response } from "express";
 import request from "supertest";
-import { CreateUserHttpViewModel } from "../../../useCases/createUser/createUserHttpViewModel";
+import { UserHttpViewModel } from "../../../useCases/protocols/userHttpViewModel";
 import { ExpressView } from "../expressView";
 
 const app = express();
 
-const mockViewModel: CreateUserHttpViewModel = {
+const mockViewModel: UserHttpViewModel = {
   statusCode: 200,
   body: "test",
 };
