@@ -1,4 +1,4 @@
-import { UserData } from "../user";
+import { UserData } from "../userData";
 
 export const mockUserData = (): UserData => {
   return {

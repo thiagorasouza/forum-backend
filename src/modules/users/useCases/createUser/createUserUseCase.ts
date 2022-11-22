@@ -1,5 +1,6 @@
 import { Success } from "../../core/success";
-import { User, UserData } from "../../domain/user";
+import { User } from "../../domain/user";
+import { UserData } from "../../domain/userData";
 import {
   ServerFailure,
   EmailAlreadyRegisteredFailure,

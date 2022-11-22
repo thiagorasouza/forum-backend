@@ -1,14 +1,9 @@
 import { Success } from "../core/success";
+import { UserData } from "./userData";
 import { UserEmail } from "./userEmail";
 import { InvalidParamFailure } from "./userFailures";
 import { UserModel } from "./userModel";
 import { UserPassword } from "./userPassword";
-
-export interface UserData {
-  name: string;
-  email: string;
-  password: string;
-}
 
 export class User {
   private constructor(public readonly props: UserModel) {}
