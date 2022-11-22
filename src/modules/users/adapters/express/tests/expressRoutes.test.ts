@@ -22,4 +22,10 @@ describe("CreateUserExpressRoute Test Suite", () => {
     const mockRequest = mockCreateUserHttpRequest();
     await request(app).post("/users").send(mockRequest).expect(200);
   });
+
+  // it("should return 200 when a username is found", async () => {
+  //   const mockRequest = mockCreateUserHttpRequest();
+  //   await request(app).post("/users").send(mockRequest).expect(200);
+  //   await request(app).get(`/users/${mockRequest.body.username}`).expect(200);
+  // });
 });

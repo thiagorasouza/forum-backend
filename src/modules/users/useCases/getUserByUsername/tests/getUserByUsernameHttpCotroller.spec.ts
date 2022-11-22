@@ -1,7 +1,6 @@
 import { GetUserByUsernameHttpController } from "../getUserByUsernameHttpCotroller";
-import { GetUserByUsernameHttpRequest } from "../getUserByUsernameHttpRequest";
 import { GetUserByUsernameUseCase } from "../getUserByUsernameUseCase";
-import { mockGetUserByUsernameDTO } from "./getUserByUsernameDTO.mock";
+import { mockGetUserByUsernameHttpRequest } from "./getUserByUsernameHttpRequest.mock";
 import { mockGetUserByUsernameUseCase } from "./getUserByUsernameUseCase.mock";
 
 interface SutTypes {
@@ -22,14 +21,10 @@ describe("GetUserByUsernameHttpController Test Suite", () => {
 
     const useCaseSpy = jest.spyOn(useCase, "execute");
 
-    const getUserByUsernameDTO = mockGetUserByUsernameDTO();
-
-    const httpRequest: GetUserByUsernameHttpRequest = {
-      body: getUserByUsernameDTO,
-    };
+    const httpRequest = mockGetUserByUsernameHttpRequest();
     sut.handle(httpRequest);
 
     expect(useCaseSpy).toHaveBeenCalledTimes(1);
-    expect(useCaseSpy).toHaveBeenCalledWith(getUserByUsernameDTO);
+    expect(useCaseSpy).toHaveBeenCalledWith(httpRequest.params);
   });
 });

@@ -7,7 +7,7 @@ export class GetUserByUsernameHttpController implements Controller {
   constructor(private readonly useCase: GetUserByUsernameUseCase) {}
 
   async handle(request: GetUserByUsernameHttpRequest): Promise<void> {
-    const { username } = request.body;
+    const { username } = request.params;
     const getUserRequest: GetUserByUsernameRequestModel = {
       username,
     };

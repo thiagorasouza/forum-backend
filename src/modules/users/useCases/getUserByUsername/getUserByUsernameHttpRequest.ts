@@ -4,5 +4,5 @@ export interface GetUserByUsernameDTO {
 
 export interface GetUserByUsernameHttpRequest {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  body: GetUserByUsernameDTO;
+  params: GetUserByUsernameDTO;
 }

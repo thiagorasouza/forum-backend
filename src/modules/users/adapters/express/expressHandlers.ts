@@ -4,6 +4,9 @@ import { CreateUserUseCase } from "../../useCases/createUser/createUserUseCase";
 import { SequelizeUserRepository } from "../../adapters/sequelize/sequelizeUserRepository";
 import { Response, Request } from "express";
 import { ExpressView } from "./expressView";
+import { GetUserByUsernameHttpPresenter } from "../../useCases/getUserByUsername/getUserByUsernameHttpPresenter";
+import { GetUserByUsernameUseCase } from "../../useCases/getUserByUsername/getUserByUsernameUseCase";
+import { GetUserByUsernameHttpController } from "../../useCases/getUserByUsername/getUserByUsernameHttpCotroller";
 
 export const createUserExpressHandler = async (
   req: Request,
@@ -14,19 +17,19 @@ export const createUserExpressHandler = async (
   const repository = new SequelizeUserRepository();
   const useCase = new CreateUserUseCase(repository, presenter);
   const controller = new CreateUserHttpController(useCase);
-  await controller.handle(req.body);
+  await controller.handle(req as any);
   return res.end();
 };
 
-// export const getUserByUsernameExpressHandler = async (
-//   req: Request,
-//   res: Response
-// ): Promise<Response> => {
-//   const view = new ExpressView(res);
-//   const presenter = new GetUserByUsername(view);
-//   const repository = new SequelizeUserRepository();
-//   const useCase = new GetUserByUsernameUseCase(repository, presenter);
-//   const controller = new GetUserByUsernameHttpController(useCase);
-//   await controller.handle(req.body);
-//   return res.end();
-// };
+export const getUserByUsernameExpressHandler = async (
+  req: Request,
+  res: Response
+): Promise<Response> => {
+  const view = new ExpressView(res);
+  const presenter = new GetUserByUsernameHttpPresenter(view);
+  const repository = new SequelizeUserRepository();
+  const useCase = new GetUserByUsernameUseCase(repository, presenter);
+  const controller = new GetUserByUsernameHttpController(useCase);
+  await controller.handle(req as any);
+  return res.end();
+};

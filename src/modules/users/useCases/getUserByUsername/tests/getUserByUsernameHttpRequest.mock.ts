@@ -4,6 +4,6 @@ import { mockGetUserByUsernameDTO } from "./getUserByUsernameDTO.mock";
 export const mockGetUserByUsernameHttpRequest =
   (): GetUserByUsernameHttpRequest => {
     return {
-      body: mockGetUserByUsernameDTO(),
+      params: mockGetUserByUsernameDTO(),
     };
   };
