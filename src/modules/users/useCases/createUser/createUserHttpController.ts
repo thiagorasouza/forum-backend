@@ -7,10 +7,10 @@ export class CreateUserHttpController implements Controller {
   constructor(private readonly useCase: CreateUserUseCase) {}
 
   async handle(request: CreateUserHttpRequest): Promise<void> {
-    const { name, email, password } = request.body;
+    const { username, email, password } = request.body;
 
     const createUserRequest: CreateUserRequestModel = {
-      name,
+      username,
       email,
       password,
     };

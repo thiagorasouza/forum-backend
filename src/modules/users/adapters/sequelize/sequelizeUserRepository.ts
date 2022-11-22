@@ -15,7 +15,7 @@ export class SequelizeUserRepository implements CreateUserRepository {
   async create(userModel: UserModel): Promise<CreateResponse> {
     const userData = SequelizeUserRepository.mapFromDomain(userModel);
 
-    const sequelizeUserModel = SequelizeUserModel.build(userData);
+    const sequelizeUserModel = SequelizeUserModel.build({ ...userData });
     await sequelizeUserModel.save();
 
     return new Success<string>("User saved");
@@ -38,9 +38,9 @@ export class SequelizeUserRepository implements CreateUserRepository {
     return new Success<UserModel>(userModel);
   }
 
-  static mapFromDomain(userModel: UserModel) {
+  static mapFromDomain(userModel: UserModel): UserData {
     return {
-      name: userModel.name,
+      username: userModel.username.value,
       email: userModel.email.value,
       password: userModel.password.value,
     };

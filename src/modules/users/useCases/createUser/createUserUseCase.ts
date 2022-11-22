@@ -17,7 +17,7 @@ export class CreateUserUseCase {
   ) {}
 
   async execute(request: CreateUserRequestModel): Promise<void> {
-    const { name, email, password } = request;
+    const { username, email, password } = request;
 
     try {
       const getUserByEmailResult = await this.repository.getByEmail(email);
@@ -25,7 +25,7 @@ export class CreateUserUseCase {
         return this.toPresenter(new EmailAlreadyRegisteredFailure());
       }
 
-      const userData: UserData = { name, email, password };
+      const userData: UserData = { username, email, password };
       const userResult = User.create(userData);
       if (!userResult.ok) {
         return this.toPresenter(userResult);

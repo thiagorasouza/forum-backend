@@ -1,8 +1,9 @@
 import { UserEmail } from "./userEmail";
 import { UserPassword } from "./userPassword";
+import { UserUsername } from "./userUsername";
 
 export interface UserModel {
-  name: string;
+  username: UserUsername;
   email: UserEmail;
   password: UserPassword;
 }

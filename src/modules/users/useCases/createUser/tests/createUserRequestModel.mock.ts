@@ -2,7 +2,7 @@ import { CreateUserRequestModel } from "../createUserRequestModel";
 
 export const mockCreateUserRequestModel = (): CreateUserRequestModel => {
   return {
-    name: "valid_name",
+    username: "valid_username",
     email: "valid_email",
     password: "valid_password",
   };
