@@ -42,6 +42,19 @@ describe("GetUserByUsernameUseCase Test Suite", () => {
     expect(presenterSpy).toHaveBeenCalledWith(userNotFound);
   });
 
+  it("should succed with UserModel if username registered", async () => {
+    const { sut, presenter } = makeSut();
+    const requestModel = mockGetUserByUsernameRequestModel();
+    const presenterSpy = jest.spyOn(presenter, "format");
+
+    const userModel = mockUserModel();
+    const userExists = new Success<UserModel>(userModel);
+
+    await sut.execute(requestModel);
+
+    expect(presenterSpy).toHaveBeenCalledWith(userExists);
+  });
+
   // it("should succeed if user is registered", async () => {
   //   const { sut } = makeSut();
   //   const requestMock = mockCreateUserRequestModel();
