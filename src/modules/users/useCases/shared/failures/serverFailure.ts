@@ -1,4 +1,4 @@
-import { Failure } from "../../core/failure";
+import { Failure } from "../../../core/failure";
 
 export class ServerFailure extends Failure<string> {
   constructor() {

@@ -1,4 +1,4 @@
-import { Controller } from "../protocols/controller";
+import { Controller } from "../shared/protocols/controller";
 import { GetUserByUsernameHttpRequest } from "./getUserByUsernameHttpRequest";
 import { GetUserByUsernameRequestModel } from "./getUserByUsernameRequestModel";
 import { GetUserByUsernameUseCase } from "./getUserByUsernameUseCase";

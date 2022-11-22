@@ -8,7 +8,7 @@ export const getUserRoutes = (): Router => {
   const router = Router();
 
   router.post("/", createUserExpressHandler);
-  router.get("/:username", getUserByUsernameExpressHandler);
+  // router.get("/:username", getUserByUsernameExpressHandler);
 
   return router;
 };

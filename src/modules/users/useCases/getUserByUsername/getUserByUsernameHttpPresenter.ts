@@ -1,11 +1,14 @@
 import { Success } from "../../core/success";
-import { UserNotFoundFailure } from "../failures/userNotFoundFailure";
-import { UserHttpView } from "../protocols/userHttpView";
-import { UserHttpViewModel } from "../protocols/userHttpViewModel";
+import { UserNotFoundFailure } from "../shared/failures/userNotFoundFailure";
+import { HttpView } from "../shared/protocols/httpView";
+import { HttpViewModel } from "../shared/protocols/HttpViewModel";
+import { GetUserByUsernamePresenter } from "./getUserByUsernamePresenter";
 import { GetUserByUsernameResponseModel } from "./getUserByUsernameResponseModel";
 
-export class GetUserByUsernameHttpPresenter {
-  constructor(private readonly view: UserHttpView) {}
+export class GetUserByUsernameHttpPresenter
+  implements GetUserByUsernamePresenter
+{
+  constructor(private readonly view: HttpView) {}
 
   format(response: GetUserByUsernameResponseModel): void {
     if (response.constructor === Success) {
@@ -16,7 +19,7 @@ export class GetUserByUsernameHttpPresenter {
     }
   }
 
-  private toView(viewModel: UserHttpViewModel) {
+  private toView(viewModel: HttpViewModel) {
     return this.view.display(viewModel);
   }
 }

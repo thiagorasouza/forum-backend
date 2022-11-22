@@ -1,17 +1,18 @@
 import { Success } from "../../core/success";
 import { User } from "../../domain/user";
 import { UserData } from "../../domain/userData";
-import { EmailAlreadyRegisteredFailure } from "../failures/emailAlreadyRegisteredFailure";
-import { ServerFailure } from "../failures/serverFailure";
+import { EmailAlreadyRegisteredFailure } from "../shared/failures/emailAlreadyRegisteredFailure";
+import { ServerFailure } from "../shared/failures/serverFailure";
+import { UseCase } from "../shared/protocols/useCase";
 import { CreateUserPresenter } from "./createUserPresenter";
 import { CreateUserRepository } from "./createUserRepository";
 import { CreateUserRequestModel } from "./createUserRequestModel";
 import { CreateUserResponseModel } from "./createUserResponseModel";
 
-export class CreateUserUseCase {
+export class CreateUserUseCase implements UseCase {
   constructor(
-    private readonly repository: CreateUserRepository,
-    private readonly presenter: CreateUserPresenter
+    protected readonly repository: CreateUserRepository,
+    protected readonly presenter: CreateUserPresenter
   ) {}
 
   async execute(request: CreateUserRequestModel): Promise<void> {
@@ -38,7 +39,7 @@ export class CreateUserUseCase {
     }
   }
 
-  private toPresenter(response: CreateUserResponseModel) {
+  public toPresenter(response: CreateUserResponseModel) {
     return this.presenter.format(response);
   }
 }

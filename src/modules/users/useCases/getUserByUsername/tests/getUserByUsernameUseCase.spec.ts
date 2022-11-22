@@ -1,8 +1,8 @@
 import { Success } from "../../../core/success";
 import { mockUserModel } from "../../../domain/tests/userModel.mock";
 import { UserModel } from "../../../domain/userModel";
-import { ServerFailure } from "../../failures/serverFailure";
-import { UserNotFoundFailure } from "../../failures/userNotFoundFailure";
+import { ServerFailure } from "../../shared/failures/serverFailure";
+import { UserNotFoundFailure } from "../../shared/failures/userNotFoundFailure";
 import { mockGetUserByUsernameRequestModel } from "./getUserByUsernameRequestModel.mock";
 import { mockGetUserByUsernameUseCase as makeSut } from "./getUserByUsernameUseCase.mock";
 

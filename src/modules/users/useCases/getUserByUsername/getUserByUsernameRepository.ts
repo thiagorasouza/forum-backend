@@ -1,7 +1,7 @@
 import { InconsistentDataFailure } from "../../adapters/sequelize/sequelizeUserFailures";
 import { Success } from "../../core/success";
 import { UserModel } from "../../domain/userModel";
-import { UserNotFoundFailure } from "../failures/userNotFoundFailure";
+import { UserNotFoundFailure } from "../shared/failures/userNotFoundFailure";
 
 export type GetByUsernameResponse =
   | UserNotFoundFailure

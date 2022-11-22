@@ -1,11 +1,11 @@
 import { Response } from "express";
-import { UserHttpView } from "../../useCases/protocols/userHttpView";
-import { UserHttpViewModel } from "../../useCases/protocols/userHttpViewModel";
+import { HttpView } from "../../useCases/shared/protocols/httpView";
+import { HttpViewModel } from "../../useCases/shared/protocols/HttpViewModel";
 
-export class ExpressView implements UserHttpView {
+export class ExpressView implements HttpView {
   constructor(private readonly res: Response) {}
 
-  display(viewModel: UserHttpViewModel): void {
+  display(viewModel: HttpViewModel): void {
     this.res.status(viewModel.statusCode);
     this.res.json(viewModel.body);
   }

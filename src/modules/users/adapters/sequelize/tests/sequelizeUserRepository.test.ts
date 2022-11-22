@@ -6,7 +6,7 @@ import { UserModel } from "../../../domain/userModel";
 import { SequelizeConnection } from "../sequelizeConnection";
 import { InconsistentDataFailure } from "../sequelizeUserFailures";
 import { UserData } from "../../../domain/userData";
-import { UserNotFoundFailure } from "../../../useCases/failures/userNotFoundFailure";
+import { UserNotFoundFailure } from "../../../useCases/shared/failures/userNotFoundFailure";
 import { User } from "../../../domain/user";
 import { InvalidParamFailure } from "../../../domain/userFailures";
 

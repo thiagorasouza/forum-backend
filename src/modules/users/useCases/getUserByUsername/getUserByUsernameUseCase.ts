@@ -1,4 +1,4 @@
-import { ServerFailure } from "../failures/serverFailure";
+import { ServerFailure } from "../shared/failures/serverFailure";
 import { GetUserByUsernamePresenter } from "./getUserByUsernamePresenter";
 import { GetUserByUsernameRepository } from "./getUserByUsernameRepository";
 import { GetUserByUsernameRequestModel } from "./getUserByUsernameRequestModel";

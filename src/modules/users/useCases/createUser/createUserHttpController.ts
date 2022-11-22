@@ -1,7 +1,7 @@
 import { CreateUserUseCase } from "./createUserUseCase";
 import { CreateUserHttpRequest } from "./createUserHttpRequest";
 import { CreateUserRequestModel } from "./createUserRequestModel";
-import { Controller } from "../protocols/controller";
+import { Controller } from "../shared/protocols/controller";
 
 export class CreateUserHttpController implements Controller {
   constructor(private readonly useCase: CreateUserUseCase) {}

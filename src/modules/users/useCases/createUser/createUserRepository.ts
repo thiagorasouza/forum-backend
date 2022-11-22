@@ -2,7 +2,7 @@ import { InconsistentDataFailure } from "../../adapters/sequelize/sequelizeUserF
 import { Failure } from "../../core/failure";
 import { Success } from "../../core/success";
 import { UserModel } from "../../domain/userModel";
-import { UserNotFoundFailure } from "../failures/userNotFoundFailure";
+import { UserNotFoundFailure } from "../shared/failures/userNotFoundFailure";
 
 export type CreateResponse = Failure<string> | Success<string>;
 export type GetByEmailResponse =

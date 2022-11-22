@@ -7,17 +7,17 @@
 import { Success } from "../../../core/success";
 import { mockUserModel } from "../../../domain/tests/userModel.mock";
 import { UserModel } from "../../../domain/userModel";
-import { UserNotFoundFailure } from "../../failures/userNotFoundFailure";
-import { UserHttpView } from "../../protocols/userHttpView";
+import { UserNotFoundFailure } from "../../shared/failures/userNotFoundFailure";
+import { HttpView } from "../../shared/protocols/httpView";
 import { GetUserByUsernameHttpPresenter } from "../getUserByUsernameHttpPresenter";
 
 interface SutTypes {
   sut: GetUserByUsernameHttpPresenter;
-  view: UserHttpView;
+  view: HttpView;
 }
 
-const makeView = (): UserHttpView => {
-  class UserHttpViewMock implements UserHttpView {
+const makeView = (): HttpView => {
+  class UserHttpViewMock implements HttpView {
     display(): void {
       return;
     }

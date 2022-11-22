@@ -1,16 +1,16 @@
 import { Success } from "../../../core/success";
 import { InvalidParamFailure } from "../../../domain/userFailures";
-import { EmailAlreadyRegisteredFailure } from "../../failures/emailAlreadyRegisteredFailure";
+import { EmailAlreadyRegisteredFailure } from "../../shared/failures/emailAlreadyRegisteredFailure";
 import { CreateUserHttpPresenter } from "../createUserHttpPresenter";
-import { UserHttpView } from "../../protocols/userHttpView";
+import { HttpView } from "../../shared/protocols/httpView";
 
 interface SutTypes {
   sut: CreateUserHttpPresenter;
-  view: UserHttpView;
+  view: HttpView;
 }
 
-const makeView = (): UserHttpView => {
-  class CreateUserHttpViewMock implements UserHttpView {
+const makeView = (): HttpView => {
+  class CreateUserHttpViewMock implements HttpView {
     display(): void {
       return;
     }
@@ -40,6 +40,7 @@ describe("CreateUserHttpPresenter", () => {
 
     expect(viewSpy).toHaveBeenCalledWith({
       statusCode: 200,
+      body: successMock.value,
     });
   });
 
