@@ -50,18 +50,18 @@ describe("CreateUserHttpPresenter", () => {
     });
   });
 
-  // it("should display 400 if email is already registered", () => {
-  //   const { sut, view } = makeSut();
+  it("should display 404 if user is not found", () => {
+    const { sut, view } = makeSut();
 
-  //   const viewSpy = jest.spyOn(view, "display");
+    const viewSpy = jest.spyOn(view, "display");
 
-  //   sut.format(emailAlreadyRegisteredMock);
+    sut.format(userNotFoundMock);
 
-  //   expect(viewSpy).toHaveBeenCalledWith({
-  //     statusCode: 400,
-  //     body: emailAlreadyRegisteredMock.error,
-  //   });
-  // });
+    expect(viewSpy).toHaveBeenCalledWith({
+      statusCode: 404,
+      body: userNotFoundMock.error,
+    });
+  });
 
   // it("should display 400 if params are not valid", () => {
   //   const { sut, view } = makeSut();

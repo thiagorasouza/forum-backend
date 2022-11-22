@@ -12,7 +12,7 @@ export class GetUserByUsernameHttpPresenter {
       return this.toView({ statusCode: 200, body: response.value });
     }
     if (response.constructor === UserNotFoundFailure) {
-      return this.toView({ statusCode: 400, body: response.error });
+      return this.toView({ statusCode: 404, body: response.error });
     }
   }
 
