@@ -1,27 +1,28 @@
 import { Success } from "../../../core/success";
-import { InvalidParamFailure } from "../../shared/failures/invalidParamFailure";
-import { EmailAlreadyRegisteredFailure } from "../../shared/failures/emailAlreadyRegisteredFailure";
-import { CreateUserHttpPresenter } from "../createUserHttpPresenter";
-import { HttpView } from "../../shared/protocols/httpView";
+import { EmailAlreadyRegisteredFailure } from "../failures/emailAlreadyRegisteredFailure";
+import { InvalidParamFailure } from "../failures/invalidParamFailure";
+import { UserNotFoundFailure } from "../failures/userNotFoundFailure";
+import { HttpPresenter } from "../httpPresenter";
+import { HttpView } from "../protocols/httpView";
 
 interface SutTypes {
-  sut: CreateUserHttpPresenter;
+  sut: HttpPresenter;
   view: HttpView;
 }
 
 const makeView = (): HttpView => {
-  class CreateUserHttpViewMock implements HttpView {
+  class HttpViewMock implements HttpView {
     display(): void {
       return;
     }
   }
 
-  return new CreateUserHttpViewMock();
+  return new HttpViewMock();
 };
 
 const makeSut = (): SutTypes => {
   const view = makeView();
-  const sut = new CreateUserHttpPresenter(view);
+  const sut = new HttpPresenter(view);
 
   return { sut, view };
 };
@@ -29,9 +30,10 @@ const makeSut = (): SutTypes => {
 const successMock = new Success<string>("success");
 const emailAlreadyRegisteredMock = new EmailAlreadyRegisteredFailure();
 const invalidParamMock = new InvalidParamFailure("any");
+const userNotFoundMock = new UserNotFoundFailure();
 
 describe("CreateUserHttpPresenter", () => {
-  it("should display 200 for success case", () => {
+  it("should display 200 for success cases", () => {
     const { sut, view } = makeSut();
 
     const viewSpy = jest.spyOn(view, "display");
@@ -67,6 +69,19 @@ describe("CreateUserHttpPresenter", () => {
     expect(viewSpy).toHaveBeenCalledWith({
       statusCode: 400,
       body: invalidParamMock.error,
+    });
+  });
+
+  it("should display 404 if user is not found", () => {
+    const { sut, view } = makeSut();
+
+    const viewSpy = jest.spyOn(view, "display");
+
+    sut.format(userNotFoundMock);
+
+    expect(viewSpy).toHaveBeenCalledWith({
+      statusCode: 404,
+      body: userNotFoundMock.error,
     });
   });
 });

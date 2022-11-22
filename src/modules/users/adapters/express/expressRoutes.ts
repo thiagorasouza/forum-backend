@@ -1,8 +1,5 @@
 import { Router } from "express";
-import {
-  createUserExpressHandler,
-  getUserByUsernameExpressHandler,
-} from "./expressHandlers";
+import { createUserExpressHandler } from "./expressHandlers";
 
 export const getUserRoutes = (): Router => {
   const router = Router();
