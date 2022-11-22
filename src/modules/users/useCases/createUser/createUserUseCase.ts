@@ -1,7 +1,7 @@
 import { Success } from "../../core/success";
 import { User } from "../../domain/user";
 import { UserData } from "../../domain/userData";
-import { EmailAlreadyRegisteredFailure } from "./createUserFailures";
+import { EmailAlreadyRegisteredFailure } from "../failures/emailAlreadyRegisteredFailure";
 import { ServerFailure } from "../failures/serverFailure";
 import { CreateUserPresenter } from "./createUserPresenter";
 import { CreateUserRepository } from "./createUserRepository";

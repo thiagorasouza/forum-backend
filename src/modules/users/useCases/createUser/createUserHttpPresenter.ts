@@ -1,6 +1,6 @@
 import { Success } from "../../core/success";
 import { InvalidParamFailure } from "../../domain/userFailures";
-import { EmailAlreadyRegisteredFailure } from "./createUserFailures";
+import { EmailAlreadyRegisteredFailure } from "../failures/emailAlreadyRegisteredFailure";
 import { CreateUserHttpView } from "./createUserHttpView";
 import { CreateUserHttpViewModel } from "./createUserHttpViewModel";
 import { CreateUserResponseModel } from "./createUserResponseModel";
