@@ -2,7 +2,7 @@ import { Success } from "../../core/success";
 import { InvalidParamFailure } from "../shared/failures/invalidParamFailure";
 import { EmailAlreadyRegisteredFailure } from "../shared/failures/emailAlreadyRegisteredFailure";
 import { HttpView } from "../shared/protocols/httpView";
-import { HttpViewModel } from "../shared/protocols/HttpViewModel";
+import { HttpViewModel } from "../shared/protocols/httpViewModel";
 import { CreateUserResponseModel } from "./createUserResponseModel";
 import { CreateUserPresenter } from "./createUserPresenter";
 

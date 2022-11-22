@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
 import request from "supertest";
-import { HttpViewModel } from "../../../useCases/shared/protocols/HttpViewModel";
+import { HttpViewModel } from "../../../useCases/shared/protocols/httpViewModel";
 import { ExpressView } from "../expressView";
 
 const app = express();

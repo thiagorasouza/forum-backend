@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { HttpView } from "../../useCases/shared/protocols/httpView";
-import { HttpViewModel } from "../../useCases/shared/protocols/HttpViewModel";
+import { HttpViewModel } from "../../useCases/shared/protocols/httpViewModel";
 
 export class ExpressView implements HttpView {
   constructor(private readonly res: Response) {}

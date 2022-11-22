@@ -1,7 +1,7 @@
 import { Success } from "../../core/success";
 import { UserNotFoundFailure } from "../shared/failures/userNotFoundFailure";
 import { HttpView } from "../shared/protocols/httpView";
-import { HttpViewModel } from "../shared/protocols/HttpViewModel";
+import { HttpViewModel } from "../shared/protocols/httpViewModel";
 import { GetUserByUsernamePresenter } from "./getUserByUsernamePresenter";
 import { GetUserByUsernameResponseModel } from "./getUserByUsernameResponseModel";
 
