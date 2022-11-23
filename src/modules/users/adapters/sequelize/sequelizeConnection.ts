@@ -11,6 +11,7 @@ export class SequelizeConnection {
       password: "",
       storage: ":memory:",
       models,
+      logging: false,
     });
     await connection.authenticate();
     SequelizeConnection.sequelize = connection;
