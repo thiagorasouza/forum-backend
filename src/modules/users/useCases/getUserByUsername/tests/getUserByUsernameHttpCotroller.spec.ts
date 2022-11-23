@@ -1,4 +1,4 @@
-import { GetUserByUsernameHttpController } from "../getUserByUsernameHttpCotroller";
+import { GetUserByUsernameHttpController } from "../getUserByUsernameHttpController";
 import { GetUserByUsernameUseCase } from "../getUserByUsernameUseCase";
 import { mockGetUserByUsernameHttpRequest } from "./mocks/getUserByUsernameHttpRequest.mock";
 import { mockGetUserByUsernameUseCase } from "./mocks/getUserByUsernameUseCase.mock";
