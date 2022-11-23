@@ -1,4 +1,4 @@
-import { Failure } from "../../core/failure";
+import { Failure } from "../../../core/failure";
 
 export class InconsistentDataFailure extends Failure<string> {
   constructor() {

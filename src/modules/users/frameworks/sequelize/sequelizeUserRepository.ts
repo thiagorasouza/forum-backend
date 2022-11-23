@@ -8,7 +8,7 @@ import {
   CreateResponse,
   GetByEmailResponse,
 } from "../../useCases/createUser/createUserRepository";
-import { InconsistentDataFailure } from "./sequelizeUserFailures";
+import { InconsistentDataFailure } from "../../useCases/shared/failures/inconsistentDataFailure";
 import { SequelizeUserModel } from "./sequelizeUserModel";
 import {
   GetByUsernameResponse,

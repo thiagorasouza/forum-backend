@@ -2,7 +2,7 @@ import { SequelizeUserRepository } from "../sequelizeUserRepository";
 import { SequelizeUserModel } from "../sequelizeUserModel";
 import { mockUserModel } from "../../../domain/tests/userModel.mock";
 import { SequelizeConnection } from "../sequelizeConnection";
-import { InconsistentDataFailure } from "../sequelizeUserFailures";
+import { InconsistentDataFailure } from "../../../useCases/shared/failures/inconsistentDataFailure";
 import { UserData } from "../../../domain/userData";
 import { UserNotFoundFailure } from "../../../useCases/shared/failures/userNotFoundFailure";
 import { User } from "../../../domain/user";

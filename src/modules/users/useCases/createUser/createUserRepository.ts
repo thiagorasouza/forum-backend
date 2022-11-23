@@ -1,4 +1,4 @@
-import { InconsistentDataFailure } from "../../frameworks/sequelize/sequelizeUserFailures";
+import { InconsistentDataFailure } from "../shared/failures/inconsistentDataFailure";
 import { Failure } from "../../core/failure";
 import { Success } from "../../core/success";
 import { UserModel } from "../../domain/userModel";
