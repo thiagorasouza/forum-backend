@@ -18,7 +18,8 @@ export interface CreateUserRequestModel {
 export type CreateUserResponseModel =
   | UserCreatedSuccess
   | EmailAlreadyRegisteredFailure
-  | UserFailures;
+  | UserFailures
+  | ServerFailure;
 
 export class CreateUserUseCase implements UseCase {
   constructor(
