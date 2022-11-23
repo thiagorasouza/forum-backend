@@ -1,10 +1,8 @@
 import { CreateUserHttpController } from "../../useCases/createUser/createUserHttpController";
 import { CreateUserUseCase } from "../../useCases/createUser/createUserUseCase";
-import { SequelizeUserRepository } from "../../adapters/sequelize/sequelizeUserRepository";
+import { SequelizeUserRepository } from "../sequelize/sequelizeUserRepository";
 import { Response, Request } from "express";
 import { ExpressView } from "./expressView";
-import { GetUserByUsernameUseCase } from "../../useCases/getUserByUsername/getUserByUsernameUseCase";
-import { GetUserByUsernameHttpController } from "../../useCases/getUserByUsername/getUserByUsernameHttpCotroller";
 import { HttpPresenter } from "../../useCases/shared/httpPresenter";
 
 export const createUserExpressHandler = async (
