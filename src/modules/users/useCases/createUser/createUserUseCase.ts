@@ -55,6 +55,7 @@ export class CreateUserUseCase implements UseCase {
 
       return this.toPresenter(new UserCreatedSuccess());
     } catch (error) {
+      console.log(error);
       return this.toPresenter(new ServerFailure());
     }
   }

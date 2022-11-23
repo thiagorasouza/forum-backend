@@ -10,25 +10,25 @@ import { HttpPresenter } from "../../useCases/shared/httpPresenter";
 export const createUserExpressHandler = async (
   req: Request,
   res: Response
-): Promise<Response> => {
+): Promise<void> => {
   const view = new ExpressView(res);
   const presenter = new HttpPresenter(view);
   const repository = new SequelizeUserRepository();
   const useCase = new CreateUserUseCase(repository, presenter);
   const controller = new CreateUserHttpController(useCase);
   await controller.handle(req as any);
-  return res.end();
+  // return res.end();
 };
 
-export const getUserByUsernameExpressHandler = async (
-  req: Request,
-  res: Response
-): Promise<Response> => {
-  const view = new ExpressView(res);
-  const presenter = new HttpPresenter(view);
-  const repository = new SequelizeUserRepository();
-  const useCase = new GetUserByUsernameUseCase(repository, presenter);
-  const controller = new GetUserByUsernameHttpController(useCase);
-  await controller.handle(req as any);
-  return res.end();
-};
+// export const getUserByUsernameExpressHandler = async (
+//   req: Request,
+//   res: Response
+// ): Promise<Response> => {
+//   const view = new ExpressView(res);
+//   const presenter = new HttpPresenter(view);
+//   const repository = new SequelizeUserRepository();
+//   const useCase = new GetUserByUsernameUseCase(repository, presenter);
+//   const controller = new GetUserByUsernameHttpController(useCase);
+//   await controller.handle(req as any);
+//   return res.end();
+// };
