@@ -14,6 +14,7 @@ import {
   GetByUsernameResponse,
   GetUserByUsernameRepository,
 } from "../../useCases/getUserByUsername/getUserByUsernameRepository";
+import { UserFoundSuccess } from "../../useCases/shared/successes/userFoundSuccess";
 
 export class SequelizeUserRepository
   implements CreateUserRepository, GetUserByUsernameRepository
@@ -45,7 +46,7 @@ export class SequelizeUserRepository
     fieldName: string;
     fieldValue: string;
   }): Promise<
-    UserNotFoundFailure | InconsistentDataFailure | Success<UserModel>
+    UserNotFoundFailure | InconsistentDataFailure | UserFoundSuccess
   > {
     const userData = await SequelizeUserModel.findOne({
       where: { [name]: value },
@@ -60,7 +61,7 @@ export class SequelizeUserRepository
     }
 
     const userModel = mapResult.value.props;
-    return new Success<UserModel>(userModel);
+    return new UserFoundSuccess(userModel);
   }
 
   static mapFromDomain(userModel: UserModel): UserData {

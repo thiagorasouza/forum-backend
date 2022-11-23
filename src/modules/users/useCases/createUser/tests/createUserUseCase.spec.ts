@@ -9,6 +9,7 @@ import { makeCreateUserUseCase as makeSut } from "./mocks/createUserUseCase.mock
 import { Guard } from "../../../core/guard";
 import { MissingParamFailure } from "../../shared/failures/missingParamFailure";
 import { UserCreatedSuccess } from "../../shared/successes/userCreatedSuccess";
+import { UserFoundSuccess } from "../../shared/successes/userFoundSuccess";
 
 const responseMock = {} as UserModel;
 
@@ -58,7 +59,7 @@ describe("CreateUserUseCase Test Suite", () => {
     const { sut, repository, presenter } = makeSut();
     const requestMock = mockCreateUserRequestModel();
 
-    const userExists = new Success<UserModel>(responseMock);
+    const userExists = new UserFoundSuccess(responseMock);
 
     jest
       .spyOn(repository, "getByEmail")

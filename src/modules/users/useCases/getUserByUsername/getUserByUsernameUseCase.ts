@@ -1,9 +1,8 @@
 import { Guard } from "../../core/guard";
-import { Success } from "../../core/success";
 import { UserFailures } from "../../domain/userFailures";
-import { UserModel } from "../../domain/userModel";
 import { ServerFailure } from "../shared/failures/serverFailure";
 import { UserNotFoundFailure } from "../shared/failures/userNotFoundFailure";
+import { UserFoundSuccess } from "../shared/successes/userFoundSuccess";
 import { GetUserByUsernamePresenter } from "./getUserByUsernamePresenter";
 import { GetUserByUsernameRepository } from "./getUserByUsernameRepository";
 
@@ -12,7 +11,7 @@ export interface GetUserByUsernameRequestModel {
 }
 
 export type GetUserByUsernameResponseModel =
-  | Success<UserModel>
+  | UserFoundSuccess
   | UserNotFoundFailure
   | UserFailures;
 
@@ -35,6 +34,7 @@ export class GetUserByUsernameUseCase {
       );
       return this.toPresenter(getUserByUsernameResult);
     } catch (error) {
+      console.log(error);
       return this.toPresenter(new ServerFailure());
     }
   }

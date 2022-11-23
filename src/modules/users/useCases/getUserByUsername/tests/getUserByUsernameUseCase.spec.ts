@@ -1,10 +1,9 @@
 import { Guard } from "../../../core/guard";
-import { Success } from "../../../core/success";
 import { mockUserModel } from "../../../domain/tests/userModel.mock";
-import { UserModel } from "../../../domain/userModel";
 import { MissingParamFailure } from "../../shared/failures/missingParamFailure";
 import { ServerFailure } from "../../shared/failures/serverFailure";
 import { UserNotFoundFailure } from "../../shared/failures/userNotFoundFailure";
+import { UserFoundSuccess } from "../../shared/successes/userFoundSuccess";
 import { mockGetUserByUsernameRequestModel } from "./mocks/getUserByUsernameRequestModel.mock";
 import { mockGetUserByUsernameUseCase as makeSut } from "./mocks/getUserByUsernameUseCase.mock";
 
@@ -60,7 +59,7 @@ describe("GetUserByUsernameUseCase Test Suite", () => {
     const presenterSpy = jest.spyOn(presenter, "format");
 
     const userModel = mockUserModel();
-    const userExists = new Success<UserModel>(userModel);
+    const userExists = new UserFoundSuccess(userModel);
 
     const requestModel = mockGetUserByUsernameRequestModel();
     await sut.execute(requestModel);

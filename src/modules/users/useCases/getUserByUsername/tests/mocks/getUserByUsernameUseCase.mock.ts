@@ -1,6 +1,5 @@
-import { Success } from "../../../../core/success";
 import { mockUserModel } from "../../../../domain/tests/userModel.mock";
-import { UserModel } from "../../../../domain/userModel";
+import { UserFoundSuccess } from "../../../shared/successes/userFoundSuccess";
 import { GetUserByUsernamePresenter } from "../../getUserByUsernamePresenter";
 import {
   GetByUsernameResponse,
@@ -12,7 +11,7 @@ const makeRepository = (): GetUserByUsernameRepository => {
   class GetUserByUsernameRepositoryMock implements GetUserByUsernameRepository {
     async getByUsername(): Promise<GetByUsernameResponse> {
       const userModel = mockUserModel();
-      return new Success<UserModel>(userModel);
+      return new UserFoundSuccess(userModel);
     }
   }
 

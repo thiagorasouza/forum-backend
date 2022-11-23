@@ -1,14 +1,13 @@
 import { SequelizeUserRepository } from "../sequelizeUserRepository";
 import { SequelizeUserModel } from "../sequelizeUserModel";
 import { mockUserModel } from "../../../domain/tests/userModel.mock";
-import { Success } from "../../../core/success";
-import { UserModel } from "../../../domain/userModel";
 import { SequelizeConnection } from "../sequelizeConnection";
 import { InconsistentDataFailure } from "../sequelizeUserFailures";
 import { UserData } from "../../../domain/userData";
 import { UserNotFoundFailure } from "../../../useCases/shared/failures/userNotFoundFailure";
 import { User } from "../../../domain/user";
 import { InvalidParamFailure } from "../../../useCases/shared/failures/invalidParamFailure";
+import { UserFoundSuccess } from "../../../useCases/shared/successes/userFoundSuccess";
 
 const makeSut = (): SequelizeUserRepository => {
   return new SequelizeUserRepository();
@@ -54,7 +53,7 @@ describe("SequelizeUserRepository Test Suite", () => {
     await SequelizeUserModel.create({ ...userData });
     const getByEmailResult = (await sut.getByEmail(
       userData.email
-    )) as Success<UserModel>;
+    )) as UserFoundSuccess;
     expect(getByEmailResult.ok).toBe(true);
     expect(getByEmailResult?.value).toEqual(mockUserModel());
   });
@@ -73,7 +72,7 @@ describe("SequelizeUserRepository Test Suite", () => {
     await SequelizeUserModel.create({ ...userData });
     const getByUsernameResult = (await sut.getByUsername(
       userData.username
-    )) as Success<UserModel>;
+    )) as UserFoundSuccess;
     expect(getByUsernameResult.ok).toBe(true);
     expect(getByUsernameResult?.value).toEqual(mockUserModel());
   });
