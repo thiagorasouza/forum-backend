@@ -1,11 +1,11 @@
 import { Guard } from "../../core/guard";
-import { Success } from "../../core/success";
 import { User } from "../../domain/user";
 import { UserData } from "../../domain/userData";
 import { UserFailures } from "../../domain/userFailures";
 import { EmailAlreadyRegisteredFailure } from "../shared/failures/emailAlreadyRegisteredFailure";
 import { ServerFailure } from "../shared/failures/serverFailure";
 import { UseCase } from "../shared/protocols/useCase";
+import { UserCreatedSuccess } from "../shared/successes/userCreatedSuccess";
 import { CreateUserPresenter } from "./createUserPresenter";
 import { CreateUserRepository } from "./createUserRepository";
 
@@ -16,7 +16,7 @@ export interface CreateUserRequestModel {
 }
 
 export type CreateUserResponseModel =
-  | Success<string>
+  | UserCreatedSuccess
   | EmailAlreadyRegisteredFailure
   | UserFailures;
 
@@ -53,7 +53,7 @@ export class CreateUserUseCase implements UseCase {
       const userModel = userResult.value.props;
       await this.repository.create(userModel);
 
-      return this.toPresenter(new Success<string>("User created"));
+      return this.toPresenter(new UserCreatedSuccess());
     } catch (error) {
       return this.toPresenter(new ServerFailure());
     }

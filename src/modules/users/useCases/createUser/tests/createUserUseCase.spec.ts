@@ -8,6 +8,7 @@ import { mockCreateUserRequestModel } from "./mocks/createUserRequestModel.mock"
 import { makeCreateUserUseCase as makeSut } from "./mocks/createUserUseCase.mock";
 import { Guard } from "../../../core/guard";
 import { MissingParamFailure } from "../../shared/failures/missingParamFailure";
+import { UserCreatedSuccess } from "../../shared/successes/userCreatedSuccess";
 
 const responseMock = {} as UserModel;
 
@@ -136,7 +137,7 @@ describe("CreateUserUseCase Test Suite", () => {
 
     await sut.execute(requestMock);
 
-    const userCreated = new Success<string>("User created");
+    const userCreated = new UserCreatedSuccess();
     expect(presenterSpy).toHaveBeenCalledWith(userCreated);
   });
 });
