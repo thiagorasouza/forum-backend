@@ -13,7 +13,8 @@ export interface GetUserByUsernameRequestModel {
 export type GetUserByUsernameResponseModel =
   | UserFoundSuccess
   | UserNotFoundFailure
-  | UserFailures;
+  | UserFailures
+  | ServerFailure;
 
 export class GetUserByUsernameUseCase {
   constructor(

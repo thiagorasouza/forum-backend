@@ -3,14 +3,14 @@ import { CreateUserUseCase } from "../../useCases/createUser/createUserUseCase";
 import { SequelizeUserRepository } from "../sequelize/sequelizeUserRepository";
 import { Response, Request } from "express";
 import { ExpressView } from "./expressView";
-import { HttpPresenter } from "../../useCases/shared/httpPresenter";
+import { CreateUserHttpPresenter } from "../../useCases/createUser/createUserHttpPresenter";
 
 export const createUserExpressHandler = async (
   req: Request,
   res: Response
 ): Promise<void> => {
   const view = new ExpressView(res);
-  const presenter = new HttpPresenter(view);
+  const presenter = new CreateUserHttpPresenter(view);
   const repository = new SequelizeUserRepository();
   const useCase = new CreateUserUseCase(repository, presenter);
   const controller = new CreateUserHttpController(useCase);
