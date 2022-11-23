@@ -1,11 +1,10 @@
 import { InconsistentDataFailure } from "../shared/failures/inconsistentDataFailure";
-import { Failure } from "../../core/failure";
-import { Success } from "../../core/success";
 import { UserModel } from "../../domain/userModel";
 import { UserNotFoundFailure } from "../shared/failures/userNotFoundFailure";
 import { UserFoundSuccess } from "../shared/successes/userFoundSuccess";
+import { UserCreatedSuccess } from "../shared/successes/userCreatedSuccess";
 
-export type CreateResponse = Failure<string> | Success<string>;
+export type CreateResponse = UserCreatedSuccess;
 export type GetByEmailResponse =
   | UserNotFoundFailure
   | InconsistentDataFailure

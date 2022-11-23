@@ -15,6 +15,7 @@ import {
   GetUserByUsernameRepository,
 } from "../../useCases/getUserByUsername/getUserByUsernameRepository";
 import { UserFoundSuccess } from "../../useCases/shared/successes/userFoundSuccess";
+import { UserCreatedSuccess } from "../../useCases/shared/successes/userCreatedSuccess";
 
 export class SequelizeUserRepository
   implements CreateUserRepository, GetUserByUsernameRepository
@@ -25,7 +26,7 @@ export class SequelizeUserRepository
     const sequelizeUserModel = SequelizeUserModel.build({ ...userData });
     await sequelizeUserModel.save();
 
-    return new Success<string>("User saved");
+    return new UserCreatedSuccess();
   }
 
   async getByEmail(email: string): Promise<GetByEmailResponse> {
