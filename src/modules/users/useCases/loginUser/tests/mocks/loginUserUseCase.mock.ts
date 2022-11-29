@@ -8,7 +8,7 @@ import { UserFoundSuccess } from "../../../shared/successes/userFoundSuccess";
 import { mockUserModel } from "../../../../domain/tests/mocks/userModel.mock";
 import { CompareResult, Hasher } from "../../../shared/protocols/hasher";
 import { Success } from "../../../../core/success";
-import { Encrypter, EncryptResult } from "../../../shared/protocols/encrypter";
+import { Encrypter } from "../../../shared/protocols/encrypter";
 
 const makeLoginUserPresenter = (): LoginUserPresenter => {
   class LoginUserPresenterStub implements LoginUserPresenter {
@@ -43,8 +43,8 @@ const makeHasher = (): Hasher => {
 
 const mockEncrypter = (): Encrypter => {
   class EncrypterStub implements Encrypter {
-    async encrypt(): Promise<EncryptResult> {
-      return new Success("encrypted_payload");
+    async encrypt(): Promise<string> {
+      return "encrypted_payload";
     }
   }
 
