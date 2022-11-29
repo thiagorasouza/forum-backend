@@ -29,7 +29,7 @@ const makeSut = (): SutTypes => {
 
 const successMock = new UserLoggedInSuccess("any_token");
 const userNotFoundMock = new UserNotFoundFailure();
-const invalidParamMock = new InvalidPasswordFailure();
+const invalidPassword = new InvalidPasswordFailure();
 const serverFailureMock = new ServerFailure();
 
 describe("LoginUserHttpPresenter Test Suite", () => {
@@ -59,19 +59,25 @@ describe("LoginUserHttpPresenter Test Suite", () => {
     });
   });
 
-  // it("should display 400 if params are not valid", () => {
-  //   const { sut, view } = makeSut();
-  //   const viewSpy = jest.spyOn(view, "display");
-  //   sut.format(invalidParamMock);
-  //   expect(viewSpy).toHaveBeenCalledWith({
-  //     statusCode: 400,
-  //     body: invalidParamMock.error,
-  //   });
-  // });
+  it("should display 400 if password is not valid", () => {
+    const { sut, view } = makeSut();
+
+    const viewSpy = jest.spyOn(view, "display");
+
+    sut.format(invalidPassword);
+    expect(viewSpy).toHaveBeenCalledWith({
+      statusCode: 400,
+      body: invalidPassword.error,
+    });
+  });
+
   // it("should display 500 for server failures", () => {
   //   const { sut, view } = makeSut();
+
   //   const viewSpy = jest.spyOn(view, "display");
+
   //   sut.format(serverFailureMock);
+
   //   expect(viewSpy).toHaveBeenCalledWith({
   //     statusCode: 500,
   //     body: serverFailureMock.error,
