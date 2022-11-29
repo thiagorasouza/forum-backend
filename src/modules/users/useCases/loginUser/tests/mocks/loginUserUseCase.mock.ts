@@ -37,6 +37,6 @@ interface SutTypes {
 export const makeLoginUserUseCase = (): SutTypes => {
   const repository = makeLoginUserRepository();
   const presenter = makeLoginUserPresenter();
-  const sut = new LoginUserUseCase(presenter);
+  const sut = new LoginUserUseCase(presenter, repository);
   return { sut, presenter, repository };
 };
