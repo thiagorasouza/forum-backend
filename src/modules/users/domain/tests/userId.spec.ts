@@ -1,23 +1,9 @@
 import { Success } from "../../core/success";
 import { InvalidParamFailure } from "../../useCases/shared/failures/invalidParamFailure";
-import { Identifier } from "../identifier";
 import { UserId } from "../userId";
+import { mockIdentifier } from "./mocks/identifier.mock";
 
 const invalidId = new InvalidParamFailure("id");
-
-const mockIdentifier = (): Identifier => {
-  class IdentifierStub implements Identifier {
-    generateRandomId(): string {
-      return "random_id";
-    }
-
-    isIdValid(): boolean {
-      return true;
-    }
-  }
-
-  return new IdentifierStub();
-};
 
 describe("UserId Test Suite", () => {
   it("should call Identifier.generateRandomId if id is not provided", () => {
