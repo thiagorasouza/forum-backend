@@ -1,3 +1,4 @@
+import { UserNotFoundFailure } from "../shared/failures/userNotFoundFailure";
 import { HttpView } from "../shared/protocols/httpView";
 import { HttpViewModel } from "../shared/protocols/httpViewModel";
 import { UserLoggedInSuccess } from "../shared/successes/userLoggedInSuccess";
@@ -10,6 +11,10 @@ export class LoginUserHttpPresenter implements LoginUserPresenter {
   format(response: LoginUserResponseModel): void {
     if (response.constructor === UserLoggedInSuccess) {
       return this.toView({ statusCode: 200, body: response.value });
+    }
+
+    if (response.constructor === UserNotFoundFailure) {
+      return this.toView({ statusCode: 404, body: response.error });
     }
   }
 
