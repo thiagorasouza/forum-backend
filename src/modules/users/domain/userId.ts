@@ -21,8 +21,8 @@ export class UserId {
     identifier: Identifier
   ): UserIdResult {
     if (!id) {
-      identifier.generateRandomId();
-      return new Success<UserId>(new UserId("123"));
+      const randomId = identifier.generateRandomId();
+      return new Success<UserId>(new UserId(randomId));
     }
 
     const isIdValid = identifier.isIdValid(id);

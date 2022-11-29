@@ -29,6 +29,15 @@ describe("UserId Test Suite", () => {
     expect(generateRandomIdSpy).toHaveBeenCalledTimes(1);
   });
 
+  it("should return a UserId instance with a new id when id is not provided", () => {
+    const identifierStub = mockIdentifier();
+    const result = UserId.create(null, identifierStub) as Success<UserId>;
+    const userId = result.value;
+
+    expect(result.ok).toBe(true);
+    expect(userId.value).toBe("random_id");
+  });
+
   it("should call Identifier.isIdValid with correct value", () => {
     const identifierStub = mockIdentifier();
     const isIdValidSpy = jest.spyOn(identifierStub, "isIdValid");
