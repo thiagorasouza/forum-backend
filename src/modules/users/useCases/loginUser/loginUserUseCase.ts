@@ -1,3 +1,4 @@
+import { Server } from "http";
 import { Guard } from "../../core/guard";
 import { InvalidPasswordFailure } from "../shared/failures/invalidPasswordFailure";
 import { ServerFailure } from "../shared/failures/serverFailure";
@@ -29,40 +30,44 @@ export class LoginUserUseCase implements UseCase {
   ) {}
 
   async execute(request: LoginUserRequestModel): Promise<void> {
-    const guardResult = Guard.againstNullOrUndefined(request, [
-      "email",
-      "password",
-    ]);
-    if (!guardResult.ok) {
-      return this.toPresenter(guardResult);
+    try {
+      const guardResult = Guard.againstNullOrUndefined(request, [
+        "email",
+        "password",
+      ]);
+      if (!guardResult.ok) {
+        return this.toPresenter(guardResult);
+      }
+
+      const { email, password: submittedPassword } = request;
+
+      const getByEmailResult = await this.repository.getByEmail(email);
+      if (!getByEmailResult.ok) {
+        return this.toPresenter(getByEmailResult);
+      }
+
+      const userModel = getByEmailResult.value;
+      const storedPassword = userModel.password.value;
+
+      const compareResult = await this.hasher.compare(
+        submittedPassword,
+        storedPassword
+      );
+      if (!compareResult.ok) {
+        return this.toPresenter(compareResult);
+      }
+
+      const payload: EncrypterPayload = {
+        sub: userModel.id.value,
+        email: userModel.email.value,
+        username: userModel.username.value,
+      };
+      const token = await this.encrypter.encrypt(payload);
+
+      this.toPresenter(new UserLoggedInSuccess(token));
+    } catch (error) {
+      this.toPresenter(new ServerFailure());
     }
-
-    const { email, password: submittedPassword } = request;
-
-    const getByEmailResult = await this.repository.getByEmail(email);
-    if (!getByEmailResult.ok) {
-      return this.toPresenter(getByEmailResult);
-    }
-
-    const userModel = getByEmailResult.value;
-    const storedPassword = userModel.password.value;
-
-    const compareResult = await this.hasher.compare(
-      submittedPassword,
-      storedPassword
-    );
-    if (!compareResult.ok) {
-      return this.toPresenter(compareResult);
-    }
-
-    const payload: EncrypterPayload = {
-      sub: userModel.id.value,
-      email: userModel.email.value,
-      username: userModel.username.value,
-    };
-    const token = await this.encrypter.encrypt(payload);
-
-    this.toPresenter(new UserLoggedInSuccess(token));
   }
 
   toPresenter(response: LoginUserResponseModel): void {

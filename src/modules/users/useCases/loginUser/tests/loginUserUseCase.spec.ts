@@ -2,6 +2,7 @@ import { Guard } from "../../../core/guard";
 import { mockUserModel } from "../../../domain/tests/mocks/userModel.mock";
 import { InvalidPasswordFailure } from "../../shared/failures/invalidPasswordFailure";
 import { MissingParamFailure } from "../../shared/failures/missingParamFailure";
+import { ServerFailure } from "../../shared/failures/serverFailure";
 import { UserNotFoundFailure } from "../../shared/failures/userNotFoundFailure";
 import { EncrypterPayload } from "../../shared/protocols/encrypter";
 import { UserLoggedInSuccess } from "../../shared/successes/userLoggedInSuccess";
@@ -24,7 +25,7 @@ describe("LoginUserUseCase Test Suite", () => {
     );
   });
 
-  it("should fail if Guard.againstNullOrUndefined fails", async () => {
+  it("should fail if email or password were submitted", async () => {
     const { sut, presenter } = makeSut();
 
     const missingParam = new MissingParamFailure("any_field");
@@ -71,7 +72,7 @@ describe("LoginUserUseCase Test Suite", () => {
     );
   });
 
-  it("should fail if Hasher.compare fails", async () => {
+  it("should fail if password mismatches", async () => {
     const { sut, hasher, presenter } = makeSut();
 
     const invalidPassword = new InvalidPasswordFailure();
@@ -115,5 +116,47 @@ describe("LoginUserUseCase Test Suite", () => {
     await sut.execute(requestModel);
 
     expect(presenterSpy).toHaveBeenCalledWith(new UserLoggedInSuccess("token"));
+  });
+
+  it("should returns ServerFailure if LoginUserRepository throws", async () => {
+    const { sut, repository, presenter } = makeSut();
+
+    jest
+      .spyOn(repository, "getByEmail")
+      .mockReturnValueOnce(Promise.reject(new Error()));
+    const presenterSpy = jest.spyOn(presenter, "format");
+
+    const requestModel = mockLoginUserRequestModel();
+    await sut.execute(requestModel);
+
+    expect(presenterSpy).toHaveBeenCalledWith(new ServerFailure());
+  });
+
+  it("should returns ServerFailure if Hasher throws", async () => {
+    const { sut, hasher, presenter } = makeSut();
+
+    jest
+      .spyOn(hasher, "compare")
+      .mockReturnValueOnce(Promise.reject(new Error()));
+    const presenterSpy = jest.spyOn(presenter, "format");
+
+    const requestModel = mockLoginUserRequestModel();
+    await sut.execute(requestModel);
+
+    expect(presenterSpy).toHaveBeenCalledWith(new ServerFailure());
+  });
+
+  it("should returns ServerFailure if Encrypter throws", async () => {
+    const { sut, hasher, presenter } = makeSut();
+
+    jest
+      .spyOn(hasher, "compare")
+      .mockReturnValueOnce(Promise.reject(new Error()));
+    const presenterSpy = jest.spyOn(presenter, "format");
+
+    const requestModel = mockLoginUserRequestModel();
+    await sut.execute(requestModel);
+
+    expect(presenterSpy).toHaveBeenCalledWith(new ServerFailure());
   });
 });
