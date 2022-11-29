@@ -16,20 +16,20 @@ export class UserId {
     return this._value;
   }
 
-  // private static isValid(username: string): boolean {
-  //   return;
-  // }
+  public static create(
+    id: string | null,
+    identifier: Identifier
+  ): UserIdResult {
+    if (!id) {
+      identifier.generateRandomId();
+      return new Success<UserId>(new UserId("123"));
+    }
 
-  public static create(id: string, identifier: Identifier): UserIdResult {
-    identifier.isIdValid(id);
-    return new InvalidParamFailure("id");
+    const isIdValid = identifier.isIdValid(id);
+    if (!isIdValid) {
+      return new InvalidParamFailure("id");
+    }
+
+    return new Success<UserId>(new UserId(id));
   }
-
-  // public static create(id: string): Failure<string> | Success<UserId> {
-  //   return;
-  //   // if (!UserUsername.isValid(username)) {
-  //   //   return new InvalidParamFailure("username");
-  //   // }
-  //   // return new Success(new UserUsername(username));
-  // }
 }
