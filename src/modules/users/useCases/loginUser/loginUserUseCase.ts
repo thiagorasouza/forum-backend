@@ -2,6 +2,7 @@ import { Guard } from "../../core/guard";
 import { InvalidPasswordFailure } from "../shared/failures/invalidPasswordFailure";
 import { ServerFailure } from "../shared/failures/serverFailure";
 import { UserNotFoundFailure } from "../shared/failures/userNotFoundFailure";
+import { Encrypter, EncrypterPayload } from "../shared/protocols/encrypter";
 import { Hasher } from "../shared/protocols/hasher";
 import { UseCase } from "../shared/protocols/useCase";
 import { LoginUserPresenter } from "./loginUserPresenter";
@@ -21,7 +22,8 @@ export class LoginUserUseCase implements UseCase {
   constructor(
     private readonly presenter: LoginUserPresenter,
     private readonly repository: LoginUserRepository,
-    private readonly hasher: Hasher
+    private readonly hasher: Hasher,
+    private readonly encrypter: Encrypter
   ) {}
 
   async execute(request: LoginUserRequestModel): Promise<void> {
@@ -40,7 +42,8 @@ export class LoginUserUseCase implements UseCase {
       return this.toPresenter(getByEmailResult);
     }
 
-    const storedPassword = getByEmailResult.value.password.value;
+    const userModel = getByEmailResult.value;
+    const storedPassword = userModel.password.value;
 
     const compareResult = await this.hasher.compare(
       submittedPassword,
@@ -49,6 +52,14 @@ export class LoginUserUseCase implements UseCase {
     if (!compareResult.ok) {
       return this.toPresenter(compareResult);
     }
+
+    const payload: EncrypterPayload = {
+      // should be id
+      sub: userModel.email.value,
+      email: userModel.email.value,
+      username: userModel.username.value,
+    };
+    await this.encrypter.encrypt(payload);
   }
 
   toPresenter(response: LoginUserResponseModel): void {

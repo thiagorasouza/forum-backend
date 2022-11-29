@@ -4,6 +4,7 @@ import { mockUserModel } from "../../../domain/tests/userModel.mock";
 import { InvalidPasswordFailure } from "../../shared/failures/invalidPasswordFailure";
 import { MissingParamFailure } from "../../shared/failures/missingParamFailure";
 import { UserNotFoundFailure } from "../../shared/failures/userNotFoundFailure";
+import { EncrypterPayload } from "../../shared/protocols/encrypter";
 import { mockLoginUserRequestModel } from "./mocks/loginUserRequestModel.mock";
 import { makeLoginUserUseCase as makeSut } from "./mocks/loginUserUseCase.mock";
 
@@ -53,7 +54,7 @@ describe("LoginUserUseCase Test Suite", () => {
     expect(presenterSpy).toHaveBeenCalledWith(userNotFound);
   });
 
-  it("should check password if email is registered", async () => {
+  it("should call Hasher.compare with correct values", async () => {
     const { sut, hasher } = makeSut();
 
     const compareSpy = jest.spyOn(hasher, "compare");
@@ -63,13 +64,14 @@ describe("LoginUserUseCase Test Suite", () => {
 
     const userModel = mockUserModel();
 
+    expect(compareSpy).toHaveBeenCalledTimes(1);
     expect(compareSpy).toHaveBeenCalledWith(
       requestModel.password,
       userModel.password.value
     );
   });
 
-  it("should fail if checking password fails", async () => {
+  it("should fail if Hasher.compare fails", async () => {
     const { sut, hasher, presenter } = makeSut();
 
     const invalidPassword = new InvalidPasswordFailure();
@@ -83,5 +85,24 @@ describe("LoginUserUseCase Test Suite", () => {
     await sut.execute(requestModel);
 
     expect(presenterSpy).toHaveBeenCalledWith(invalidPassword);
+  });
+
+  it("should call Encrypter with correct value", async () => {
+    const { sut, encrypter } = makeSut();
+
+    const encryptSpy = jest.spyOn(encrypter, "encrypt");
+
+    const requestModel = mockLoginUserRequestModel();
+    await sut.execute(requestModel);
+
+    const userModel = mockUserModel();
+    const payload: EncrypterPayload = {
+      sub: userModel.email.value,
+      email: userModel.email.value,
+      username: userModel.username.value,
+    };
+
+    expect(encryptSpy).toHaveBeenCalledTimes(1);
+    expect(encryptSpy).toHaveBeenCalledWith(payload);
   });
 });
