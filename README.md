@@ -4,7 +4,7 @@ A greatly architected forum app.
 
 ## Architecture
 
-### Users
+### 🧍 Users
 
 - [x] Create user
 - [ ] Login user
