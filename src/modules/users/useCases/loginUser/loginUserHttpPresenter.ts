@@ -1,4 +1,5 @@
 import { InvalidPasswordFailure } from "../shared/failures/invalidPasswordFailure";
+import { ServerFailure } from "../shared/failures/serverFailure";
 import { UserNotFoundFailure } from "../shared/failures/userNotFoundFailure";
 import { HttpView } from "../shared/protocols/httpView";
 import { HttpViewModel } from "../shared/protocols/httpViewModel";
@@ -20,6 +21,10 @@ export class LoginUserHttpPresenter implements LoginUserPresenter {
 
     if (response.constructor === InvalidPasswordFailure) {
       return this.toView({ statusCode: 400, body: response.error });
+    }
+
+    if (response.constructor === ServerFailure) {
+      return this.toView({ statusCode: 500, body: response.error });
     }
   }
 

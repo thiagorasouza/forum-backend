@@ -71,16 +71,16 @@ describe("LoginUserHttpPresenter Test Suite", () => {
     });
   });
 
-  // it("should display 500 for server failures", () => {
-  //   const { sut, view } = makeSut();
+  it("should display 500 for server failures", () => {
+    const { sut, view } = makeSut();
 
-  //   const viewSpy = jest.spyOn(view, "display");
+    const viewSpy = jest.spyOn(view, "display");
 
-  //   sut.format(serverFailureMock);
+    sut.format(serverFailureMock);
 
-  //   expect(viewSpy).toHaveBeenCalledWith({
-  //     statusCode: 500,
-  //     body: serverFailureMock.error,
-  //   });
-  // });
+    expect(viewSpy).toHaveBeenCalledWith({
+      statusCode: 500,
+      body: serverFailureMock.error,
+    });
+  });
 });
