@@ -4,6 +4,7 @@ import { InvalidPasswordFailure } from "../../shared/failures/invalidPasswordFai
 import { MissingParamFailure } from "../../shared/failures/missingParamFailure";
 import { UserNotFoundFailure } from "../../shared/failures/userNotFoundFailure";
 import { EncrypterPayload } from "../../shared/protocols/encrypter";
+import { UserLoggedInSuccess } from "../../shared/successes/userLoggedInSuccess";
 import { mockLoginUserRequestModel } from "./mocks/loginUserRequestModel.mock";
 import { makeLoginUserUseCase as makeSut } from "./mocks/loginUserUseCase.mock";
 
@@ -103,5 +104,16 @@ describe("LoginUserUseCase Test Suite", () => {
 
     expect(encryptSpy).toHaveBeenCalledTimes(1);
     expect(encryptSpy).toHaveBeenCalledWith(payload);
+  });
+
+  it("should return a token on success", async () => {
+    const { sut, presenter } = makeSut();
+
+    const presenterSpy = jest.spyOn(presenter, "format");
+
+    const requestModel = mockLoginUserRequestModel();
+    await sut.execute(requestModel);
+
+    expect(presenterSpy).toHaveBeenCalledWith(new UserLoggedInSuccess("token"));
   });
 });

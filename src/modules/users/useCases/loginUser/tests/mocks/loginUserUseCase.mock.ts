@@ -44,7 +44,7 @@ const makeHasher = (): Hasher => {
 const mockEncrypter = (): Encrypter => {
   class EncrypterStub implements Encrypter {
     async encrypt(): Promise<string> {
-      return "encrypted_payload";
+      return "token";
     }
   }
 

@@ -5,6 +5,7 @@ import { UserNotFoundFailure } from "../shared/failures/userNotFoundFailure";
 import { Encrypter, EncrypterPayload } from "../shared/protocols/encrypter";
 import { Hasher } from "../shared/protocols/hasher";
 import { UseCase } from "../shared/protocols/useCase";
+import { UserLoggedInSuccess } from "../shared/successes/userLoggedInSuccess";
 import { LoginUserPresenter } from "./loginUserPresenter";
 import { LoginUserRepository } from "./loginUserRepository";
 
@@ -14,6 +15,7 @@ export interface LoginUserRequestModel {
 }
 
 export type LoginUserResponseModel =
+  | UserLoggedInSuccess
   | UserNotFoundFailure
   | InvalidPasswordFailure
   | ServerFailure;
@@ -58,7 +60,9 @@ export class LoginUserUseCase implements UseCase {
       email: userModel.email.value,
       username: userModel.username.value,
     };
-    await this.encrypter.encrypt(payload);
+    const token = await this.encrypter.encrypt(payload);
+
+    this.toPresenter(new UserLoggedInSuccess(token));
   }
 
   toPresenter(response: LoginUserResponseModel): void {
