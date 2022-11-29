@@ -3,8 +3,6 @@ import { Success } from "../core/success";
 import { InvalidParamFailure } from "../useCases/shared/failures/invalidParamFailure";
 import { Identifier } from "./identifier";
 
-type UserIdResult = Failure<string> | Success<UserId>;
-
 export class UserId {
   private readonly _value: string;
 
@@ -19,7 +17,7 @@ export class UserId {
   public static create(
     id: string | null,
     identifier: Identifier
-  ): UserIdResult {
+  ): Failure<string> | Success<UserId> {
     if (!id) {
       const randomId = identifier.generateRandomId();
       return new Success<UserId>(new UserId(randomId));
