@@ -1,4 +1,5 @@
 import { Guard } from "../../../core/guard";
+import { mockUserModel } from "../../../domain/tests/userModel.mock";
 import { MissingParamFailure } from "../../shared/failures/missingParamFailure";
 import { UserNotFoundFailure } from "../../shared/failures/userNotFoundFailure";
 import { mockLoginUserRequestModel } from "./mocks/loginUserRequestModel.mock";
@@ -48,5 +49,21 @@ describe("LoginUserUseCase Test Suite", () => {
     await sut.execute(requestModel);
 
     expect(presenterSpy).toHaveBeenCalledWith(userNotFound);
+  });
+
+  it("should check password if email is registered", async () => {
+    const { sut, hasher } = makeSut();
+
+    const compareSpy = jest.spyOn(hasher, "compare");
+
+    const requestModel = mockLoginUserRequestModel();
+    await sut.execute(requestModel);
+
+    const userModel = mockUserModel();
+
+    expect(compareSpy).toHaveBeenCalledWith(
+      requestModel.password,
+      userModel.password.value
+    );
   });
 });
