@@ -1,4 +1,5 @@
 import { Guard } from "../../core/guard";
+import { InvalidPasswordFailure } from "../shared/failures/invalidPasswordFailure";
 import { ServerFailure } from "../shared/failures/serverFailure";
 import { UserNotFoundFailure } from "../shared/failures/userNotFoundFailure";
 import { Hasher } from "../shared/protocols/hasher";
@@ -11,7 +12,10 @@ export interface LoginUserRequestModel {
   password: string;
 }
 
-export type LoginUserResponseModel = UserNotFoundFailure | ServerFailure;
+export type LoginUserResponseModel =
+  | UserNotFoundFailure
+  | InvalidPasswordFailure
+  | ServerFailure;
 
 export class LoginUserUseCase implements UseCase {
   constructor(
@@ -42,9 +46,9 @@ export class LoginUserUseCase implements UseCase {
       submittedPassword,
       storedPassword
     );
-    // if (!compareResult.ok) {
-    //   return this.toPresenter(compareResult);
-    // }
+    if (!compareResult.ok) {
+      return this.toPresenter(compareResult);
+    }
   }
 
   toPresenter(response: LoginUserResponseModel): void {

@@ -1,5 +1,7 @@
 import { Guard } from "../../../core/guard";
+import { Success } from "../../../core/success";
 import { mockUserModel } from "../../../domain/tests/userModel.mock";
+import { InvalidPasswordFailure } from "../../shared/failures/invalidPasswordFailure";
 import { MissingParamFailure } from "../../shared/failures/missingParamFailure";
 import { UserNotFoundFailure } from "../../shared/failures/userNotFoundFailure";
 import { mockLoginUserRequestModel } from "./mocks/loginUserRequestModel.mock";
@@ -65,5 +67,21 @@ describe("LoginUserUseCase Test Suite", () => {
       requestModel.password,
       userModel.password.value
     );
+  });
+
+  it("should fail if checking password fails", async () => {
+    const { sut, hasher, presenter } = makeSut();
+
+    const invalidPassword = new InvalidPasswordFailure();
+
+    jest
+      .spyOn(hasher, "compare")
+      .mockReturnValueOnce(Promise.resolve(invalidPassword));
+    const presenterSpy = jest.spyOn(presenter, "format");
+
+    const requestModel = mockLoginUserRequestModel();
+    await sut.execute(requestModel);
+
+    expect(presenterSpy).toHaveBeenCalledWith(invalidPassword);
   });
 });
