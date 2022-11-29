@@ -1,4 +1,3 @@
-import { Server } from "http";
 import { Guard } from "../../core/guard";
 import { InvalidPasswordFailure } from "../shared/failures/invalidPasswordFailure";
 import { ServerFailure } from "../shared/failures/serverFailure";

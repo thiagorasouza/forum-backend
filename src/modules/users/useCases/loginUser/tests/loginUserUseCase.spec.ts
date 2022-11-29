@@ -40,6 +40,17 @@ describe("LoginUserUseCase Test Suite", () => {
     expect(presenterSpy).toHaveBeenCalledWith(missingParam);
   });
 
+  it("should call LoginUserRepository with correct value", async () => {
+    const { sut, repository } = makeSut();
+
+    const getByEmailSpy = jest.spyOn(repository, "getByEmail");
+
+    const requestModel = mockLoginUserRequestModel();
+    await sut.execute(requestModel);
+
+    expect(getByEmailSpy).toHaveBeenCalledWith(requestModel.email);
+  });
+
   it("should fail if email is not registered", async () => {
     const { sut, repository, presenter } = makeSut();
 
