@@ -16,12 +16,15 @@ import {
 } from "../../useCases/getUserByUsername/getUserByUsernameRepository";
 import { UserFoundSuccess } from "../../useCases/shared/successes/userFoundSuccess";
 import { UserCreatedSuccess } from "../../useCases/shared/successes/userCreatedSuccess";
+import { Identifier } from "../../domain/identifier";
 
 export class SequelizeUserRepository
   implements CreateUserRepository, GetUserByUsernameRepository
 {
+  constructor(private readonly identifier: Identifier) {}
+
   async create(userModel: UserModel): Promise<CreateResponse> {
-    const userData = SequelizeUserRepository.mapFromDomain(userModel);
+    const userData = this.mapFromDomain(userModel);
 
     const sequelizeUserModel = SequelizeUserModel.build({ ...userData });
     await sequelizeUserModel.save();
@@ -56,7 +59,7 @@ export class SequelizeUserRepository
       return new UserNotFoundFailure();
     }
 
-    const mapResult = SequelizeUserRepository.mapToDomain(userData);
+    const mapResult = this.mapToDomain(userData);
     if (!mapResult.ok) {
       return new InconsistentDataFailure();
     }
@@ -65,7 +68,7 @@ export class SequelizeUserRepository
     return new UserFoundSuccess(userModel);
   }
 
-  static mapFromDomain(userModel: UserModel): UserData {
+  mapFromDomain(userModel: UserModel): UserData {
     return {
       username: userModel.username.value,
       email: userModel.email.value,
@@ -73,7 +76,7 @@ export class SequelizeUserRepository
     };
   }
 
-  static mapToDomain(userData: UserData) {
-    return User.create(userData);
+  mapToDomain(userData: UserData) {
+    return User.create(userData, this.identifier);
   }
 }

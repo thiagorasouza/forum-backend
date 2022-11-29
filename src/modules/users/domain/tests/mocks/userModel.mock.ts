@@ -20,7 +20,7 @@ const mockUserEmail = (): UserEmail => {
 
 const mockUserPassword = (): UserPassword => {
   const userPasswordResult = UserPassword.create(
-    "hashed_password"
+    "any_password"
   ) as Success<UserPassword>;
   return userPasswordResult.value;
 };

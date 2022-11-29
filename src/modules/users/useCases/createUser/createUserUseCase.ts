@@ -1,4 +1,5 @@
 import { Guard } from "../../core/guard";
+import { Identifier } from "../../domain/identifier";
 import { User } from "../../domain/user";
 import { UserData } from "../../domain/userData";
 import { UserFailures } from "../../domain/userFailures";
@@ -24,7 +25,8 @@ export type CreateUserResponseModel =
 export class CreateUserUseCase implements UseCase {
   constructor(
     protected readonly repository: CreateUserRepository,
-    protected readonly presenter: CreateUserPresenter
+    protected readonly presenter: CreateUserPresenter,
+    protected readonly identifier: Identifier
   ) {}
 
   async execute(request: CreateUserRequestModel): Promise<void> {
@@ -46,7 +48,7 @@ export class CreateUserUseCase implements UseCase {
       }
 
       const userData: UserData = { username, email, password };
-      const userResult = User.create(userData);
+      const userResult = User.create(userData, this.identifier);
       if (!userResult.ok) {
         return this.toPresenter(userResult);
       }

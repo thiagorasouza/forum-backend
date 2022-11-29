@@ -3,18 +3,15 @@ import { SequelizeUserModel } from "../sequelizeUserModel";
 import { mockUserModel } from "../../../domain/tests/mocks/userModel.mock";
 import { SequelizeConnection } from "../sequelizeConnection";
 import { InconsistentDataFailure } from "../../../useCases/shared/failures/inconsistentDataFailure";
-import { UserData } from "../../../domain/userData";
 import { UserNotFoundFailure } from "../../../useCases/shared/failures/userNotFoundFailure";
 import { User } from "../../../domain/user";
 import { InvalidParamFailure } from "../../../useCases/shared/failures/invalidParamFailure";
 import { UserFoundSuccess } from "../../../useCases/shared/successes/userFoundSuccess";
+import { mockUserData } from "../../../domain/tests/mocks/userData.mock";
+import { mockIdentifier } from "../../../domain/tests/mocks/identifier.mock";
 
 const makeSut = (): SequelizeUserRepository => {
-  return new SequelizeUserRepository();
-};
-
-const mockUserData = (): UserData => {
-  return SequelizeUserRepository.mapFromDomain(mockUserModel());
+  return new SequelizeUserRepository(mockIdentifier());
 };
 
 describe("SequelizeUserRepository Test Suite", () => {

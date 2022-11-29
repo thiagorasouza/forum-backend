@@ -5,11 +5,15 @@ import { InvalidParamFailure } from "../useCases/shared/failures/invalidParamFai
 import { UserModel } from "./userModel";
 import { UserPassword } from "./userPassword";
 import { UserUsername } from "./userUsername";
+import { Identifier } from "./identifier";
 
 export class User {
   private constructor(public readonly props: UserModel) {}
 
-  static create(userData: UserData): InvalidParamFailure | Success<User> {
+  static create(
+    userData: UserData,
+    identifier: Identifier
+  ): InvalidParamFailure | Success<User> {
     const userUsernameResult = UserUsername.create(userData.username);
     if (!userUsernameResult.ok) {
       return userUsernameResult;

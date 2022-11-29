@@ -73,7 +73,7 @@ describe("CreateUserUseCase Test Suite", () => {
   });
 
   it("should create User entity with correct values", async () => {
-    const { sut } = makeSut();
+    const { sut, identifier } = makeSut();
     const requestMock = mockCreateUserRequestModel();
 
     const userCreateSpy = jest.spyOn(User, "create");
@@ -81,7 +81,7 @@ describe("CreateUserUseCase Test Suite", () => {
     await sut.execute(requestMock);
 
     expect(userCreateSpy).toHaveBeenCalledTimes(1);
-    expect(userCreateSpy).toHaveBeenCalledWith(requestMock);
+    expect(userCreateSpy).toHaveBeenCalledWith(requestMock, identifier);
   });
 
   it("should fail if building User entity fails", async () => {

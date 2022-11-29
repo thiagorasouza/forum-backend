@@ -7,6 +7,8 @@ import {
   GetByEmailResponse,
   CreateResponse,
 } from "../../createUserRepository";
+import { mockIdentifier } from "../../../../domain/tests/mocks/identifier.mock";
+import { Identifier } from "../../../../domain/identifier";
 
 const makeRepository = (): CreateUserRepository => {
   class CreateUserRepositoryMock implements CreateUserRepository {
@@ -35,12 +37,14 @@ interface SutTypes {
   sut: CreateUserUseCase;
   repository: CreateUserRepository;
   presenter: CreateUserPresenter;
+  identifier: Identifier;
 }
 
 export const makeCreateUserUseCase = (): SutTypes => {
   const repository = makeRepository();
   const presenter = makePresenter();
-  const sut = new CreateUserUseCase(repository, presenter);
+  const identifier = mockIdentifier();
+  const sut = new CreateUserUseCase(repository, presenter, identifier);
 
-  return { sut, repository, presenter };
+  return { sut, repository, presenter, identifier };
 };

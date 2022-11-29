@@ -5,8 +5,15 @@ import { InvalidParamFailure } from "../../useCases/shared/failures/invalidParam
 import { UserPassword } from "../userPassword";
 import { UserUsername } from "../userUsername";
 import { mockUserData } from "./mocks/userData.mock";
+import { mockIdentifier } from "./mocks/identifier.mock";
+import { Identifier } from "../identifier";
 
 describe("User Test Suite", () => {
+  let identifierStub: Identifier;
+  beforeAll(() => {
+    identifierStub = mockIdentifier();
+  });
+
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -15,17 +22,17 @@ describe("User Test Suite", () => {
     const userUsernameCreate = jest.spyOn(UserUsername, "create");
 
     const userData = mockUserData();
-    User.create(userData);
+    User.create(userData, identifierStub);
 
     expect(userUsernameCreate).toHaveBeenCalledTimes(1);
-    expect(userUsernameCreate).toHaveBeenCalledWith("any_username");
+    expect(userUsernameCreate).toHaveBeenCalledWith("anyusername");
   });
 
   it("should check if email is valid on creation", () => {
     const userEmailCreate = jest.spyOn(UserEmail, "create");
 
     const userData = mockUserData();
-    User.create(userData);
+    User.create(userData, identifierStub);
 
     expect(userEmailCreate).toHaveBeenCalledTimes(1);
     expect(userEmailCreate).toHaveBeenCalledWith("any_email@email.com");
@@ -35,7 +42,7 @@ describe("User Test Suite", () => {
     const userPasswordCreate = jest.spyOn(UserPassword, "create");
 
     const userData = mockUserData();
-    User.create(userData);
+    User.create(userData, identifierStub);
 
     expect(userPasswordCreate).toHaveBeenCalledTimes(1);
     expect(userPasswordCreate).toHaveBeenCalledWith("any_password");
@@ -46,7 +53,7 @@ describe("User Test Suite", () => {
     jest.spyOn(UserUsername, "create").mockReturnValueOnce(invalidUsername);
 
     const userData = mockUserData();
-    const result = User.create(userData);
+    const result = User.create(userData, identifierStub);
 
     expect(result).toEqual(invalidUsername);
   });
@@ -56,7 +63,7 @@ describe("User Test Suite", () => {
     jest.spyOn(UserEmail, "create").mockReturnValueOnce(invalidEmail);
 
     const userData = mockUserData();
-    const result = User.create(userData);
+    const result = User.create(userData, identifierStub);
 
     expect(result).toEqual(invalidEmail);
   });
@@ -66,7 +73,7 @@ describe("User Test Suite", () => {
     jest.spyOn(UserPassword, "create").mockReturnValueOnce(invalidPassword);
 
     const userData = mockUserData();
-    const result = User.create(userData);
+    const result = User.create(userData, identifierStub);
 
     expect(result).toEqual(invalidPassword);
   });
@@ -83,7 +90,7 @@ describe("User Test Suite", () => {
     jest.spyOn(UserPassword, "create").mockReturnValueOnce(validPassword);
 
     const userData = mockUserData();
-    const result = User.create(userData) as Success<User>;
+    const result = User.create(userData, identifierStub) as Success<User>;
 
     expect(result.ok).toBe(true);
     expect(result.value).toBeInstanceOf(User);
