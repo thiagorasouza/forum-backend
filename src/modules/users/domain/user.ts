@@ -6,6 +6,7 @@ import { UserModel } from "./userModel";
 import { UserPassword } from "./userPassword";
 import { UserUsername } from "./userUsername";
 import { Identifier } from "./identifier";
+import { UserId } from "./userId";
 
 export class User {
   private constructor(public readonly props: UserModel) {}
@@ -14,6 +15,11 @@ export class User {
     userData: UserData,
     identifier: Identifier
   ): InvalidParamFailure | Success<User> {
+    const userIdResult = UserId.create(identifier, userData?.id);
+    if (!userIdResult.ok) {
+      return userIdResult;
+    }
+
     const userUsernameResult = UserUsername.create(userData.username);
     if (!userUsernameResult.ok) {
       return userUsernameResult;
@@ -30,6 +36,7 @@ export class User {
     }
 
     const validUserProps = {
+      id: userIdResult.value,
       username: userUsernameResult.value,
       email: userEmailResult.value,
       password: userPasswordResult.value,

@@ -15,8 +15,8 @@ export class UserId {
   }
 
   public static create(
-    id: string | null,
-    identifier: Identifier
+    identifier: Identifier,
+    id?: string
   ): Failure<string> | Success<UserId> {
     if (!id) {
       const randomId = identifier.generateRandomId();

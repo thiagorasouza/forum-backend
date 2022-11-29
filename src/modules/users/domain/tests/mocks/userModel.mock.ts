@@ -1,8 +1,18 @@
 import { Success } from "../../../core/success";
 import { UserEmail } from "../../userEmail";
+import { UserId } from "../../userId";
 import { UserModel } from "../../userModel";
 import { UserPassword } from "../../userPassword";
 import { UserUsername } from "../../userUsername";
+import { mockIdentifier } from "./identifier.mock";
+
+const mockUserId = (): UserId => {
+  const userIdResult = UserId.create(
+    mockIdentifier(),
+    "any_id"
+  ) as Success<UserId>;
+  return userIdResult.value;
+};
 
 const mockUserUsername = (): UserUsername => {
   const userUsernameResult = UserUsername.create(
@@ -27,6 +37,7 @@ const mockUserPassword = (): UserPassword => {
 
 export const mockUserModel = (): UserModel => {
   return {
+    id: mockUserId(),
     username: mockUserUsername(),
     email: mockUserEmail(),
     password: mockUserPassword(),

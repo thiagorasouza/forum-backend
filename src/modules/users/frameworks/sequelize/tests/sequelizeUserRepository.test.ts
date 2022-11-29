@@ -7,7 +7,10 @@ import { UserNotFoundFailure } from "../../../useCases/shared/failures/userNotFo
 import { User } from "../../../domain/user";
 import { InvalidParamFailure } from "../../../useCases/shared/failures/invalidParamFailure";
 import { UserFoundSuccess } from "../../../useCases/shared/successes/userFoundSuccess";
-import { mockUserData } from "../../../domain/tests/mocks/userData.mock";
+import {
+  mockUserData,
+  mockUserDataWithId,
+} from "../../../domain/tests/mocks/userData.mock";
 import { mockIdentifier } from "../../../domain/tests/mocks/identifier.mock";
 
 const makeSut = (): SequelizeUserRepository => {
@@ -46,7 +49,7 @@ describe("SequelizeUserRepository Test Suite", () => {
 
   it("should be able to get a user by email if user exists", async () => {
     const sut = makeSut();
-    const userData = mockUserData();
+    const userData = mockUserDataWithId();
     await SequelizeUserModel.create({ ...userData });
     const getByEmailResult = (await sut.getByEmail(
       userData.email
@@ -65,7 +68,7 @@ describe("SequelizeUserRepository Test Suite", () => {
 
   it("should be able to get a user by username if user exists", async () => {
     const sut = makeSut();
-    const userData = mockUserData();
+    const userData = mockUserDataWithId();
     await SequelizeUserModel.create({ ...userData });
     const getByUsernameResult = (await sut.getByUsername(
       userData.username
