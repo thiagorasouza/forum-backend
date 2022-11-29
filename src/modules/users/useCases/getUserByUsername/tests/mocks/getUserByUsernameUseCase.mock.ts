@@ -1,4 +1,4 @@
-import { mockUserModel } from "../../../../domain/tests/userModel.mock";
+import { mockUserModel } from "../../../../domain/tests/mocks/userModel.mock";
 import { UserFoundSuccess } from "../../../shared/successes/userFoundSuccess";
 import { GetUserByUsernamePresenter } from "../../getUserByUsernamePresenter";
 import {

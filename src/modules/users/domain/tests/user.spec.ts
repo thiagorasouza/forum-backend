@@ -4,7 +4,7 @@ import { UserEmail } from "../userEmail";
 import { InvalidParamFailure } from "../../useCases/shared/failures/invalidParamFailure";
 import { UserPassword } from "../userPassword";
 import { UserUsername } from "../userUsername";
-import { mockUserData } from "./userData.mock";
+import { mockUserData } from "./mocks/userData.mock";
 
 describe("User Test Suite", () => {
   beforeEach(() => {

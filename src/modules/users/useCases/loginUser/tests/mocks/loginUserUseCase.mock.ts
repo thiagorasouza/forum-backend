@@ -5,7 +5,7 @@ import {
   LoginUserRepository,
 } from "../../loginUserRepository";
 import { UserFoundSuccess } from "../../../shared/successes/userFoundSuccess";
-import { mockUserModel } from "../../../../domain/tests/userModel.mock";
+import { mockUserModel } from "../../../../domain/tests/mocks/userModel.mock";
 import { CompareResult, Hasher } from "../../../shared/protocols/hasher";
 import { Success } from "../../../../core/success";
 import { Encrypter, EncryptResult } from "../../../shared/protocols/encrypter";

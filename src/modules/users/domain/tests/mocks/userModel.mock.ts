@@ -1,8 +1,8 @@
-import { Success } from "../../core/success";
-import { UserEmail } from "../userEmail";
-import { UserModel } from "../userModel";
-import { UserPassword } from "../userPassword";
-import { UserUsername } from "../userUsername";
+import { Success } from "../../../core/success";
+import { UserEmail } from "../../userEmail";
+import { UserModel } from "../../userModel";
+import { UserPassword } from "../../userPassword";
+import { UserUsername } from "../../userUsername";
 
 const mockUserUsername = (): UserUsername => {
   const userUsernameResult = UserUsername.create(

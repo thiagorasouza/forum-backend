@@ -1,4 +1,4 @@
-import { mockUserModel } from "../../../domain/tests/userModel.mock";
+import { mockUserModel } from "../../../domain/tests/mocks/userModel.mock";
 import { InvalidParamFailure } from "../../shared/failures/invalidParamFailure";
 import { ServerFailure } from "../../shared/failures/serverFailure";
 import { UserNotFoundFailure } from "../../shared/failures/userNotFoundFailure";

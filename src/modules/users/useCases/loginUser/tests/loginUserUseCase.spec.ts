@@ -1,6 +1,6 @@
 import { Guard } from "../../../core/guard";
 import { Success } from "../../../core/success";
-import { mockUserModel } from "../../../domain/tests/userModel.mock";
+import { mockUserModel } from "../../../domain/tests/mocks/userModel.mock";
 import { InvalidPasswordFailure } from "../../shared/failures/invalidPasswordFailure";
 import { MissingParamFailure } from "../../shared/failures/missingParamFailure";
 import { UserNotFoundFailure } from "../../shared/failures/userNotFoundFailure";
