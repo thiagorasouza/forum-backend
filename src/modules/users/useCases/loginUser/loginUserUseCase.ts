@@ -54,8 +54,7 @@ export class LoginUserUseCase implements UseCase {
     }
 
     const payload: EncrypterPayload = {
-      // should be id
-      sub: userModel.email.value,
+      sub: userModel.id.value,
       email: userModel.email.value,
       username: userModel.username.value,
     };

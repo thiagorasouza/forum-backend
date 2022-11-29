@@ -1,5 +1,4 @@
 import { Guard } from "../../../core/guard";
-import { Success } from "../../../core/success";
 import { mockUserModel } from "../../../domain/tests/mocks/userModel.mock";
 import { InvalidPasswordFailure } from "../../shared/failures/invalidPasswordFailure";
 import { MissingParamFailure } from "../../shared/failures/missingParamFailure";
@@ -97,7 +96,7 @@ describe("LoginUserUseCase Test Suite", () => {
 
     const userModel = mockUserModel();
     const payload: EncrypterPayload = {
-      sub: userModel.email.value,
+      sub: userModel.id.value,
       email: userModel.email.value,
       username: userModel.username.value,
     };
