@@ -1,4 +1,4 @@
 export interface Identifier {
   generateRandomId(): string;
-  isIdValid(): boolean;
+  isIdValid(id: string): boolean;
 }

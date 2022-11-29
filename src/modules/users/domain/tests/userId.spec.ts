@@ -1,11 +1,38 @@
 import { InvalidParamFailure } from "../../useCases/shared/failures/invalidParamFailure";
+import { Identifier } from "../../useCases/shared/protocols/identifier";
 import { UserId } from "../userId";
 
 const invalidId = new InvalidParamFailure("id");
 
+const mockIdentifier = (): Identifier => {
+  class IdentifierStub implements Identifier {
+    generateRandomId(): string {
+      return "random_id";
+    }
+
+    isIdValid(id: string): boolean {
+      return true;
+    }
+  }
+
+  return new IdentifierStub();
+};
+
 describe("UserId Test Suite", () => {
+  it("should call Identifier.isIdValid with correct value", () => {
+    const identifierStub = mockIdentifier();
+    const isIdValidSpy = jest.spyOn(identifierStub, "isIdValid");
+
+    UserId.create("any_id", identifierStub);
+
+    expect(isIdValidSpy).toHaveBeenCalledTimes(1);
+    expect(isIdValidSpy).toHaveBeenCalledWith("any_id");
+  });
+
   it("should fail when id is not valid", () => {
-    const result = UserId.create("invalid_id");
+    const identifierStub = mockIdentifier();
+    const result = UserId.create("invalid_id", identifierStub);
+
     expect(result).toEqual(invalidId);
   });
 

@@ -1,6 +1,9 @@
 import { Failure } from "../core/failure";
 import { Success } from "../core/success";
 import { InvalidParamFailure } from "../useCases/shared/failures/invalidParamFailure";
+import { Identifier } from "../useCases/shared/protocols/identifier";
+
+type UserIdResult = Failure<string> | Success<UserId>;
 
 export class UserId {
   private readonly _value: string;
@@ -17,7 +20,8 @@ export class UserId {
   //   return;
   // }
 
-  public static create(id: string): Failure<string> | Success<UserId> {
+  public static create(id: string, identifier: Identifier): UserIdResult {
+    identifier.isIdValid(id);
     return new InvalidParamFailure("id");
   }
 
