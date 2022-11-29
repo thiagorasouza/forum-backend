@@ -1,5 +1,5 @@
 import { InvalidParamFailure } from "../../useCases/shared/failures/invalidParamFailure";
-import { Identifier } from "../../useCases/shared/protocols/identifier";
+import { Identifier } from "../identifier";
 import { UserId } from "../userId";
 
 const invalidId = new InvalidParamFailure("id");

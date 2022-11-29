@@ -1,7 +1,7 @@
 import { Failure } from "../core/failure";
 import { Success } from "../core/success";
 import { InvalidParamFailure } from "../useCases/shared/failures/invalidParamFailure";
-import { Identifier } from "../useCases/shared/protocols/identifier";
+import { Identifier } from "./identifier";
 
 type UserIdResult = Failure<string> | Success<UserId>;
 
