@@ -11,7 +11,7 @@ const mockIdentifier = (): Identifier => {
       return "random_id";
     }
 
-    isIdValid(id: string): boolean {
+    isIdValid(): boolean {
       return true;
     }
   }
@@ -38,7 +38,7 @@ describe("UserId Test Suite", () => {
     expect(userId.value).toBe("random_id");
   });
 
-  it("should call Identifier.isIdValid with correct value", () => {
+  it("should call Identifier.isIdValid with correct value when id is provided", () => {
     const identifierStub = mockIdentifier();
     const isIdValidSpy = jest.spyOn(identifierStub, "isIdValid");
 
@@ -48,7 +48,7 @@ describe("UserId Test Suite", () => {
     expect(isIdValidSpy).toHaveBeenCalledWith("any_id");
   });
 
-  it("should fail when id is not valid", () => {
+  it("should fail when provided id is not valid", () => {
     const identifierStub = mockIdentifier();
 
     jest.spyOn(identifierStub, "isIdValid").mockReturnValueOnce(false);
@@ -58,14 +58,13 @@ describe("UserId Test Suite", () => {
     expect(result).toEqual(invalidId);
   });
 
-  // it("should return a UserId instance when valid id is provided", () => {
-  //   const identifierStub = mockIdentifier();
-  //   const result = UserId.create(
-  //     "invalid_id",
-  //     identifierStub
-  //   ) as Success<UserId>;
+  it("should return a UserId instance with the provided id when a valid id is provided", () => {
+    const identifierStub = mockIdentifier();
 
-  //   expect(result.ok).toBe(true);
-  //   expect(result.value).toBe("random_id");
-  // });
+    const result = UserId.create("valid_id", identifierStub) as Success<UserId>;
+    const userId = result.value;
+
+    expect(result.ok).toBe(true);
+    expect(userId.value).toBe("valid_id");
+  });
 });
