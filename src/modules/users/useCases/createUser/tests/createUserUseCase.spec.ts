@@ -44,7 +44,7 @@ describe("CreateUserUseCase Test Suite", () => {
     expect(presenterSpy).toHaveBeenCalledWith(missingParam);
   });
 
-  it("should check if email is already registered", async () => {
+  it("should call CreateUserRepository.getByEmail with correct value", async () => {
     const { sut, repository } = makeSut();
     const requestMock = mockCreateUserRequestModel();
 
@@ -98,7 +98,7 @@ describe("CreateUserUseCase Test Suite", () => {
     expect(presenterSpy).toHaveBeenCalledWith(invalidParamFailure);
   });
 
-  it("should save user if email does not exist and User entity is created", async () => {
+  it("should call CreateUserRepository.create with correct values", async () => {
     const { sut, repository } = makeSut();
     const requestMock = mockCreateUserRequestModel();
 
