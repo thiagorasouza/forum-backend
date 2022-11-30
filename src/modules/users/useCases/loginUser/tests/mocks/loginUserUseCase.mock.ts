@@ -6,7 +6,10 @@ import {
 } from "../../loginUserRepository";
 import { UserFoundSuccess } from "../../../shared/successes/userFoundSuccess";
 import { mockUserModel } from "../../../../domain/tests/mocks/userModel.mock";
-import { CompareResult, Hasher } from "../../../shared/protocols/hasher";
+import {
+  CompareResult,
+  HashComparer,
+} from "../../../shared/protocols/hashComparer";
 import { Success } from "../../../../core/success";
 import { Encrypter } from "../../../shared/protocols/encrypter";
 
@@ -31,14 +34,14 @@ const makeLoginUserRepository = (): LoginUserRepository => {
   return new LoginUserRepositoryStub();
 };
 
-const makeHasher = (): Hasher => {
-  class HasherStub implements Hasher {
+const makeHashComparer = (): HashComparer => {
+  class HashComparerStub implements HashComparer {
     async compare(): Promise<CompareResult> {
       return new Success("Valid password");
     }
   }
 
-  return new HasherStub();
+  return new HashComparerStub();
 };
 
 const mockEncrypter = (): Encrypter => {
@@ -55,15 +58,20 @@ interface SutTypes {
   sut: LoginUserUseCase;
   presenter: LoginUserPresenter;
   repository: LoginUserRepository;
-  hasher: Hasher;
+  hashComparer: HashComparer;
   encrypter: Encrypter;
 }
 
 export const makeLoginUserUseCase = (): SutTypes => {
   const repository = makeLoginUserRepository();
   const presenter = makeLoginUserPresenter();
-  const hasher = makeHasher();
+  const hashComparer = makeHashComparer();
   const encrypter = mockEncrypter();
-  const sut = new LoginUserUseCase(presenter, repository, hasher, encrypter);
-  return { sut, presenter, repository, hasher, encrypter };
+  const sut = new LoginUserUseCase(
+    presenter,
+    repository,
+    hashComparer,
+    encrypter
+  );
+  return { sut, presenter, repository, hashComparer, encrypter };
 };

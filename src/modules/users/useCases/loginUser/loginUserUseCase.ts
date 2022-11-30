@@ -3,7 +3,7 @@ import { InvalidPasswordFailure } from "../shared/failures/invalidPasswordFailur
 import { ServerFailure } from "../shared/failures/serverFailure";
 import { UserNotFoundFailure } from "../shared/failures/userNotFoundFailure";
 import { Encrypter, EncrypterPayload } from "../shared/protocols/encrypter";
-import { Hasher } from "../shared/protocols/hasher";
+import { HashComparer } from "../shared/protocols/hashComparer";
 import { UseCase } from "../shared/protocols/useCase";
 import { UserLoggedInSuccess } from "../shared/successes/userLoggedInSuccess";
 import { LoginUserPresenter } from "./loginUserPresenter";
@@ -24,7 +24,7 @@ export class LoginUserUseCase implements UseCase {
   constructor(
     private readonly presenter: LoginUserPresenter,
     private readonly repository: LoginUserRepository,
-    private readonly hasher: Hasher,
+    private readonly hashComparer: HashComparer,
     private readonly encrypter: Encrypter
   ) {}
 
@@ -48,7 +48,7 @@ export class LoginUserUseCase implements UseCase {
       const userModel = getByEmailResult.value;
       const storedPassword = userModel.password.value;
 
-      const compareResult = await this.hasher.compare(
+      const compareResult = await this.hashComparer.compare(
         submittedPassword,
         storedPassword
       );

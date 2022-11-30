@@ -66,10 +66,10 @@ describe("LoginUserUseCase Test Suite", () => {
     expect(presenterSpy).toHaveBeenCalledWith(userNotFound);
   });
 
-  it("should call Hasher.compare with correct values", async () => {
-    const { sut, hasher } = makeSut();
+  it("should call HashComparer.compare with correct values", async () => {
+    const { sut, hashComparer } = makeSut();
 
-    const compareSpy = jest.spyOn(hasher, "compare");
+    const compareSpy = jest.spyOn(hashComparer, "compare");
 
     const requestModel = mockLoginUserRequestModel();
     await sut.execute(requestModel);
@@ -84,12 +84,12 @@ describe("LoginUserUseCase Test Suite", () => {
   });
 
   it("should fail if password mismatches", async () => {
-    const { sut, hasher, presenter } = makeSut();
+    const { sut, hashComparer, presenter } = makeSut();
 
     const invalidPassword = new InvalidPasswordFailure();
 
     jest
-      .spyOn(hasher, "compare")
+      .spyOn(hashComparer, "compare")
       .mockReturnValueOnce(Promise.resolve(invalidPassword));
     const presenterSpy = jest.spyOn(presenter, "format");
 
@@ -143,11 +143,11 @@ describe("LoginUserUseCase Test Suite", () => {
     expect(presenterSpy).toHaveBeenCalledWith(new ServerFailure());
   });
 
-  it("should returns ServerFailure if Hasher throws", async () => {
-    const { sut, hasher, presenter } = makeSut();
+  it("should returns ServerFailure if HashComparer throws", async () => {
+    const { sut, hashComparer, presenter } = makeSut();
 
     jest
-      .spyOn(hasher, "compare")
+      .spyOn(hashComparer, "compare")
       .mockReturnValueOnce(Promise.reject(new Error()));
     const presenterSpy = jest.spyOn(presenter, "format");
 
@@ -158,10 +158,10 @@ describe("LoginUserUseCase Test Suite", () => {
   });
 
   it("should returns ServerFailure if Encrypter throws", async () => {
-    const { sut, hasher, presenter } = makeSut();
+    const { sut, hashComparer, presenter } = makeSut();
 
     jest
-      .spyOn(hasher, "compare")
+      .spyOn(hashComparer, "compare")
       .mockReturnValueOnce(Promise.reject(new Error()));
     const presenterSpy = jest.spyOn(presenter, "format");
 

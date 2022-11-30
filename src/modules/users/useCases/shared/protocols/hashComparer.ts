@@ -3,7 +3,7 @@ import { InvalidPasswordFailure } from "../failures/invalidPasswordFailure";
 
 export type CompareResult = Success<string> | InvalidPasswordFailure;
 
-export interface Hasher {
+export interface HashComparer {
   // hash(password: string): string;
   compare(value: string, hash: string): Promise<CompareResult>;
 }
