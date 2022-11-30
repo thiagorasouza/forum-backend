@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npx ts-node src/main/server.ts",
-    "test": "npx jest --silent --noStackTrace --passWithNoTests --runInBand",
+    "test": "npx dotenv -e .env.testing -- npx jest --silent --noStackTrace --passWithNoTests --runInBand",
     "test:verbose": "npx jest --runInBand",
     "test:watch": "npm test -- --watch",
     "test:staged": "npm test -- --findRelatedTests",
@@ -24,6 +24,7 @@
     "@types/validator": "^13.7.10",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "@typescript-eslint/parser": "^5.43.0",
+    "dotenv-cli": "^6.0.0",
     "eslint": "^8.27.0",
     "eslint-config-prettier": "^8.5.0",
     "git-commit-msg-linter": "^4.2.1",
@@ -39,7 +40,6 @@
     "typescript": "^4.9.3"
   },
   "dependencies": {
-    "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "reflect-metadata": "^0.1.13",
     "sequelize": "^6.25.7",
