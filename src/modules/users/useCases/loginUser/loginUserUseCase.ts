@@ -61,7 +61,7 @@ export class LoginUserUseCase implements UseCase {
         email: userModel.email.value,
         username: userModel.username.value,
       };
-      const token = await this.encrypter.encrypt(payload);
+      const token = this.encrypter.encrypt(payload);
 
       this.toPresenter(new UserLoggedInSuccess(token));
     } catch (error) {

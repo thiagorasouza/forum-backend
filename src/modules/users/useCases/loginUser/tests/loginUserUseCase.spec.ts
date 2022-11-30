@@ -158,11 +158,11 @@ describe("LoginUserUseCase Test Suite", () => {
   });
 
   it("should returns ServerFailure if Encrypter throws", async () => {
-    const { sut, hashComparer, presenter } = makeSut();
+    const { sut, encrypter, presenter } = makeSut();
 
-    jest
-      .spyOn(hashComparer, "compare")
-      .mockReturnValueOnce(Promise.reject(new Error()));
+    jest.spyOn(encrypter, "encrypt").mockImplementationOnce(() => {
+      throw new Error();
+    });
     const presenterSpy = jest.spyOn(presenter, "format");
 
     const requestModel = mockLoginUserRequestModel();

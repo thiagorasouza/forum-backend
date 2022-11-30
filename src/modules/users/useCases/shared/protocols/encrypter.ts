@@ -5,5 +5,5 @@ export interface EncrypterPayload {
 }
 
 export interface Encrypter {
-  encrypt(payload: EncrypterPayload): Promise<string>;
+  encrypt(payload: EncrypterPayload): string;
 }

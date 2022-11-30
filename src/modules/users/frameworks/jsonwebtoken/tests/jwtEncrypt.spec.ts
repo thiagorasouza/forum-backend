@@ -34,4 +34,13 @@ describe("JWTEncrypter Test Suite", () => {
 
     expect(signSpy).toHaveBeenCalledWith(payload, JWT_SECRET);
   });
+
+  // it("should return the signed token", () => {
+  //   const sut = makeSut();
+
+  //   const payload = mockEncrypterPayload();
+  //   const result = sut.encrypt(payload);
+
+  //   expect(result).toBe("any_token");
+  // });
 });

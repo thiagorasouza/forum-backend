@@ -7,8 +7,7 @@ import {
 export class JWTEncrypter implements Encrypter {
   constructor(private readonly jwtSecret: string) {}
 
-  async encrypt(payload: EncrypterPayload): Promise<string> {
-    jwt.sign(payload, this.jwtSecret);
-    return "";
+  encrypt(payload: EncrypterPayload): string {
+    return jwt.sign(payload, this.jwtSecret);
   }
 }

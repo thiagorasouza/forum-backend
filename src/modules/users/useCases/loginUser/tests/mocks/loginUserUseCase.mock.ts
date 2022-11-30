@@ -42,7 +42,7 @@ const makeHashComparer = (): HashComparer => {
 
 const mockEncrypter = (): Encrypter => {
   class EncrypterStub implements Encrypter {
-    async encrypt(): Promise<string> {
+    encrypt(): string {
       return "token";
     }
   }
