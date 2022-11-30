@@ -16,4 +16,12 @@ export const config = {
 
     return process.env.DATABASE_URI;
   },
+
+  getJwtSecret: (): string => {
+    if (!process.env.JWT_SECRET) {
+      throw new Error("JWT_SECRET is not set in process.env");
+    }
+
+    return process.env.JWT_SECRET;
+  },
 };
