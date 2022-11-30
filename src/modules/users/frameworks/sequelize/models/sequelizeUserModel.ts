@@ -15,3 +15,5 @@ export class SequelizeUserModel extends Model {
   @Column
   password!: string;
 }
+
+export default SequelizeUserModel;

@@ -11,7 +11,7 @@ app.use(express.json());
 
 describe("CreateUserExpressHandler Test Suite", () => {
   beforeAll(async () => {
-    await SequelizeConnection.connect([SequelizeUserModel]);
+    await SequelizeConnection.connect();
     await SequelizeUserModel.sync();
   });
 

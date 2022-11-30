@@ -19,7 +19,7 @@ const makeSut = (): SequelizeUserRepository => {
 
 describe("SequelizeUserRepository Test Suite", () => {
   beforeAll(async () => {
-    await SequelizeConnection.connect([SequelizeUserModel]);
+    await SequelizeConnection.connect();
     await SequelizeUserModel.sync();
   });
 

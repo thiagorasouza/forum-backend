@@ -6,7 +6,7 @@ import { mockCreateUserHttpRequest } from "../../../useCases/createUser/tests/mo
 
 describe("CreateUserExpressRoute Test Suite", () => {
   beforeAll(async () => {
-    await SequelizeConnection.connect([SequelizeUserModel]);
+    await SequelizeConnection.connect();
     await SequelizeUserModel.sync();
   });
 
