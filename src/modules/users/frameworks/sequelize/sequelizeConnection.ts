@@ -13,6 +13,10 @@ export class SequelizeConnection {
     SequelizeConnection.sequelize = connection;
   }
 
+  static async sync() {
+    await SequelizeConnection.sequelize.sync();
+  }
+
   static async disconnect() {
     await SequelizeConnection.sequelize.close();
   }

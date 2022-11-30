@@ -5,11 +5,14 @@ import { config } from "./config";
 const port = config.getPort();
 
 SequelizeConnection.connect()
-  .then(() => {
-    console.log("Database connection established");
+  .then(async () => {
+    console.log("1. Database connection established");
+
+    await SequelizeConnection.sync();
+    console.log("2. Tables synchronized");
 
     app.listen(port, () => {
-      console.log(`Server listening on ${port}`);
+      console.log(`3. Server listening on ${port}`);
     });
   })
   .catch((error) => {
