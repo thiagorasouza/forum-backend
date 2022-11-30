@@ -20,13 +20,15 @@ describe("CreateUserExpressRoute Test Suite", () => {
   });
 
   it("should return 200 when a user is created", async () => {
-    const mockRequest = mockCreateUserHttpRequest();
-    await request(app).post("/users").send(mockRequest.body).expect(200);
+    const mockRequestBody = mockCreateUserHttpRequest().body;
+    await request(app).post("/users").send(mockRequestBody).expect(200);
   });
 
-  // it("should return 200 when a username is found", async () => {
-  //   const mockRequest = mockCreateUserHttpRequest();
-  //   await request(app).post("/users").send(mockRequest).expect(200);
-  //   await request(app).get(`/users/${mockRequest.body.username}`).expect(200);
-  // });
+  it("should return 200 when a username is found", async () => {
+    const mockRequestBody = mockCreateUserHttpRequest().body;
+    await request(app).post("/users").send(mockRequestBody).expect(200);
+
+    const username = mockRequestBody.username;
+    await request(app).get(`/users/${username}`).expect(200);
+  });
 });

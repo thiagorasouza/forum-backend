@@ -1,11 +1,11 @@
-import express, { Response, Request } from "express";
+import express from "express";
 import request from "supertest";
 import { CreateUserHttpController } from "../../../useCases/createUser/createUserHttpController";
 import { mockCreateUserHttpRequest } from "../../../useCases/createUser/tests/mocks/createUserHttpRequest.mock";
 import { SequelizeConnection } from "../../sequelize/sequelizeConnection";
 import { SequelizeUserModel } from "../../sequelize/models/sequelizeUserModel";
-import { createUserExpressHandler } from "../expressHandlers";
 import { config } from "../../../../../main/config";
+import { createUserHandler } from "../expressHandlers";
 
 const app = express();
 app.use(express.json());
@@ -31,30 +31,13 @@ describe("Express Handlers Test Suite", () => {
         "handle"
       );
 
-      app.post("/test_handler", createUserExpressHandler);
+      app.post("/test_handler", createUserHandler);
 
-      const mockRequest = mockCreateUserHttpRequest();
-      await request(app).post("/test_handler").send(mockRequest.body);
+      const mockRequestBody = mockCreateUserHttpRequest().body;
+      await request(app).post("/test_handler").send(mockRequestBody);
 
       expect(handleSpy).toHaveBeenCalledTimes(1);
-      expect(handleSpy.mock.calls[0][0].body).toEqual(mockRequest.body);
-    });
-
-    it("should end with the response", async () => {
-      const mockRequest = mockCreateUserHttpRequest();
-
-      let resSpy;
-      app.post(
-        "/test_res_end",
-        async (req: Request, res: Response): Promise<void> => {
-          resSpy = jest.spyOn(res, "end");
-          await createUserExpressHandler(req, res);
-        }
-      );
-
-      await request(app).post("/test_res_end").send(mockRequest.body);
-
-      expect(resSpy).toHaveBeenCalledTimes(1);
+      expect(handleSpy.mock.calls[0][0].body).toEqual(mockRequestBody);
     });
   });
 
