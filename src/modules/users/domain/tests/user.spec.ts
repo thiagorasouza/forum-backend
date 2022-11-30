@@ -4,9 +4,10 @@ import { UserEmail } from "../userEmail";
 import { InvalidParamFailure } from "../../useCases/shared/failures/invalidParamFailure";
 import { UserPassword } from "../userPassword";
 import { UserUsername } from "../userUsername";
-import { mockUserData } from "./mocks/userData.mock";
+import { mockUserData, mockUserDataWithId } from "./mocks/userData.mock";
 import { mockIdentifier } from "./mocks/identifier.mock";
 import { Identifier } from "../identifier";
+import { UserId } from "../userId";
 
 describe("User Test Suite", () => {
   let identifierStub: Identifier;
@@ -16,6 +17,26 @@ describe("User Test Suite", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+  });
+
+  it("should call UserId.create with id if id is passed", () => {
+    const userIdCreate = jest.spyOn(UserId, "create");
+
+    const userData = mockUserDataWithId();
+    User.create(userData, identifierStub);
+
+    expect(userIdCreate).toHaveBeenCalledTimes(1);
+    expect(userIdCreate).toHaveBeenCalledWith(identifierStub, "any_id");
+  });
+
+  it("should call UserId.create without id if no id is passed", () => {
+    const userIdCreate = jest.spyOn(UserId, "create");
+
+    const userData = mockUserData();
+    User.create(userData, identifierStub);
+
+    expect(userIdCreate).toHaveBeenCalledTimes(1);
+    expect(userIdCreate).toHaveBeenCalledWith(identifierStub, undefined);
   });
 
   it("should check if username is valid on creation", () => {
@@ -78,7 +99,7 @@ describe("User Test Suite", () => {
     expect(result).toEqual(invalidPassword);
   });
 
-  it("should return User instance if data is valid", () => {
+  it("should return a User instance if data is valid", () => {
     const validEmail = new Success<UserEmail>({
       value: "valid_email@email.com",
     } as UserEmail);
