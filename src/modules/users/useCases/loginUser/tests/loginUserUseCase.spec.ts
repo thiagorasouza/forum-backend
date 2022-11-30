@@ -90,7 +90,7 @@ describe("LoginUserUseCase Test Suite", () => {
 
     jest
       .spyOn(hashComparer, "compare")
-      .mockReturnValueOnce(Promise.resolve(invalidPassword));
+      .mockReturnValueOnce(Promise.resolve(false));
     const presenterSpy = jest.spyOn(presenter, "format");
 
     const requestModel = mockLoginUserRequestModel();

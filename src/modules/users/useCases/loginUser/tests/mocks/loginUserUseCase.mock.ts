@@ -6,11 +6,7 @@ import {
 } from "../../loginUserRepository";
 import { UserFoundSuccess } from "../../../shared/successes/userFoundSuccess";
 import { mockUserModel } from "../../../../domain/tests/mocks/userModel.mock";
-import {
-  CompareResult,
-  HashComparer,
-} from "../../../shared/protocols/hashComparer";
-import { Success } from "../../../../core/success";
+import { HashComparer } from "../../../shared/protocols/hashComparer";
 import { Encrypter } from "../../../shared/protocols/encrypter";
 
 const makeLoginUserPresenter = (): LoginUserPresenter => {
@@ -36,8 +32,8 @@ const makeLoginUserRepository = (): LoginUserRepository => {
 
 const makeHashComparer = (): HashComparer => {
   class HashComparerStub implements HashComparer {
-    async compare(): Promise<CompareResult> {
-      return new Success("Valid password");
+    async compare(): Promise<boolean> {
+      return true;
     }
   }
 

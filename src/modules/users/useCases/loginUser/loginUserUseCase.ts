@@ -48,12 +48,12 @@ export class LoginUserUseCase implements UseCase {
       const userModel = getByEmailResult.value;
       const storedPassword = userModel.password.value;
 
-      const compareResult = await this.hashComparer.compare(
+      const validPassword = await this.hashComparer.compare(
         submittedPassword,
         storedPassword
       );
-      if (!compareResult.ok) {
-        return this.toPresenter(compareResult);
+      if (!validPassword) {
+        return this.toPresenter(new InvalidPasswordFailure());
       }
 
       const payload: EncrypterPayload = {
