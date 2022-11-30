@@ -1,11 +1,16 @@
 import { Router } from "express";
-import { createUserHandler, getUserByUsernameHandler } from "./expressHandlers";
+import {
+  createUserHandler,
+  getUserByUsernameHandler,
+  loginUserHandler,
+} from "./expressHandlers";
 
 export const getUserRoutes = (): Router => {
   const router = Router();
 
-  router.post("/", createUserHandler);
-  router.get("/:username", getUserByUsernameHandler);
+  router.post("/users", createUserHandler);
+  router.get("/users/:username", getUserByUsernameHandler);
+  router.post("/login", loginUserHandler);
 
   return router;
 };

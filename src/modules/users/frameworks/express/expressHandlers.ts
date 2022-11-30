@@ -15,6 +15,7 @@ import { config } from "../../../../main/config";
 import { LoginUserHttpController } from "../../useCases/loginUser/loginUserHttpController";
 import { LoginUserUseCase } from "../../useCases/loginUser/loginUserUseCase";
 import { LoginUserHttpPresenter } from "../../useCases/loginUser/loginUserHttpPresenter";
+import { JWTEncrypter } from "../jsonwebtoken/jwtEncrypter";
 
 const getHandlerFromFactory = (factory: (view: View) => Controller) => {
   return async (req: Request, res: Response) => {
@@ -48,14 +49,20 @@ export const getUserByUsernameFactory = (
   return new GetUserByUsernameHttpController(useCase);
 };
 
-// export const loginUserFactory = (view: View): LoginUserHttpController => {
-//   const presenter = new LoginUserHttpPresenter(view);
-//   const identifier = new UUIDIdentifier();
-//   const repository = new SequelizeUserRepository(identifier);
-//   const hashComparer = new BcryptHasher(config.saltRounds);
-//   const useCase = new LoginUserUseCase(presenter, repository, hashComparer);
-//   return new LoginUserHttpController(useCase);
-// };
+export const loginUserFactory = (view: View): LoginUserHttpController => {
+  const presenter = new LoginUserHttpPresenter(view);
+  const identifier = new UUIDIdentifier();
+  const repository = new SequelizeUserRepository(identifier);
+  const hashComparer = new BcryptHasher(config.saltRounds);
+  const encrypter = new JWTEncrypter(config.getJwtSecret());
+  const useCase = new LoginUserUseCase(
+    presenter,
+    repository,
+    hashComparer,
+    encrypter
+  );
+  return new LoginUserHttpController(useCase);
+};
 
 export const createUserHandler = getHandlerFromFactory(
   createUserControllerFactory
@@ -65,4 +72,4 @@ export const getUserByUsernameHandler = getHandlerFromFactory(
   getUserByUsernameFactory
 );
 
-// export const loginUserHandler = getHandlerFromFactory(loginUserFactory);
+export const loginUserHandler = getHandlerFromFactory(loginUserFactory);
