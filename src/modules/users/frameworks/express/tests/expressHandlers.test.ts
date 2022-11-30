@@ -3,7 +3,7 @@ import request from "supertest";
 import { CreateUserHttpController } from "../../../useCases/createUser/createUserHttpController";
 import { mockCreateUserHttpRequest } from "../../../useCases/createUser/tests/mocks/createUserHttpRequest.mock";
 import { SequelizeConnection } from "../../sequelize/sequelizeConnection";
-import { SequelizeUserModel } from "../../sequelize/sequelizeUserModel";
+import { SequelizeUserModel } from "../../sequelize/models/sequelizeUserModel";
 import { createUserExpressHandler } from "../expressHandlers";
 
 const app = express();

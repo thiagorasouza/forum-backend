@@ -1,7 +1,7 @@
 import request from "supertest";
 import { app } from "../../../../../main/app";
 import { SequelizeConnection } from "../../sequelize/sequelizeConnection";
-import { SequelizeUserModel } from "../../sequelize/sequelizeUserModel";
+import { SequelizeUserModel } from "../../sequelize/models/sequelizeUserModel";
 import { mockCreateUserHttpRequest } from "../../../useCases/createUser/tests/mocks/createUserHttpRequest.mock";
 
 describe("CreateUserExpressRoute Test Suite", () => {

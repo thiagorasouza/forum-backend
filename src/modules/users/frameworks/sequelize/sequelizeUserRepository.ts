@@ -9,7 +9,7 @@ import {
   GetByEmailResponse,
 } from "../../useCases/createUser/createUserRepository";
 import { InconsistentDataFailure } from "../../useCases/shared/failures/inconsistentDataFailure";
-import { SequelizeUserModel } from "./sequelizeUserModel";
+import { SequelizeUserModel } from "./models/sequelizeUserModel";
 import {
   GetByUsernameResponse,
   GetUserByUsernameRepository,

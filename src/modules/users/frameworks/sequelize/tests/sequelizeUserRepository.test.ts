@@ -1,5 +1,5 @@
 import { SequelizeUserRepository } from "../sequelizeUserRepository";
-import { SequelizeUserModel } from "../sequelizeUserModel";
+import { SequelizeUserModel } from "../models/sequelizeUserModel";
 import { mockUserModel } from "../../../domain/tests/mocks/userModel.mock";
 import { SequelizeConnection } from "../sequelizeConnection";
 import { InconsistentDataFailure } from "../../../useCases/shared/failures/inconsistentDataFailure";
