@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npx dotenv -e .env.local -- npx ts-node src/main/server.ts",
     "test": "npx dotenv -e .env.testing -- npx jest --silent --noStackTrace --passWithNoTests --runInBand",
-    "test:verbose": "npx jest --runInBand",
+    "test:verbose": "npx dotenv -e .env.testing -- npx jest --runInBand",
     "test:watch": "npm test -- --watch",
     "test:staged": "npm test -- --findRelatedTests",
     "test:ci": "npm test -- --coverage"

@@ -1,4 +1,3 @@
-import { Success } from "../../core/success";
 import { User } from "../../domain/user";
 import { UserData } from "../../domain/userData";
 import { UserModel } from "../../domain/userModel";
@@ -70,6 +69,7 @@ export class SequelizeUserRepository
 
   mapFromDomain(userModel: UserModel): UserData {
     return {
+      id: userModel.id.value,
       username: userModel.username.value,
       email: userModel.email.value,
       password: userModel.password.value,
