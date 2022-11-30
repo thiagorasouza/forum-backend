@@ -26,4 +26,8 @@ export class UserEmail {
 
     return new Success<UserEmail>(new UserEmail(email));
   }
+
+  public static from(email: string): Success<UserEmail> {
+    return new Success<UserEmail>(new UserEmail(email));
+  }
 }

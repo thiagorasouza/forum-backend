@@ -4,13 +4,9 @@ import { UserId } from "../../userId";
 import { UserModel } from "../../userModel";
 import { UserPassword } from "../../userPassword";
 import { UserUsername } from "../../userUsername";
-import { mockIdentifier } from "./identifier.mock";
 
 const mockUserId = (): UserId => {
-  const userIdResult = UserId.create(
-    mockIdentifier(),
-    "any_id"
-  ) as Success<UserId>;
+  const userIdResult = UserId.from("any_id");
   return userIdResult.value;
 };
 
@@ -29,9 +25,7 @@ const mockUserEmail = (): UserEmail => {
 };
 
 const mockUserPassword = (): UserPassword => {
-  const userPasswordResult = UserPassword.create(
-    "any_password"
-  ) as Success<UserPassword>;
+  const userPasswordResult = UserPassword.from("hashed_password");
   return userPasswordResult.value;
 };
 

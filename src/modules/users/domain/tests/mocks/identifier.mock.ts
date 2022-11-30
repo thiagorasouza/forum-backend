@@ -5,10 +5,6 @@ export const mockIdentifier = (): Identifier => {
     generateRandomId(): string {
       return "random_id";
     }
-
-    isIdValid(): boolean {
-      return true;
-    }
   }
 
   return new IdentifierStub();

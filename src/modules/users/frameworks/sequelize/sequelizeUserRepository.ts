@@ -1,5 +1,5 @@
 import { User } from "../../domain/user";
-import { UserData } from "../../domain/userData";
+import { ExistingUserData, UserData } from "../../domain/userData";
 import { UserModel } from "../../domain/userModel";
 import { UserNotFoundFailure } from "../../useCases/shared/failures/userNotFoundFailure";
 import {
@@ -7,7 +7,6 @@ import {
   CreateResponse,
   GetByEmailResponse,
 } from "../../useCases/createUser/createUserRepository";
-import { InconsistentDataFailure } from "../../useCases/shared/failures/inconsistentDataFailure";
 import { SequelizeUserModel } from "./models/sequelizeUserModel";
 import {
   GetByUsernameResponse,
@@ -48,9 +47,7 @@ export class SequelizeUserRepository
   }: {
     fieldName: string;
     fieldValue: string;
-  }): Promise<
-    UserNotFoundFailure | InconsistentDataFailure | UserFoundSuccess
-  > {
+  }): Promise<UserNotFoundFailure | UserFoundSuccess> {
     const userData = await SequelizeUserModel.findOne({
       where: { [name]: value },
     });
@@ -58,12 +55,9 @@ export class SequelizeUserRepository
       return new UserNotFoundFailure();
     }
 
-    const mapResult = this.mapToDomain(userData);
-    if (!mapResult.ok) {
-      return new InconsistentDataFailure();
-    }
+    const mapToDomainResult = this.mapToDomain(userData);
 
-    const userModel = mapResult.value.props;
+    const userModel = mapToDomainResult.value.props;
     return new UserFoundSuccess(userModel);
   }
 
@@ -76,7 +70,7 @@ export class SequelizeUserRepository
     };
   }
 
-  mapToDomain(userData: UserData) {
-    return User.create(userData, this.identifier);
+  mapToDomain(userData: ExistingUserData) {
+    return User.from(userData);
   }
 }

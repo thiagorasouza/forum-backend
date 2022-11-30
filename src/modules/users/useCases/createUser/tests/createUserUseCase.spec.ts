@@ -72,8 +72,8 @@ describe("CreateUserUseCase Test Suite", () => {
     expect(presenterSpy).toHaveBeenCalledWith(emailAlreadyRegistered);
   });
 
-  it("should create User entity with correct values", async () => {
-    const { sut, identifier } = makeSut();
+  it("should call User.create with correct values", async () => {
+    const { sut, identifier, hasher } = makeSut();
     const requestMock = mockCreateUserRequestModel();
 
     const userCreateSpy = jest.spyOn(User, "create");
@@ -81,7 +81,7 @@ describe("CreateUserUseCase Test Suite", () => {
     await sut.execute(requestMock);
 
     expect(userCreateSpy).toHaveBeenCalledTimes(1);
-    expect(userCreateSpy).toHaveBeenCalledWith(requestMock, identifier);
+    expect(userCreateSpy).toHaveBeenCalledWith(requestMock, identifier, hasher);
   });
 
   it("should fail if building User entity fails", async () => {
@@ -90,7 +90,9 @@ describe("CreateUserUseCase Test Suite", () => {
 
     const invalidParamFailure = new InvalidParamFailure("any");
 
-    jest.spyOn(User, "create").mockReturnValueOnce(invalidParamFailure);
+    jest
+      .spyOn(User, "create")
+      .mockReturnValueOnce(Promise.resolve(invalidParamFailure));
     const presenterSpy = jest.spyOn(presenter, "format");
 
     await sut.execute(requestMock);
@@ -103,7 +105,9 @@ describe("CreateUserUseCase Test Suite", () => {
     const requestMock = mockCreateUserRequestModel();
 
     const userMock = { props: {} } as User;
-    jest.spyOn(User, "create").mockReturnValueOnce(new Success<User>(userMock));
+    jest
+      .spyOn(User, "create")
+      .mockReturnValueOnce(Promise.resolve(new Success<User>(userMock)));
     const saveSpy = jest.spyOn(repository, "create");
 
     await sut.execute(requestMock);
@@ -117,7 +121,9 @@ describe("CreateUserUseCase Test Suite", () => {
     const requestMock = mockCreateUserRequestModel();
 
     const userMock = { props: {} } as User;
-    jest.spyOn(User, "create").mockReturnValueOnce(new Success<User>(userMock));
+    jest
+      .spyOn(User, "create")
+      .mockReturnValueOnce(Promise.resolve(new Success<User>(userMock)));
     jest
       .spyOn(repository, "create")
       .mockReturnValueOnce(Promise.reject(new Error()));
@@ -133,7 +139,9 @@ describe("CreateUserUseCase Test Suite", () => {
     const requestMock = mockCreateUserRequestModel();
 
     const userMock = { props: {} } as User;
-    jest.spyOn(User, "create").mockReturnValueOnce(new Success<User>(userMock));
+    jest
+      .spyOn(User, "create")
+      .mockReturnValueOnce(Promise.resolve(new Success<User>(userMock)));
     const presenterSpy = jest.spyOn(presenter, "format");
 
     await sut.execute(requestMock);

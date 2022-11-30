@@ -10,6 +10,8 @@ import { GetUserByUsernameUseCase } from "../../useCases/getUserByUsername/getUs
 import { GetUserByUsernameHttpController } from "../../useCases/getUserByUsername/getUserByUsernameHttpController";
 import { Controller } from "../../useCases/shared/protocols/controller";
 import { View } from "../../useCases/shared/protocols/view";
+import { BcryptHasher } from "../bcrypt/bcryptHasher";
+import { config } from "../../../../main/config";
 
 const getHandlerFromFactory = (factory: (view: View) => Controller) => {
   return async (req: Request, res: Response) => {
@@ -23,7 +25,13 @@ const createUserControllerFactory = (view: View): CreateUserHttpController => {
   const presenter = new CreateUserHttpPresenter(view);
   const identifier = new UUIDIdentifier();
   const repository = new SequelizeUserRepository(identifier);
-  const useCase = new CreateUserUseCase(repository, presenter, identifier);
+  const hasher = new BcryptHasher(config.saltRounds);
+  const useCase = new CreateUserUseCase(
+    repository,
+    presenter,
+    identifier,
+    hasher
+  );
   return new CreateUserHttpController(useCase);
 };
 

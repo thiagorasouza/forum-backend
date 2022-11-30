@@ -1,6 +1,4 @@
-import { Failure } from "../core/failure";
 import { Success } from "../core/success";
-import { InvalidParamFailure } from "../useCases/shared/failures/invalidParamFailure";
 import { Identifier } from "./identifier";
 
 export class UserId {
@@ -14,20 +12,12 @@ export class UserId {
     return this._value;
   }
 
-  public static create(
-    identifier: Identifier,
-    id?: string
-  ): Failure<string> | Success<UserId> {
-    if (!id) {
-      const randomId = identifier.generateRandomId();
-      return new Success<UserId>(new UserId(randomId));
-    }
+  public static create(identifier: Identifier): Success<UserId> {
+    const randomId = identifier.generateRandomId();
+    return new Success<UserId>(new UserId(randomId));
+  }
 
-    const isIdValid = identifier.isIdValid(id);
-    if (!isIdValid) {
-      return new InvalidParamFailure("id");
-    }
-
+  public static from(id: string): Success<UserId> {
     return new Success<UserId>(new UserId(id));
   }
 }

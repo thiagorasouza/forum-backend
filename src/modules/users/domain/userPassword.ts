@@ -1,6 +1,6 @@
-import { Failure } from "../core/failure";
 import { Success } from "../core/success";
 import { InvalidParamFailure } from "../useCases/shared/failures/invalidParamFailure";
+import { Hasher } from "./hasher";
 
 export class UserPassword {
   private static minLength = 6;
@@ -29,13 +29,19 @@ export class UserPassword {
     return true;
   }
 
-  public static create(
-    password: string
-  ): Failure<string> | Success<UserPassword> {
-    if (!UserPassword.isValid(password)) {
+  public static async create(
+    rawPassword: string,
+    hasher: Hasher
+  ): Promise<InvalidParamFailure | Success<UserPassword>> {
+    if (!UserPassword.isValid(rawPassword)) {
       return new InvalidParamFailure("password");
     }
 
-    return new Success(new UserPassword(password));
+    const hashedPassword = await hasher.hash(rawPassword);
+    return new Success(new UserPassword(hashedPassword));
+  }
+
+  public static from(hashedPassword: string): Success<UserPassword> {
+    return new Success(new UserPassword(hashedPassword));
   }
 }

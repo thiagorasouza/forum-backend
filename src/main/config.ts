@@ -1,4 +1,6 @@
 export const config = {
+  saltRounds: 12,
+
   getPort: (): number => {
     if (!process.env.PORT) {
       throw new Error("PORT is not set in process.env");

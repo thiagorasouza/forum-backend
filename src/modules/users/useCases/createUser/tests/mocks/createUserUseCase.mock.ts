@@ -9,6 +9,8 @@ import {
 } from "../../createUserRepository";
 import { mockIdentifier } from "../../../../domain/tests/mocks/identifier.mock";
 import { Identifier } from "../../../../domain/identifier";
+import { mockHasher } from "../../../../domain/tests/mocks/hasher.mock";
+import { Hasher } from "../../../../domain/hasher";
 
 const makeRepository = (): CreateUserRepository => {
   class CreateUserRepositoryMock implements CreateUserRepository {
@@ -38,13 +40,15 @@ interface SutTypes {
   repository: CreateUserRepository;
   presenter: CreateUserPresenter;
   identifier: Identifier;
+  hasher: Hasher;
 }
 
 export const makeCreateUserUseCase = (): SutTypes => {
   const repository = makeRepository();
   const presenter = makePresenter();
   const identifier = mockIdentifier();
-  const sut = new CreateUserUseCase(repository, presenter, identifier);
+  const hasher = mockHasher();
+  const sut = new CreateUserUseCase(repository, presenter, identifier, hasher);
 
-  return { sut, repository, presenter, identifier };
+  return { sut, repository, presenter, identifier, hasher };
 };

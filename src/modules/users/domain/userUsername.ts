@@ -38,4 +38,8 @@ export class UserUsername {
 
     return new Success(new UserUsername(username));
   }
+
+  public static from(username: string): Success<UserUsername> {
+    return new Success<UserUsername>(new UserUsername(username));
+  }
 }

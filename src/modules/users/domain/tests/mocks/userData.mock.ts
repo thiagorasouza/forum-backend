@@ -1,4 +1,4 @@
-import { UserData } from "../../userData";
+import { ExistingUserData, UserData } from "../../userData";
 
 export const mockUserData = (): UserData => {
   return {
@@ -14,5 +14,14 @@ export const mockUserDataWithId = (): UserData => {
     username: "anyusername",
     email: "any_email@email.com",
     password: "any_password",
+  };
+};
+
+export const mockExistingUserData = (): ExistingUserData => {
+  return {
+    id: "any_id",
+    username: "anyusername",
+    email: "any_email@email.com",
+    password: "hashed_password",
   };
 };
