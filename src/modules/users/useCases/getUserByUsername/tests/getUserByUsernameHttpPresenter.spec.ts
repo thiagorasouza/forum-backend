@@ -1,3 +1,4 @@
+import { mockExistingUserData } from "../../../domain/tests/mocks/userData.mock";
 import { mockUserModel } from "../../../domain/tests/mocks/userModel.mock";
 import { InvalidParamFailure } from "../../shared/failures/invalidParamFailure";
 import { ServerFailure } from "../../shared/failures/serverFailure";
@@ -42,7 +43,7 @@ const serverFailureMock = new ServerFailure();
 */
 
 describe("CreateUserHttpPresenter", () => {
-  it("should display 200 for success case", () => {
+  it("should display 200 with user info for success case", () => {
     const { sut, view } = makeSut();
 
     const viewSpy = jest.spyOn(view, "display");
@@ -51,7 +52,7 @@ describe("CreateUserHttpPresenter", () => {
 
     expect(viewSpy).toHaveBeenCalledWith({
       statusCode: 200,
-      body: successMock.value,
+      body: mockExistingUserData(),
     });
   });
 

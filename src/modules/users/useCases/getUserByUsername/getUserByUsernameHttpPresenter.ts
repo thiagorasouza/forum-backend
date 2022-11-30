@@ -14,7 +14,16 @@ export class GetUserByUsernameHttpPresenter
 
   format(response: GetUserByUsernameResponseModel): void {
     if (response.constructor === UserFoundSuccess) {
-      return this.toView({ statusCode: 200, body: response.value });
+      const userModel = response.value;
+      return this.toView({
+        statusCode: 200,
+        body: {
+          id: userModel.id.value,
+          username: userModel.username.value,
+          email: userModel.email.value,
+          password: userModel.password.value,
+        },
+      });
     }
 
     if (response.constructor === UserNotFoundFailure) {
