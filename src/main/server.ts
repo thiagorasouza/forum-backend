@@ -4,7 +4,7 @@ import { config } from "./config";
 
 const port = config.getPort();
 
-SequelizeConnection.connect()
+SequelizeConnection.connect(config.getSequelizeUri())
   .then(async () => {
     console.log("1. Database connection established");
 

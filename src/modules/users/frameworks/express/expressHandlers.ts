@@ -10,6 +10,7 @@ export const createUserExpressHandler = async (
   req: Request,
   res: Response
 ): Promise<void> => {
+  console.log("🚀 ~ req", req.body);
   const view = new ExpressView(res);
   const presenter = new CreateUserHttpPresenter(view);
   const identifier = new UUIDIdentifier();

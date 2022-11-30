@@ -1,11 +1,10 @@
 import { Sequelize } from "sequelize-typescript";
-import { config } from "../../../../main/config";
 
 export class SequelizeConnection {
   static sequelize: Sequelize;
 
-  static async connect() {
-    const connection = new Sequelize(config.getSequelizeUri(), {
+  static async connect(uri: string) {
+    const connection = new Sequelize(uri, {
       models: [__dirname + "/models"],
       logging: false,
     });

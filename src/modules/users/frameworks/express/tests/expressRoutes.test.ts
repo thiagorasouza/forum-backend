@@ -3,10 +3,11 @@ import { app } from "../../../../../main/app";
 import { SequelizeConnection } from "../../sequelize/sequelizeConnection";
 import { SequelizeUserModel } from "../../sequelize/models/sequelizeUserModel";
 import { mockCreateUserHttpRequest } from "../../../useCases/createUser/tests/mocks/createUserHttpRequest.mock";
+import { config } from "../../../../../main/config";
 
 describe("CreateUserExpressRoute Test Suite", () => {
   beforeAll(async () => {
-    await SequelizeConnection.connect();
+    await SequelizeConnection.connect(config.getSequelizeUri());
     await SequelizeUserModel.sync();
   });
 

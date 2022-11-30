@@ -12,6 +12,7 @@ import {
   mockUserDataWithId,
 } from "../../../domain/tests/mocks/userData.mock";
 import { mockIdentifier } from "../../../domain/tests/mocks/identifier.mock";
+import { config } from "../../../../../main/config";
 
 const makeSut = (): SequelizeUserRepository => {
   return new SequelizeUserRepository(mockIdentifier());
@@ -19,7 +20,7 @@ const makeSut = (): SequelizeUserRepository => {
 
 describe("SequelizeUserRepository Test Suite", () => {
   beforeAll(async () => {
-    await SequelizeConnection.connect();
+    await SequelizeConnection.connect(config.getSequelizeUri());
     await SequelizeUserModel.sync();
   });
 
