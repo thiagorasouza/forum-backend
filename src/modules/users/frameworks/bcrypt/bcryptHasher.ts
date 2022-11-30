@@ -7,4 +7,8 @@ export class BcryptHasher implements Hasher {
   async hash(password: string): Promise<string> {
     return await bcrypt.hash(password, this.saltRounds);
   }
+
+  async compare(rawPassword: string, hashedPassword: string): Promise<boolean> {
+    return await bcrypt.compare(rawPassword, hashedPassword);
+  }
 }
